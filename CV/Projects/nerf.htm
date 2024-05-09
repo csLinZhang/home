@@ -1,0 +1,96 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Computer Vision</title>
+<style>
+<!--
+span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;
+	text-underline:single}
+-->
+</style>
+</head>
+
+<body>
+
+<p><font size="5" face="Calibri"><b><span lang="en-us">NeRF-based 3D 
+Reconstruction (Tutor: Fengyi Zhang, wechat: zfy15665875118)</span></b></font></p>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Introduction</span></h2>
+<h2>
+<font size="3"><span style="font-family: Calibri; font-weight: 400">NeRF (Neural 
+Radiance Field) is a popular technique originating from the field of novel view 
+synthesis and quickly being applied to the 3D reconstruction task. Based on NeRF 
+you can reconstruct the geometry and appearance of a scene from dozens of images 
+casually captured with your phone, without sophisticated devices such as depth 
+camera or lidar. </span></font></h2>
+<p>
+　</p>
+<h2>
+<span style="font-family: 'Calibri'">Requirements</span></h2>
+<p><font size="3"><span style="font-family: Calibri; font-weight: 400">In this 
+task, you are required to reconstruct a scene based on NeRF<br>
+1. Capture a set of images for a real-world scene with your device.<br>
+2. Calibrate the images using SfM tools such as Colmap to get the corresponding 
+poses.<br>
+3. Run a NeRF-based model to reconstruct the scene from the images and poses you 
+prepared.<br>
+4. Convert the reconstruction result to a 3D mesh (in ‘ply’ or ‘obj’ format).<br>
+5. Describe the above process in detail in your report. The following details 
+are required:<br>
+i. How is the scene you have chosen and how did you prepare your data<br>
+ii. Which NeRF project were you based on and what is your understanding on it<br>
+iii. What hyper-parameters did you adjust for adapting to your own data and why<br>
+iv. (Optional) What modification do you make to the codebase beyond 
+hyper-parameter adjustments to improve the reconstruction quality?</span></font><br>
+<font face="Calibri">
+<br>
+</font><span style="font-family: Calibri"><b><font size="5">Criteria:</font></b><br>
+</span><font face="Calibri">1. Minimum level: Geometry reconstruction of an 
+object-level scene<br>
+Since NeRF was originally designed to model object-level scenes, it should be 
+easy for you to reconstruct the geometry of an object as shown in Fig. 1. <br>
+　</font></p>
+<p><font face="Calibri">
+<img border="0" src="nerf.h1.gif" width="537" height="362"><br>
+Fig. 1. Geometry mesh without textures of an object-level scene.<br>
+　</font></p>
+<p><font face="Calibri">2. Intermediate level: Geometry and appearance 
+reconstruction of an object-level scene<br>
+However, it is still an open question to color your geometry mesh as shown in 
+Fig. 2 because NeRF was originally designed for novel view synthesis instead of 
+3D reconstruction. Reference 3 provides a simple way. Of course, we encourage 
+you to design or utilize more advanced methods to obtain more accurate color 
+meshes.<br>
+　</font></p>
+<p><font face="Calibri">
+<img border="0" src="nerf.h1.jpg" width="665" height="516"><br>
+Fig. 2. Mesh with textures of an object-level scene.<br>
+　</font></p>
+<p><font face="Calibri">3. Advanced level: Geometry (and appearance) 
+reconstruction of large or unbounded scenes<br>
+Again, since NeRF was originally designed to model object-level scenes, 
+additional work is required to enable its application in large or unbounded 
+scenes as shown in Fig. 3. For example, you may need a faster NeRF codebase for 
+large-scale scenes, and certain coordinates mapping for unbounded scenes</font></p>
+<p><img border="0" src="nerf.h3.jpg" width="918" height="393"><font face="Calibri"><br>
+Fig. 3. Mesh with textures of a large scene.<br>
+<br>
+　</font></p>
+<p><span style="font-family: Calibri; font-weight: 700"><font size="5">
+References</font></span><font face="Calibri"><br>
+1. Mildenhall, B., et al. &quot;NeRF: Representing scenes as neural radiance fields 
+for view synthesis.&quot; ECCV. 2020.<br>
+2. Colmap: https://github.com/colmap/colmap<br>
+3. Color mesh: https://github.com/kwea123/nerf_pl/blob/master/README_mesh.md<br>
+4. A faster NeRF codebase: <a href="https://github.com/ashawkey/torch-ngp">https://github.com/ashawkey/torch-ngp</a><br>
+　</font></p>
+<p><font face="Calibri">Created on: Nov. 09, 2023</font></p>
+
+</body>
+
+</html>

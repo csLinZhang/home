@@ -1,0 +1,105 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Computer Vision</title>
+<style>
+<!--
+span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;
+	text-underline:single}
+-->
+</style>
+</head>
+
+<body>
+
+<p><font size="5" face="Calibri"><b><span lang="en-us">Interaction between a 
+mobile device and a ROS host (Tutor: Zhong Wang, 19121805639)</span></b></font></p>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Introduction</span></h2>
+<h2>
+<font size="3"><span style="font-family: Calibri; font-weight: 400">In many 
+robot-related applications, the robot operating system (ROS) based on Linux (Ubuntu) 
+is often used to achieve data communication among multiple sensors. ROS often 
+runs on the moving robot. When we need to know the running status of the robot 
+or want to send control commands to the robot, we need to use mobile devices 
+such as mobile phones or tablets. Therefore, how to make use of the 
+communication mechanism of ROS to achieve the interaction between the mobile 
+device and the master processor is a widely demanded technology.</span></font></h2>
+<h2>
+<img border="0" src="mobile1.jpg" width="828" height="313"></h2>
+<h2>
+<span style="font-family: 'Calibri'">Requirements</span></h2>
+<p>
+<span style="font-family: Calibri">In this project, your task is to develop a 
+simple interactive app between mobile device and ROS host based on Android or 
+IOS, realizing the following functions:<br>
+<br>
+1. Start a SLAM application (Google’s cartographer 2D/3D) on the ROS master from 
+the app. The program will play the data bag collected in advance, and then 
+localize and map at the same time.<br>
+2. The app needs to receive the messages sent by the SLAM program and display 
+them (3/6-DoF poses and the built map (2D grid map or 3D point cloud)) on its 
+UI.</span></p>
+<p>
+<br>
+<img border="0" src="mobile2.jpg"><img border="0" src="mobile3.jpg"></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span style="font-family: Calibri">3. The app sends a command to early exit the 
+SLAM program.</span></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span style="font-family: Calibri">(Caution: In the above-mentioned tasks, 2D is 
+the basic requirement. Encourage students to achieve 3D display, so that they 
+can get extra bonus.)</span></p>
+<p class="MsoNormal" align="left" style="text-align:left">　</p>
+<p class="MsoNormal" align="left" style="text-align:left"><b>
+<span lang="EN-US" style="font-size: 18.0pt; font-family: Calibri,sans-serif; color: black">
+References</span></b></p>
+<p class="MsoNormal" align="left" style="text-align:left"><b><span lang="EN-US">
+ROS:</span></b></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="http://wiki.ros.org/Documentation">
+http://wiki.ros.org/Documentation</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="http://wiki.ros.org/ROS/Tutorials">
+http://wiki.ros.org/ROS/Tutorials</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left"><b><span lang="EN-US">
+ROS Mobile:</span></b></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://github.com/ROS-Mobile/ROS-Mobile-Android">
+https://github.com/ROS-Mobile/ROS-Mobile-Android</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://github.com/KIT-ISAS/iviz/tree/devel">
+https://github.com/KIT-ISAS/iviz/tree/devel</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left"><b><span lang="EN-US">
+Cartographer</span></b></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://github.com/cartographer-project/cartographer_ros">
+https://github.com/cartographer-project/cartographer_ros</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://github.com/cartographer-project/cartographer">
+https://github.com/cartographer-project/cartographer</a></span></b></span></p>
+<p class="MsoNormal" align="left" style="text-align:left">
+<span class="MsoHyperlink"><b><span lang="EN-US">
+<a style="color: #0563C1; text-decoration: underline; text-underline: single" href="https://google-cartographer-ros.readthedocs.io/en/latest/">
+https://google-cartographer-ros.readthedocs.io/en/latest/</a></span></b></span></p>
+<p>
+　</p>
+<p>
+<span style="font-family: Calibri">Created on: Nov. 09, 2023</span></p>
+
+<p>　</p>
+
+</body>
+
+</html>

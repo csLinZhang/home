@@ -1,0 +1,466 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Computer Vision</title>
+<style>
+<!--
+body{-webkit-touch-callout:none;font-family:-apple-system-font,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei",Arial,sans-serif;color:#333;background-color:#f2f2f2;letter-spacing:.034em}*{margin:0;padding:0}body{line-height:1.6;font-family:-apple-system-font,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei",Arial,sans-serif;font-size:16px}body{margin:0}.rich_media_empty_extra{background-color:#fafafa}.rich_media_inner{word-wrap:break-word;-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto}.not_in_mm .rich_media_inner{position:relative}.rich_media_area_primary{padding:20px 16px 12px;background-color:#fafafa}.rich_media_area_primary{padding-top:32px}.appmsg_skin_default .rich_media_area_primary{background-color:#fff}-->
+</style>
+</head>
+
+<body>
+
+<p><font face="Calibri"><b><font size="6">Computer Vi</font></b><font size="6"><b>sion 
+(Fall 2023)</b></font></font></p>
+<h2>
+　</h2>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Administrative <span lang="en-us">M</span>atters</span></h2>
+<blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+	<p class="style1"><span style="font-size: 12pt; font-family: Calibri">Instructor: Lin 
+	ZHANG</span></p>
+	<p class="style1"><span style="font-size: 12pt; font-family: Calibri">TA: Linfei LI (wechat: 
+	lifambitious, email: 2311444@tongji.edu.cn)</span></p>
+	<p class="style1"><span style="font-size: 12pt; font-family: Calibri">Evaluation: 
+	attendance 10%, homework (3 times) 30%, final project 20%, final paper exam 40%, extra bonus 
+	5%.</span></p>
+	<p class="style1"><a href="ReadingMaterials/Intro2CV.pdf">
+	<span style="font-size: 12pt">张林等，计算机视觉：原理算法与实践</span></a><span style="font-size: 12pt; font-family:Calibri"> 
+	(Aug. 28, 2023 updated)</span></p>
+	<p class="style1">　</p>
+</blockquote>
+<p>
+<span style="font-family: 'Calibri'; font-weight:700"><font size="5">Latest Notices</font></span></p>
+<p>
+　</p>
+<p>
+　</p>
+<h2>
+　</h2>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Lecture Slides</span></h2>
+<table border="1" width="89%" id="table1">
+	<tr>
+		<td width="199" align="center">
+		　</td>
+		<td width="373" align="center">
+		<font face="Calibri" style="font-size: 14pt; font-weight: 700">
+		Slides</font></td>
+		<td align="center">
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<font style="font-size: 14pt; font-weight: 700" face="Calibri">
+		Reading Materials</font></td>
+	</tr>
+	<tr>
+		<td width="199" align="center" height="37">
+	<font face="Calibri">
+	<img border="0" src="CV.htm4.jpg" width="117" height="138"></font></td>
+		<td width="373" align="center" height="37">
+	<span style="font-family:&quot;Calibri&quot;">
+		<a href="slides/Lecture%2001%20Introduction%20to%20Computer%20Vision.pdf">Introduction to Computer Vision</a></span></td>
+		<td align="center" height="37">
+		<p align="left"><span lang="en-us"><font face="Calibri">1. Computer Vision, 
+		Wiki Page, <a href="https://en.wikipedia.org/wiki/Computer_vision">https://en.wikipedia.org/wiki/Computer_vision</a>
+		</font></span>
+		<p align="left"><span lang="en-us"><font face="Calibri">2. Erlangen 
+		Program, <a href="https://en.wikipedia.org/wiki/Erlangen_program">
+		https://en.wikipedia.org/wiki/Erlangen_program</a> </font></span>
+		<p align="left"><span lang="en-us"><font face="Calibri">3. Xinyu Huang 
+		et al.,
+		<a href="ReadingMaterials/The%20ApolloScape%20Open%20Dataset%20for%20Autonomous%20Driving%20and%20Its%20Application-printed.pdf">
+		The ApolloScape Open Dataset for Autonomous Driving and Its Application</a>, 
+		IEEE Trans. PAMI, 2020.</font></span><p align="left"><span lang="en-us">
+		<font face="Calibri">4. Lin Zhang et 
+		al., &quot;<a href="../files/contactlesspalm.pdf">Towards contactless 
+		palmprint recognition: A novel Device, a new benchmark, and a 
+		collaborative representation based identification approach</a>&quot;, Pattern 
+		Recognition, 2017.</font></span><p align="left"><span lang="en-us">
+		<font face="Calibri">5. Yingyi Zhang, Lin Zhang et al.,
+		<a href="../ICME2019/MPV.pdf">Pay by showing your palm: A study of 
+		palmprint verification on mobile platforms</a>, in: Proc. ICME, 2019.</font></span><p align="left">
+		<span lang="en-us"><font face="Calibri">6. Tianjun Zhang, Nlong Zhao, 
+		Ying Shen, Xuan Shao, Lin Zhang*, and Yicong Zhou,
+		<a href="../files/ROECS-ACM%20MM%2021.pdf">ROECS: A robust semi-direct 
+		pipeline towards online extrinsics correction of the surround-view 
+		system</a>, in: Proc. ACM Int'l Conf. Multimedia, 2021.</font></span><p align="left">
+		<span lang="en-us"><font face="Calibri">7. Lin Zhang et al., &quot;<a href="../files/AVID_TIP.pdf">Simulation 
+		of atmospheric visibility impairment</a>&quot;, IEEE Trans. Image Processing, 
+		2021. </font></span>
+		<p align="left"><span lang="en-us"><font face="Calibri">8. Chaozheng Guo, 
+		Lin Zhang et al., <a href="../files/icassp22-chaozheng.pdf">ChunkFusion: 
+		A Learning-based RGB-D 3D reconstruction framework via chunk-wise 
+		integration</a>, in Proc. IEEE Int'l Conf. Acoustics, Speech and Signal 
+		Processing, 2022.</font></span><p align="left"><span lang="en-us">
+		<font face="Calibri">9. Xuan Shao, Lin Zhang et al., &quot;<a href="../files/MOFISSLAM_TCSVT.pdf">MOFISSLAM: 
+		A multi-object semantic SLAM system with front-view, inertial and 
+		surround-view sensors for indoor parking</a>&quot;, IEEE Trans. Circuits and 
+		Systems for Video Technology, vol.32, no.7, 2022.</font></span><p align="left">
+		<span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none">
+		10. Tianjun Zhang, Lin Zhang*, Yang Chen, and Yicong Zhou, &quot;</span><a style="font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px" href="https://cslinzhang.gitee.io/home/files/CVIDS-TIP.pdf">CVIDS: 
+		A collaborative localization and dense mapping framework for multi-agent 
+		based visual-inertial SLAM</a><span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none">,&quot;&nbsp;</span><i style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">IEEE 
+		Transactions on Image Processing</i><span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none">, 
+		vol. 31, pp. 6562-6576, 2022</span></td>
+	</tr>
+	<tr>
+		<td width="199" align="center" height="39">
+	<font face="Calibri">
+	<img border="0" src="CV.htm1.gif" width="199" height="110"></font></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2002%20Local%20Interest%20Point%20Detectors.pdf">Local 
+	Interest Point Detectors</a></span></td>
+		<td align="left" height="39">
+		<p align="left" style="margin-top: 0; margin-bottom: 8px">
+		<font face="Calibri">1.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-04-feature%20detection%20and%20matching/01-harrisCornerDetector">
+		01-harrisCornerDetector</a>. </font>
+		<span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline; float: none">
+		This program implements the Harris corner detector and generates an 
+		example for &quot;corner detection&quot; mentioned in our lecture.</span></p>
+		<p style="margin-top: 0; margin-bottom: 8px"><span lang="en-us">
+		<font face="Calibri">2</font></span><font face="Calibri"><span lang="en-us">. </span>
+		<a href="http://www.bmva.org/bmvc/1988/avc-88-023.pdf">C. Harris and M. 
+		Stephens, A combined corner and edge detector, 1988</a></font><p style="margin-top: 0; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">5</font></span><font face="Calibri"><span lang="en-us">. </span>
+		<a href="http://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf">D.G. Lowe, Distinctive image features from scale-invariant keypoints, 
+		IJCV' 04</a></font></td>
+	</tr>
+	<tr>
+		<td width="199" align="center" height="39">
+	<font face="Calibri">
+	<img border="0" src="CV.htm4.gif" width="195" height="132"></font></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2003%20Local%20Feature%20Descriptors%20and%20Matching.pdf">Local 
+	Feature Descriptors and Matching</a></span></td>
+		<td align="left" height="39">
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">1</font></span><font face="Calibri"><span lang="en-us">. </span>
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-04-feature%20detection%20and%20matching/02-harrisCornerDescriptorMatching">
+		02-harrisCornerDescriptorMatching</a><span lang="en-us">. </span></font>
+		<span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline; float: none">
+		This program implements the Harris corner detection and matching. </span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">2</font></span><font face="Calibri"><span lang="en-us">. 
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-04-feature%20detection%20and%20matching/03-openSIFTVS">
+		03-openSIFTVS</a>. </span></font>
+		<span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline; float: none">
+		This program implements the SIFT interest point detection, descriptor 
+		construction and matching in C++. It is a project with Visual Studio 
+		2017.</span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<font face="Calibri"><span lang="en-us">3. 
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-06-homography%20estimation/01-PanoramaStichingUsingSIFTRANSAC">04-PanoramaStichingUsingSIFTRANSAC</a>. </span></font>
+		<span style="color: rgb(0, 0, 0); font-family: Calibri; font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: justify; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline; float: none">
+		This matlab program implements the SIFT based panorama stitching with 
+		the RANSAC framework.</span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">4. </font></span>
+		<font face="Calibri"><a href="http://www.vlfeat.org/">Sift 
+		Implementation (Matlab)</a></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="projectivegeo.png" width="196" height="131"></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2004%20Math%20Prerequsit%201%20Projective%20Geometry.pdf">
+	Math Prerequsit I: Projective Geometry</a></span></td>
+		<td align="left" height="39">
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<font face="Calibri">
+		<a href="https://en.wikipedia.org/wiki/Projective_geometry">Introduction 
+		of Projective Geometry in Wiki</a></font></p>
+		</td>
+	</tr>
+	</table>
+<table border="1" width="89%" id="table3">
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="nonlinear.png" width="197" height="163"></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2005%20Math%20Prerequsit%202%20Nonlinear%20Least%20Squares.pdf">
+	Math Prerequsit II: Nonlinear Least-squares</a></span></td>
+		<td align="left" height="39">
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<font face="Calibri">K. Madsen et al.,
+		<a href="ReadingMaterials/Methods%20for%20nonlinear%20least%20squares.pdf">
+		Methods for nonlinear least-squares problems</a>, Technical Univ. 
+		Denmark, 2004</font></p>
+		</td>
+	</tr>
+	</table>
+<table border="1" width="89%" id="table4">
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="calibboard.jpg" width="193" height="144"></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2006%20Measurement%20Using%20a%20Single%20Camera.pdf">Measurement 
+	Using a Single Camera</a></span></td>
+		<td align="left" height="39">
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="color: rgb(0, 0, 0); text-transform: none; text-indent: 0px; letter-spacing: normal; font-family: Calibri; font-style: normal; font-weight: 400; word-spacing: 0px; float: none; display: inline !important; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+		1. Z. Zhang,&nbsp;</span><a style="text-transform: none; text-indent: 0px; letter-spacing: normal; font-family: Calibri; font-style: normal; font-weight: 400; word-spacing: 0px; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px;" href="ReadingMaterials/A%20Flexible%20New%20Technique%20for%20Camera%20Calibration.pdf">A 
+		Flexible New Technique for Camera Calibration</a><span style="color: rgb(0, 0, 0); text-transform: none; text-indent: 0px; letter-spacing: normal; font-family: Calibri; font-style: normal; font-weight: 400; word-spacing: 0px; float: none; display: inline !important; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">, 
+		IEEE T-PAMI, 2000</span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal">
+		<font face="Calibri" color="#000000">2.
+		<a href="https://en.wikipedia.org/wiki/Rodrigues'_rotation_formula">
+		Rodrigues' rotation formula</a></font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">3.
+		<a href="ReadingMaterials/Why%20need%20at%20least%202%20calibration%20board%20imgs.pdf">
+		Why do we need at least two calibration board images?</a></font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">4.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-10-imaging%20model%20and%20intrinsics%20calibration/01-cameraCalibratorImgs">
+		01-cameraCalibratorImgs</a>. A set of calibration board images captured 
+		by a camera are provided. Also, the checkerboard pattern (in PDF form) 
+		used in our lecture is provided.</font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">5.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-10-imaging%20model%20and%20intrinsics%20calibration/02-imageUndistortUsingIntrinsicsMatlab">
+		02-imageUndistortUsingIntrinsicsMatlab</a>. This demo shows how to 
+		perform image un-distortion using camera intrinsics.</font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">6.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-10-imaging%20model%20and%20intrinsics%20calibration/03-monoCalib">
+		03-monoCalib</a>. This demo is based on the openCV source code, totally 
+		complying with the theoretical discussions in our lectures. The code is 
+		complied by VS2017+opencv4.5.5+Win11. Since it is a pure C++ project, it 
+		can be straightforwardly ported to another platform (MacOS or Ubutu) if 
+		you like.&nbsp; </font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">7.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-10-imaging%20model%20and%20intrinsics%20calibration/04-fisheyeCameraCalib">
+		04-fisheyeCameraCalib</a>. This demo shows how to use opencv routines to 
+		perform fisheye camera calibration and how to use camera intrinsics to 
+		perform online video un-distortion. The code is 
+		compiled by VS2017+opencv4.5.5+Win11. </font></span></p>
+		<p style="margin-top: 0; margin-bottom: 8px">
+		<span style="letter-spacing: normal"><font face="Calibri">8.
+		<a href="https://github.com/csLinZhang/CVBook/tree/main/chapter-11-bird-eye%20view/01-surround-view/surround-view">05-surround-view</a>. This demo shows how to 
+		synthesize a surround-view from four fisheye videos. The camera 
+		intrinsic parameters, the homography transforms between the four views 
+		and the road, and raw videos captured from four cameras are provided. 
+		The code is compiled by VS2017+opencv4.5.5+Win11. </font></span></p>
+		</td>
+	</tr>
+	</table>
+<table border="1" width="89%" id="table5">
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="ml.jpg" width="197" height="127"></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2007%20Basics%20for%20Machine%20Learning%20and%20A%20Special%20Emphasis%20on%20CNN.pdf">
+	Basics for Machine Learning and A Special Emphasis on CNN</a></span></td>
+		<td align="left" height="39">
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">1. K. He et al.,
+		<a href="ReadingMaterials/Deep%20Residual%20Learning%20for%20Image%20Recognition.pdf">
+		Deep Residual Learning for Image Recognition</a>, CVPR 2016<br>
+		2. G. Huang et al.,
+		<a href="ReadingMaterials/Densely%20Connected%20Convolutional%20Networks.pdf">
+		Densely Connected Convolutional Networks</a>, CVPR 2017<br>
+		3. J. Redmon et al.,
+		<a href="ReadingMaterials/Yolo%209000%20better%20faster%20stronger.pdf">
+		Yolo: 9000 better, faster, stronger</a>, CVPR 2017</font></span></p>
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">4. J. Redmon et al.,
+		<a href="ReadingMaterials/YOLOv3.pdf">YOLOv3: An Incremental Improvement</a>, 
+		arXiv, 2018<br>
+		5. Github for YoloV4,
+		<a href="https://github.com/AlexeyAB/darknet">
+		https://github.com/AlexeyAB/darknet</a> </font></span></p>
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">6. Ultralytics YOLOv8,
+		<a href="https://ultralytics.com/yolov8">https://ultralytics.com/yolov8</a>
+		</font></span></p>
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">7. J.R. Terven et al., 
+		<a href="ReadingMaterials/A%20COMPREHENSIVE%20REVIEW%20OF%20YOLO%20FROM%20YOLOV1%20TO%20YOLOV8%20AND%20BEYOND.pdf">A 
+		comprehensive review of YOLO: From YOLOv1 to YOLOv8 and beyond</a>, 
+		arXiv:2304.0050, 2023.<br>
+		8.
+		<a href="https://mp.weixin.qq.com/s?__biz=MzA5NzQyNTcxMA==&mid=2656431759&idx=1&sn=c65139b0c873c14c5934b64efd42b4bb&chksm=8b004ecebc77c7d84cda4f275fd9e39e3a3fc94e43b2d84f3fe9729fc178da2f57ccc7a5610a&mpshare=1&scene=2&srcid=&from=timeline&key=aa412f9ce4a2058d31481dd">
+		典型卷积神经网络模型结构的演进</a></font></span></p>
+		</td>
+	</tr>
+	</table>
+<table border="1" width="89%" id="table6">
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="autocar.jpg" width="199" height="127"></td>
+		<td width="373" align="center" height="39">
+	<span style="font-family: Calibri">
+	<a href="slides/Lecture%2008%20Visual%20Perception%20Practices%20in%20Autonomous%20Driving.pdf">
+	Visual Perception Practices in Autonomous Driving</a></span></td>
+		<td align="left" height="39">
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<font face="Calibri">1. Lin Zhang et al.,
+		<a href="../files/parkingslot.pdf">Vision-based parking-slot detection: 
+		A DCNN-based approach and a large-scale benchmark dataset</a>, IEEE 
+		Trans. Image Processing, 2018. (<a href="https://cslinzhang.github.io/deepps/">project 
+		website</a>)<br>
+		2. </font><span lang="en-us">
+		<font face="Calibri">Xuan Shao, Lin Zhang et al., &quot;<a href="../files/MOFISSLAM_TCSVT.pdf">MOFISSLAM: 
+		A multi-object semantic SLAM system with front-view, inertial and 
+		surround-view sensors for indoor parking</a>&quot;, IEEE Trans. Circuits and 
+		Systems for Video Technology, 2022. (<a href="https://shaoxuan92.github.io/MOFIS/">project 
+		website</a>)</font></span></p>
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<span lang="en-us"><font face="Calibri">3. Tianjun Zhang, Nlong Zhao, 
+		Ying Shen, Xuan Shao, Lin Zhang*, and Yicong Zhou,
+		<a href="../files/ROECS-ACM%20MM%2021.pdf">ROECS: A robust semi-direct 
+		pipeline towards online extrinsics correction of the surround-view 
+		system</a>, in: Proc. ACM Int'l Conf. Multimedia, 2021. (<a href="https://cslinzhang.github.io/ROECS/">project 
+		website</a>)</font></span></p>
+		</td>
+	</tr>
+	</table>
+<table border="1" width="89%" id="table7">
+	<tr>
+		<td width="199" align="center" height="39">
+	<img border="0" src="me3D.gif" width="196" height="180"></td>
+		<td width="373" align="center" height="39">
+	<a href="slides/Lecture%2009%20Introduction%20to%20Numerical%20Geometry.pdf">
+	<font face="Calibri">Introduction to Numerical Geometry</font></a></td>
+		<td align="left" height="39">
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<font face="Calibri">1. Example to demonstrate fast marching (<a href="https://pan.baidu.com/s/1HvdaZSAqBb-fZkTMEK2xWA?pwd=v287">FastMarching.rar</a>)
+		<br>
+		2. Example to show Euclidean isometry removal by PCA (<a href="https://pan.baidu.com/s/1DX39tO0VIRrh_NHVA6GxQQ?pwd=ltpg">EuclideanIsometryRemoval.rar</a>)<br>
+		3. Code for ICP-based 3D shape matching (<a href="https://pan.baidu.com/s/1Le7iB9s3J_SwTmtuM9G9mw?pwd=um35">ICP.rar</a>)
+		<br>
+		4. Lin Zhang et al.,
+		<a href="../files/3D%20Face%20Recognition%20Based%20on%20Multiple%20Keypoint%20Descriptors%20and%20Sparse%20Representation.pdf">
+		3D face recognition based on multiple keypoint descriptors andsparse 
+		representation</a>, PLoS ONE, 2014</font></p>
+		<p style="line-height: 150%; margin-top: 0px; margin-bottom: 8px">
+		<font face="Calibri">5. Lin Zhang et al.,
+		<a href="../files/3DpalmLHST.pdf">3D palmprint identification using 
+		block-wise features and collaborative representation</a>, IEEE Trans. 
+		Pattern Analysis and Machine Intelligence, 2015.</font></p>
+		</td>
+	</tr>
+	</table>
+<p style="margin-top: 0; margin-bottom: 0">　</p>
+<p style="margin-top: 0; margin-bottom: 0"><font size="5">
+<span style="font-family: 'Calibri'; font-weight: 700">Assignments</span></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'">
+<font style="font-size: 12pt">Notes: </font> </span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font color="#CC0000"><b>
+<span style="font-family: 'Calibri'">
+<font style="font-size: 12pt">1. Compress all files into a .rar file and name it 
+as &quot;CV_studentID_yourName_Assignment2.rar&quot;; the title of the email should be of 
+the format &quot;CV_studentID_yourName_Assignment2&quot;. 
+If you want to resubmit, please add &quot;_R1&quot; or &quot;_R2&quot; to the .rar file and the 
+email title, similar as &quot;CV_studentID_yourName_Assignment2_R1&quot;. </font></span>
+</b></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'">
+<font style="font-size: 12pt">2. For the programming assignments, please
+<span lang="en-us">make sure your 
+program can successfully run on TA's machine</span>.</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'">
+<font style="font-size: 12pt">3. All the documents you hand 
+in, including comments in the source codes, should be in English.</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 12pt">4. Please send your solutions to TA&nbsp;and 
+confirm with TA that he has received your email successfully.</font></p>
+<p>　</p>
+<p>　</p>
+<p>　</p>
+<p>　</p>
+<p><span lang="en-us"><font size="5">
+<span style="font-family: 'Calibri'; font-weight: 700">Projects</span></font></span></p>
+<p>　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'"><font style="font-size: 12pt">Notes: </font> </span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'"><font style="font-size: 12pt">1. 2 or 3 persons form a 
+group to deal with a selected topic</font><span lang="en-us"><font style="font-size: 12pt">.</font></span></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'"><font style="font-size: 12pt">2. At the end of this 
+semester, you need to hand in the source code of the project and a related 
+report (PPT form); and then, you need to give a presentation about your fruit. All the documents should be in English, including the comments in the 
+program. The style of the source code should be neat and clear; and you should 
+provide clear comments to the key components, functions, or statements. The 
+report should contain at least the following parts: background introduction, 
+system structure design, key algorithms used, experimental results, and 
+references.</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: Calibri"><font style="font-size: 12pt">3</font></span><span style="font-family: 'Calibri'"><font style="font-size: 12pt">. Try your 
+best to make the system perfect. Creative ideas are highly encouraged. If the 
+innovation is critical, we could prepare some conference papers!</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 12pt">Topics </font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p>　</p>
+<p><span lang="en-us"><font size="5">
+<span style="font-family: 'Calibri'; font-weight: 700">Main 
+References</span></font></span></p>
+<table border="0" width="47%" id="table2">
+	<tr>
+		<td width="131" align="center"><font face="Calibri"><img border="0" src="CV.htm1.jpg"></font></td>
+		<td align="center"><font face="Calibri" style="font-size: 11pt">D. Forsyth 
+		and J. Ponce<br>
+		Computer Vision -- A Modern Approach (2nd Edition),<br>
+		Prentice Hall, 2013<br>
+		<a href="https://pan.baidu.com/s/1C-IC5EeESm0X0KpJLzzhlA?pwd=4qyx">Online version available here</a></font></td>
+	</tr>
+	<tr>
+		<td width="131" align="center">
+		<img src="51BHH1U0JbL._SX351_BO1,204,203,200_.jpg" width="95" height="130"></td>
+		<td align="center">
+		<p style="margin-top: 0; margin-bottom: 0"><font face="Calibri"><span style="font-size: 11pt">
+		Richard Hartley and Andrew Zisserman</span></font></p>
+		<p style="margin-top: 0; margin-bottom: 0">
+		<font face="Calibri"><span style="font-size: 11pt">Multiple View 
+		Geometry in Computer Vision&nbsp; (2nd Edition)</span></font></p>
+		<p style="margin-top: 0; margin-bottom: 0"><font face="Calibri"><span style="font-size: 11pt">Cambridge 
+		University Press, 2004</span></font><p style="margin-top: 0; margin-bottom: 0">
+		<font face="Calibri" style="font-size: 11pt">
+		<a href="https://pan.baidu.com/s/1r0ldoGcvPWyzy7RQ0T_eWw?pwd=5awl">Online version available here</a></font></td>
+	</tr>
+	<tr>
+		<td width="131" align="center">
+		<img border="0" src="Image-Processing-Analysis-and-Machine-Vision.jpg" width="96" height="109"></td>
+		<td align="center">
+		<p>
+		<font face="Calibri"><span style="font-size: 11pt">Milan Sonka, Vaclav 
+		Hlavac, Roger Boyle著，兴军亮，艾海舟译，图像处理、分析与机器视觉（第4版），清华大学出版社, 2016</span></font></p>
+		<p>
+		<font face="Calibri" style="font-size: 11pt">
+		<a href="https://pan.baidu.com/s/1JZ0t5ymKy2S0S-gPv2tdag?pwd=sjup">
+		Online version available here</a></font></p></td>
+	</tr>
+</table>
+<p>　</p>
+<p><span lang="en-us"><font face="Calibri" size="4">Created on: 
+Aug. 28, 2023</font></span></p>
+<p><span lang="en-us"><font face="Calibri" size="4">Last updated on: Jan. 09, 2024</font></span></p>
+
+</body>
+
+</html>

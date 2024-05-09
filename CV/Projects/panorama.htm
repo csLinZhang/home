@@ -1,0 +1,142 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Computer Vision</title>
+</head>
+
+<body>
+
+<p><font size="5" face="Calibri"><b>Panorama Stitching </b></font></p>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Introduction</span></h2>
+<h2>
+<font size="3">
+<span style="font-family: 'Calibri'; font-weight: 400">Sometimes, 
+when capturing, we can only get a partial image of the object, especially when 
+the size of the object is extremely large. However, if the two partial images have some 
+content overlapping, we can make use of CV algorithms to &quot;stitch&quot; them together 
+to get a panorama of the scene. This is exactly the purpose of this project.</span></font></h2>
+<h2>
+<span style="font-family: 'Calibri'">Requirements</span></h2>
+<p>
+<font size="3">
+<span style="font-family: 'Calibri'; font-weight: 400">In this 
+project, you are required to construct a panorama stitching system. Having two 
+(or multiple) images with overlapping regions at hand, your 
+system can &quot;merge&quot; them together to get a bigger picture, which contains the 
+&quot;union&quot; contents of the two separate images. At the same time, some 
+photometric defects aroused by merging can be considered and dealt with, to make 
+the resulting panorama more vivid and realistic [4].&nbsp; In addition, since I have 
+provided sample codes for this project, you can follow my framework; however, 
+some components need to be modified by you. </span>
+<span style="font-family: 'Calibri'; font-weight: 700">
+Specifically, please use the SIFT method to detect interest points and to 
+construct local descriptors. </span></font></p>
+<p>
+<span style="font-family: 'Calibri'">In this project, you can use 
+the local features based image alignment method, mentioned in our lecture, to 
+align the two images, and then to merge them together. In such a method, the 
+basic procedures include:</span></p>
+<p>
+<span style="font-family: 'Calibri'">1&gt; Given two images im1 and 
+im2, detect local interest points sets on each of them, respectively;</span></p>
+<p>
+<span style="font-family: 'Calibri'">2&gt; For each extracted 
+interest point, a descriptor (SIFT) should be constructed based on its neighborhood;</span></p>
+<p>
+<span style="font-family: 'Calibri'">3&gt; The correspondence 
+relationship between the interest points on two images should be established;</span></p>
+<p>
+<span style="font-family: 'Calibri'">4&gt; The geometric 
+transformation matrix (usually called as homography matrix) between im1 and im2 
+could be estimated based on the correspondence relationship established in step 
+3); usually at this step, RANSAC algorithm can be used;</span></p>
+<p>
+<span style="font-family: 'Calibri'">5&gt; Based on the obtained 
+homography matrix, images can be aligned and stitched. Besides, different 
+lighting conditions of the two images need to be considered to make the 
+&quot;stitching&quot; more natural.</span></p>
+<p>
+<span style="font-family: 'Calibri'">Following is an example 
+(actually, two examples are provided in the source code). <b>The 
+source code and testing images for this example can be found 
+<a href="https://pan.baidu.com/s/1Kbq0yNrzXWPFLMdw3avj2g?pwd=vt7a">here</a></b>.</span></p>
+<p>
+<span style="font-family: 'Calibri'">Figure 1</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="img1.bmp" width="658" height="368"></font></p>
+<p>
+<span style="font-family: 'Calibri'">Figure 2</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="img2.bmp" width="658" height="368"></font></p>
+<p>
+<span style="font-family: 'Calibri'">Figure1 and Figure2 are the 
+pictures of our SSE building, taken by myself on Sep. 18, 2011. They have 
+different contents and different view points. Now, I want to stitch them 
+together. </span></p>
+<p>
+<span style="font-family: 'Calibri'">STEP1: interest points 
+detection</span></p>
+<p>
+<span style="font-family: 'Calibri'">I simply use the Harris 
+corner detector here.</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="img1corner.png" width="658" height="368">
+<img border="0" src="img2corner.png" width="658" height="368"></font></p>
+<p>
+<span style="font-family: 'Calibri'">STEP2: local descriptor for 
+each point.</span></p>
+<p>
+<span style="font-family: 'Calibri'">I simply use a fixed 
+neighborhood as the descriptor and use the normalized correlation as the 
+matching criterion to find point correspondences between two images.</span></p>
+<p>
+<span style="font-family: 'Calibri'">STEP3: using RANSAC algorithm 
+to find the inliers of the correspondence pairs and to estimate the homography 
+matrix</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="correspondence.png" width="1183" height="353"></font></p>
+<p>
+<span style="font-family: 'Calibri'">Above figure shows the 
+inliers of correspondence pairs.</span></p>
+<p>
+<span style="font-family: 'Calibri'">STEP4: using the estimated 
+homography matrix to transform img1 to the coordinate system of img2.</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="transformedIm1.png" width="757" height="381"></font></p>
+<p>
+<span style="font-family: 'Calibri'">STEP5: merge transformed img1 
+with img2 together, as shown in the following figure.</span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="mergeresult.png" width="759" height="375"></font></p>
+<p style="margin-top: 0; margin-bottom: 0"><font size="5">
+<span style="font-family: 'Calibri'; font-weight: 700">Most 
+Related References</span></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'">1. 
+<a href="http://en.wikipedia.org/wiki/Image_stitching">
+http://en.wikipedia.org/wiki/Image_stitching</a></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-family: 'Calibri'">2.
+<a href="Image%20alignment%20and%20stitching%20a%20tutorial.pdf">R. Szeliski, 
+Image alignment and stitching: a tutorial, 2006</a> (More information about 
+image stitching than our project requirements are described in this tutorial.)</span></p>
+<p><span lang="en-us"><font face="Calibri" size="4">Created on: 
+Mar. 10, 2014</font></span></p>
+<p><span lang="en-us"><font face="Calibri" size="4">Last updated 
+on: Mar. 10, 2014</font></span></p>
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Computer Vision</title>
+</head>
+
+<body>
+
+<p><font size="5" face="Calibri"><b>Pixel-level domain adaptation: A study case 
+on generating parking-slot image samples (Tutor: Juntao Chen 158 0175 8610)</b></font></p>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Introduction</span></h2>
+<h2>
+<font size="3"><span style="font-family: Calibri; font-weight: 400">Domain 
+adaptation is a hot research topic in the fields of machine learning and 
+computer vision. Roughly speaking, methods in this area can be categorized into 
+two classes, pixel-level ones and feature-level ones. Image-level domain 
+adaptation aims to learn the mapping between different visual domains. It is 
+quite useful for augmenting training sets. In this project, your task is to 
+complete a system which can create virtual parking-slot image samples that are 
+realistic looking. </span></font></h2>
+<h2>
+<span style="font-family: 'Calibri'">Requirements</span></h2>
+<p>
+<span style="font-family: 'Calibri'">1&gt; Develop a virtual parking-slot image 
+generation system using Unity. Taking a real road image as the texture. Then, 
+feed the texture into Unity. Your system is expected to create various 
+parking-slot image samples by adjusting the lighting conditions, the trees, the 
+objects nearby, and the&nbsp; parking-lines.</span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<img border="0" src="virtualps.png" width="805" height="408"></p>
+<p style="margin-top: 0; margin-bottom: 0">　</p>
+<p style="margin-top: 0; margin-bottom: 0"><span style="font-family: Calibri">2&gt; 
+Virtual image samples may be not as real as samples collected from the real 
+world. So, you need to use GAN-based domain adaptation technologies to improve 
+their reality. You may try the following suggested candidate solutions: 1) 
+Learning from simulated and unsupervised images through adversarial training, 
+CVPR 2017; 2) Unsupervised pixel-level domain adaptation with generative 
+adversarial networks, CVPR 2017; 3) Diverse image-to-image translation via 
+disentangled representations, ECCV 2018. To train GAN-based pixel-level domain 
+adaptation networks, you may need to use real parking-slot image samples, which 
+can be obtained here <a href="https://cslinzhang.github.io/deepps/">
+https://cslinzhang.github.io/deepps/</a>. </span></p>
+
+</body>
+
+</html>
