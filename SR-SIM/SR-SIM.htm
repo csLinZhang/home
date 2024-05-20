@@ -1,0 +1,199 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>SR-SIM: A Fast and High Performance IQA Index based on Spectral Residual</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="5" color="#0000FF">SR-SIM: A Fast and 
+		High Performance IQA Index based on Spectral Residual</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">
+		<a href="../../index.htm">Lin Zhang</a><font color="#0000FF"> and 
+		<a href="http://sse.tongji.edu.cn/hyli/">Hongyu 
+		Li</a></font></font></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">School of Software 
+		Engineering, Tongji University, Shanghai</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Times New Roman; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;<a href="../ICIP12/ICIP-SR-SIM.pdf">SR-SIM: A fast and high performance IQA 
+index based on spectral residual</a>&quot;, in: Proc. ICIP, 2012. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Source Code</font></b></span></p>
+<p>
+<font face="Times New Roman" style="font-size: 13pt">The source code can be 
+downloaded here: <a href="Files/SR_SIM.m">SR-SIM.m</a>. </font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">SR-SIM</span><span style="font-size: 13pt; font-family: Times New Roman; color: windowtext" lang="EN-US">
+was evaluated on 3 publicly available large-scale IQA 
+databases, including
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www.ponomarenko.info/tid2008.htm">
+TID2008 database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://vision.okstate.edu/csiq">
+CSIQ database</a>,
+and
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://live.ece.utexas.edu/research/Quality/">
+LIVE database</a><span style="color: #000000">.</span> The results (in 
+Matlab .mat format) are provided here, together with performance evaluations for future comparisons. Each result file 
+contains a <i>n</i> by 2 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+SR-SIM values, and the second column is the mos/dmos values provided by the 
+database. For example, you can use the following matlab code to calculate the 
+SROCC and KROCC values for VSI values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">matData 
+= load('SRSIMOnTID.mat');<br>
+SRSIMOnTID = matData.SRSIMOnTID;<br>
+SRSIM_TID_SROCC = corr(SRSIMOnTID(:,1), SRSIMOnTID(:,2), 'type', 
+'spearman');<br>
+SRSIM_TID_KROCC = corr(SRSIMOnTID(:,1), SRSIMOnTID(:,2), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> (Pearson Linear Correlation 
+Coefficient) and <i>RMSE</i> (Root Mean-Squared-Error) are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[1].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">
+Evaluation results of </font>
+<span style="font-family: Times New Roman; font-size: 13pt">SR</span></span><span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">-SIM</span><span lang="en-us"><font face="Times New Roman" style="font-size: 13pt"> 
+on three databases are given below. Besides, for each evaluation metric, we present 
+its weighted-average value over all the testing datasets; and the weight for 
+each database is set as the number of distorted images in that dataset. </font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 68%" id="table4">
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">Database</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">SROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">KROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">PLCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">RMSE</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">TID2008</span></font></span></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8913</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7149</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8866</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6206</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">CSIQ</span></font></span></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9319</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7725</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9250</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.0997</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">LIVE</span></font></span></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9618</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8299</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9553</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">8.0811</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9182</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.7566</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9125</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<hr>
+<p><font face="Times New Roman" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Times New Roman">[1] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+
+<hr>
+<p align="justify"><font face="Times New Roman"><span lang="en-us">Created on: 
+Dec. 
+19, 2011</span></font></p>
+<p align="justify"><font face="Times New Roman">Last update: <span lang="en-us">
+May</span>.<span lang="en-us"> 06,
+</span>201<span lang="en-us">2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>

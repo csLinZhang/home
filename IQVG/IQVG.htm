@@ -1,0 +1,187 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>IQVG: Learning a Blind Image Quality Index Based on Visual Saliency Guided Sampling and Gabor Filtering</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="5" color="#0000FF">IQVG: 
+		Learning a Blind Image Quality Index Based on Visual Saliency Guided Sampling and Gabor Filtering</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">
+		Zhongyi Gu, Lin Zhang<font color="#0000FF">*,
+		and Hongyu Li
+		</font></font></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">School of Software 
+		Engineering, Tongji University, Shanghai</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Times New Roman; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;<a href="../ICIP2013/IQVG.pdf">Learning a Blind Image Quality Index Based on Visual Saliency Guided Sampling and Gabor Filtering</a>&quot;, 
+in Proc. ICIP, 2013. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Source Code</font></b></span></p>
+
+<!-- <p>
+<font face="Times New Roman" style="font-size: 13pt">The source code can be 
+downloaded here: <a href="Files/IQVG.rar">IQVG.m</a>.</font></p> -->
+<p>
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">Source 
+code can be downloaded 
+<a href="https://pan.baidu.com/s/1GeKe_SXYh-fu0qmfic5UJA?pwd=51do">here</a>.</font></span></p>
+
+
+<hr>
+
+
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Evaluation 
+Results</font></b></span></p>
+<p>
+<font style="font-size: 13pt" face="Times New Roman">Experiments were conducted 
+on LIVE IQA image dataset [1]. In order to compare with other methods properly, 
+we followed the experiment strategy in [2]. We randomly selected 23 reference 
+images associated with their distorted copies for training, and 6 reference 
+images with their distorted copies for testing to ensure the content of the 
+training images and the testing images do not overlap. The reported result is 
+the median of 1000 train-test runs. Two metrics, Spearman rank-order correlation 
+coefficients (SROCC) and Pearson linear correlation coefficients (PLCC) were 
+used to evaluate the accuracy of all the algorithms. A value close to 1 for 
+SROCC and PLCC indicates a good performance for quality estimation. The 
+following table shows the experimental results of our proposed method.</font></p>
+
+
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 34%" id="table6">
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700"> &nbsp </span></font></span></td>
+		
+		<td style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<b><font face="Times New Roman" size="3">SROCC</font></b></td>
+		
+		<td style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<b><font face="Times New Roman" size="3">PLCC</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">JP2K</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9190</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9266</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">JPEG</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9003</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9203</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">WN</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9622</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9785</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><b><font size="3">BLUR</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9430</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9527</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">FF</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9377</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9404</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">ALL</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9420</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3">0.9424</font></b></td>
+	</tr>
+		
+</table>
+
+
+<hr>
+<p><font face="Times New Roman" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<ol>
+	<li>
+	<p align="justify"><font face="Times New Roman">H.R. Sheikh, M.F. Sabir, and 
+	A.C. Bovik,<span lang="en-us"> &quot;A statistical evaluation of recent full 
+	reference image quality assessment algorithms,&quot;</span> <i>IEEE Trans. Image 
+	Processing</i>, 
+	<span lang="en-us">vol. 15, pp. 3440-3451, Nov. 2006</span>.</font></li>
+	<li>
+	<p align="justify"><font face="Times New Roman">P. Ye and D. Doermann, 
+	&quot;No-reference image quality assessment using visual codebooks,&quot; <i>IEEE 
+	Trans. Image Processing</i>, vol. 21, pp. 3129-3138, 2012.</font></li>
+	
+</ol>
+
+
+<span lang="EN-US">
+
+<hr>
+<p align="justify"><font face="Times New Roman"><span lang="en-us">Created on: 
+Jan. 
+15, 2013</span></font></p>
+<p align="justify"><font face="Times New Roman">Last update: Nov. 04<span lang="en-us">,
+</span>2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>
