@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0050)http://humansensing.cs.cmu.edu/projects/parda.html --><HTML 
+lang=en xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><HEAD><TITLE>Monogenic-LBP</TITLE><LINK 
+rel=StyleSheet type=text/css 
+href="monoLBP_files/glab.css" media=all><LINK 
+rel=StyleSheet type=text/css 
+href="monoLBP_files/style.css" media=all>
+<META content="text/html; charset=ISO-8859-1" http-equiv=Content-Type>
+<META name=GENERATOR content="MSHTML 8.00.6001.18904">
+<STYLE>TABLE.MsoNormalTable {
+	FONT-FAMILY: "Times New Roman"; FONT-SIZE: 10pt; mso-style-parent: ""
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV id=primarycontent>
+<H1 align=center>Monogenic-LBP: A New Approach for Rotation Invariant Texture 
+Classification</H1>
+<P align=center><font face="Arial Black"><span style="font-size: 14pt">(<font color="#FF0000"><b><a href="monoLBP_files/mono_LBP.m">source code is here</a></b></font>)</span></font></P>
+<CENTER>&nbsp;</CENTER>
+<H2><B>Authors</B></H2>
+<UL id=Authors>
+  <LI><b>Lin Zhang, SSE, Tongji University, China </b>
+  <LI><a href="http://www.comp.polyu.edu.hk/~cslzhang">Lei Zhang, Dept. Computing, HK 
+  Polytechnic University, Hong Kong</a>
+  <LI><b>Zhenhua Guo, Graduate School at Shenzhen, Tsinghua University, China</b><LI>
+	<b>David Zhang, Computing, HK Polytechnic University, Hong Kong&nbsp; </b> 
+  </LI></UL>
+<H2><B>Abstract</B></H2>
+<P align=justify><span style="font-style:
+normal">Analysis of two-dimensional textures has many potential applications</span><span style="font-style: normal"> 
+in computer vision</span><span style="font-style:normal">. In this paper, we 
+investigate the problem of rotation invariant texture classification</span><span style="font-style: normal">, 
+and </span><span style="font-style:normal">propose a novel text</span><span style="font-style: normal">ure
+</span><span style="font-style:normal">feature</span><span style="font-style: normal"> 
+extractor</span><span style="font-style:normal">, namely Monogenic-LBP (M-LBP). 
+M-LBP integrates the traditional </span><span style="font-style: normal">Local 
+Binary Pattern (</span><span style="font-style:normal">LBP</span><span style="font-style: normal">)</span><span style="font-style:normal"> 
+operator with the other two rotation invariant measures</span><span style="font-style: normal">:</span><span style="font-style:normal"> 
+the local phase and the local surface type </span>
+<span style="font-style: normal">computed </span>
+<span style="font-style:normal">by the 1<sup>st</sup>-order and 2<sup>nd</sup>-order 
+Riesz transforms, respectively. The classification is based on the image&#8217;s 
+histogram of M-LBP responses. Extensive experiments conducted on the CUReT 
+database demonstrate the overall superiority of M-LBP over the other 
+state-of-the-art methods evaluated.</span></P>
+<H2><B>Algorithm</B></H2>
+<P style="TEXT-ALIGN: justify">As one of the effective rotation invariant 
+texture classification methods, LBP is widely used since it is simple yet 
+powerful. However, LBP tends to oversimplify the local image structures. Thus, 
+we want to find some other rotation invariant features to supplement LBP in 
+order to improve the classification accuracy while preserving its simplicity. 
+The local phase corresponds to a qualitative measure of a local structure (step, 
+peak, etc) and it is a robust feature with respect to noise and illumination 
+changes. We adopt the monogenic signal theory, which is an isotropic 2-D 
+extension of the 1-D analytic signal, to extract the local image phase 
+information in a rotation invariant way. Besides, we utilize the monogenic 
+curvature tensor to extract the local surface type information, which is another 
+rotation invariant metric. Then, we combine the uniform LBP, the local phase 
+information and the local surface type information together as a novel texton 
+feature, namely Monogenic-LBP (M-LBP). In real implementation, we adopt a 
+multi-resolution analysis scheme by combining the information provided by 
+multiple operators of varying parameters. The following figure shows the local 
+phase and the local surface type (binarized) information extracted. (a) and (d) 
+are two example texture images. (b) and (e) are the local phase. (c) and (f) are 
+binarized local surface type.</P>
+<span style="font-size: 9.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;
+<img border="0" src="monoLBP_files/example.jpg" width="461" height="355"></span><p>
+<span style="font-size: 9.0pt; font-family: Times New Roman">&nbsp;</span></p>
+<P style="TEXT-ALIGN: justify">At the classification stage, we use the 
+chi-square statistics to measure the dissimilarity of sample and model 
+histograms.</P>
+<H2><B>Validation</B></H2>
+<P style="TEXT-ALIGN: justify">We conducted experiments on a 
+<a href="http://www.robots.ox.ac.uk/~vgg/research/texclass/">modified CUReT 
+database</a>. It contains 61 textures and each texture has 92 images obtained under 
+different viewpoints and illumination directions.
+<span style="font-style: normal">We compared the performance of the proposed M-LBP 
+method with the other three state-of-the-art rotation invariant texture 
+classification methods, MR8, Joint, and the original LBP. We performed 
+experiments on four different settings to simulate four situations:</span></P>
+<p class="MsoBodyTextIndent" style="text-indent: 18.0pt; text-align: justify">
+<span style="font-style: normal">1. T46A: The training set for each class was 
+selected by taking one from every two adjacent images. Hence, there were 2,806 
+(61×46) models and 2,806 test samples. This setting was used to simulate the 
+situation of large and comprehensive training set.</span></p>
+<p class="MsoBodyTextIndent" style="text-indent: 18.0pt; text-align: justify">
+<span style="font-style: normal">2. T23A: The training set for each class was 
+selected by taking one from every four adjacent images. Hence, there were 1,403 
+(61×23) models and 4,209 (61×69) test samples. This setting was used to simulate 
+the situation of small but comprehensive training set.</span></p>
+<p class="MsoBodyTextIndent" style="text-indent: 18.0pt; text-align: justify">
+<span style="font-style: normal">3. T46F: The training set for each class was 
+selected as the first 46 images. Hence, there were 2,806 models and 2,806 test 
+samples. This setting was used to simulate the situation of large but less 
+comprehensive training set.</span></p>
+<p class="MsoBodyTextIndent" style="text-indent: 18.0pt; text-align: justify">
+<span style="font-style: normal">4. T23F: The training set for each class was 
+selected as the first 23 images. Hence, there were 1,403 models and 4,209 test 
+samples. This setting was used to simulate the situation of small and less 
+comprehensive training set.</span></p>
+<P style="TEXT-ALIGN: justify">The classification accuracies and the feature 
+sizes for the four evaluated methods are listed in Table 1. In addition, we also 
+care about the classification speeds. At the classification stage, the histogram 
+of the test image will be built at first and then it will be matched to all the 
+models generated from the training samples. In Table 2, we list the time for one 
+test histogram construction and for one matching at the classification stage by 
+each method. All the algorithms were implemented with Matlab 7.4 except that a 
+C++ implemented kd-tree (encapsulated in a MEX function) was used in MR8 and 
+Joint to accelerate the labeling process. Experiments were performed on a Dell 
+Inspiron 530s PC with Intel 6550 processor and 2GB RAM.</P>
+<p class="MsoBodyTextIndent" style="text-indent: 0pt">
+<font face="Georgia"><b><span style="font-size: 12pt; font-style: normal">Table 
+1.</span></b><span style="font-size: 12pt; font-style: normal"> Classification 
+accuracies (%) and feature sizes</span></font></p>
+<table border="1" width="100%" id="table5">
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+			<font face="Georgia"><span style="font-size: 12pt">Histogram Bins</span></font></td>
+		<td>
+			<font face="Georgia"><span style="font-size: 12pt">T46A</span></font></td>
+		<td>
+			<font face="Georgia"><span style="font-size: 12pt">T23A</span></font></td>
+		<td>
+			<font face="Georgia"><span style="font-size: 12pt">T46F</span></font></td>
+		<td>
+			<font face="Georgia"><span style="font-size: 12pt">T23F</span></font></td>
+	</tr>
+	<tr>
+			<td style="width:84px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0pt; padding-bottom:0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">LBP</span></font></td>
+			<td style="width: 113px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">54</span></font></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">95.47</span></font></td>
+			<td style="width: 71px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">93.09</span></font></td>
+			<td style="width: 92px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">85.64</span></font></td>
+			<td style="width: 106px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">78.50</span></font></td>
+		</tr>
+	<tr>
+			<td style="width:84px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0pt; padding-bottom:0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">MR8</span></font></td>
+			<td style="width: 113px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">2440</span></font></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">97.65</span></font></td>
+			<td style="width: 71px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">96.15</span></font></td>
+			<td style="width: 92px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">88.70</span></font></td>
+			<td style="width: 106px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">77.83</span></font></td>
+		</tr>
+	<tr>
+			<td style="width:84px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0pt; padding-bottom:0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">Joint</span></font></td>
+			<td style="width: 113px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">2440</span></font></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">97.36</span></font></td>
+			<td style="width: 71px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">95.37</span></font></td>
+			<td style="width: 92px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">87.13</span></font></td>
+			<td style="width: 106px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" align="center" bordercolor="#FFFFFF">
+			<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+			<font face="Georgia"><span style="font-size: 12pt">78.55</span></font></td>
+		</tr>
+	<tr>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">M-LBP</span></b></font></td>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">540</span></b></font></td>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">97.86</span></b></font></td>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">96.72</span></b></font></td>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">89.67</span></b></font></td>
+		<td>
+			<font face="Georgia"><b><span style="font-size: 12pt">81.21</span></b></font></td>
+	</tr>
+</table>
+<p class="MsoBodyTextIndent" style="text-align: justify"><font face="Georgia">
+<span style="font-style: normal">&nbsp;</span></font></p>
+<p class="MsoBodyTextIndent"><font face="Georgia">
+<b><span style="font-size: 12pt; font-style: normal">Table 2.</span></b><span style="font-size: 12pt; font-style: normal"> 
+Time consumption (msec) at the classification stage</span></font></p>
+<table border="1" width="100%" id="table6">
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+		<font face="Georgia"><span style="font-size: 12pt">Histogram 
+		construction </span></font></td>
+		<td>
+		<font face="Georgia"><span style="font-size: 12pt">One matching</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 79px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">LBP</span></font></td>
+		<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">87</span></font></td>
+		<td style="width: 196px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" height="24" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">0.022</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 79px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">MR8</span></font></td>
+		<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">4960</span></font></td>
+		<td style="width: 196px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" height="24" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">0.089</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 79px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">Joint</span></font></td>
+		<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">13173</span></font></td>
+		<td style="width: 196px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0pt; padding-bottom: 0pt" height="24" bordercolor="#FFFFFF">
+		<p class="MsoNormal" align="center" style="text-align: justify; layout-grid-mode: char">
+		<font face="Georgia"><span style="font-size: 12pt">0.089</span></font></td>
+	</tr>
+	<tr>
+		<td>
+		<font face="Georgia"><span style="font-size: 12pt">M-LBP</span></font></td>
+		<td>
+		<font face="Georgia"><span style="font-size: 12pt">221</span></font></td>
+		<td>
+		<font face="Georgia"><span style="font-size: 12pt">0.035</span></font></td>
+	</tr>
+</table>
+<p class="MsoNormal" align="center" style="layout-grid-mode: char">&nbsp;</p>
+<p class="MsoNormal" align="justify" style="layout-grid-mode: char">
+<font face="Georgia">With Table 1 and Table 2, we evaluate the four schemes from 
+three aspects: the classification accuracy, the feature size, and the runtime 
+classification speed. First, with respect to the classification accuracy, M-LBP 
+outperforms all the other 3 approaches under all the 4 experimental settings. 
+Especially, it performs significantly better than the other ones in &#8220;T23F&#8221;. By 
+contrast, although MR8 and Joint achieves similar performance with M-LBP in 
+&#8220;T46A&#8221;, they perform much worse than M-LBP in &#8220;T23F&#8221;. This is because both MR8 
+and Joint require a training stage, which depends much on the training samples; 
+when the training set is small and not comprehensive (as in &#8220;T23F&#8221;), the 
+classification accuracy will drop largely. Thus, this indicates that the 
+proposed M-LBP is more suitable for real applications where training samples are 
+limited and not comprehensive. Second, M-LBP requires a moderate feature size, 
+bigger than LBP but much smaller than MR8 and Joint. Although the feature size 
+of M-LBP is bigger than LBP, considering the gain in the classification 
+accuracy, it is deserved. Third, the four schemes have very different 
+classification speeds. LBP and M-LBP work much faster than MR8 and Joint. In MR8 
+and Joint, in order to build the histogram of the test image, every pixel on the 
+test image need to be labeled to one item in the texton dictionary, which is 
+quite time consuming. Such a process is not required in LBP and M-LBP. Besides, 
+an extra training period is needed in MR8 and Joint to build the texton 
+dictionary, which is also not required in LBP and M-LBP. Thus, in general, the 
+proposed M-LBP has the merits of high classification accuracy, small feature 
+size and fast classification speed.</font></p>
+<H2><B>Reference</B></H2>
+<P style="text-align: justify">Lin Zhang, Lei Zhang, Zhenhua Guo, and David Zhang, "Monogenic-LBP: a new 
+approach for rotation invariant texture classification", in: Proc. ICIP, pp. 
+2677-2680, 
+2010.</P>
+<P style="text-align: justify"><br></P></DIV>
+<div align="center"><a href="http://www.amazingcounter.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3013245&c=9040048" alt="hidden counters"></a><br></div>
+</BODY></HTML>

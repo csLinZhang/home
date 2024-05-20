@@ -1,0 +1,45 @@
+BODY {
+	BACKGROUND-COLOR: white; COLOR: black
+}
+A:link {
+	COLOR: red; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: blue; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+IMG.video {
+	BORDER-BOTTOM: white 1px solid; BORDER-LEFT: white 1px solid; BORDER-TOP: white 1px solid; BORDER-RIGHT: white 1px solid
+}
+IMG.paperpreview {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; MARGIN: 10px 30px 10px 10px; BORDER-TOP-STYLE: none; FLOAT: left; BORDER-LEFT-STYLE: none
+}
+#primarycontent {
+	TEXT-ALIGN: left; ; WIDTH: expression(document.body.clientWidth > 1000? "1000px": "auto" ); MAX-WIDTH: 1000px; MARGIN-LEFT: auto; MARGIN-RIGHT: auto
+}
+BODY {
+	TEXT-ALIGN: center
+}
+TABLE.results {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px auto; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+TABLE.results TD {
+	TEXT-ALIGN: right; MARGIN: 0px; PADDING-RIGHT: 5px
+}
+TABLE.results TR {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+TD.credits {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 10px; MARGIN: 0px; FONT-SIZE: 80%
+}
+P.footer {
+	FONT-SIZE: x-small
+}
+UL {
+	PADDING-LEFT: 20px
+}
+OL {
+	PADDING-LEFT: 20px
+}
