@@ -1,0 +1,330 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>3D palmprint identification using block-wise features and collaborative representation</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">3D Palmprint 
+		Identification Using Block-wise Features and Collaborative 
+		Representation</font></b></span><p class="text">
+		<span lang="en-us"><font face="Calibri" size="4" color="#0000FF">IEEE 
+		Trans. Pattern Analysis and Machine Intelligence, vol. 37, no. 8, pp. 
+		1730-1736, 2015 (<a href="../files/3DpalmLHST.pdf">Paper</a>)</font></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang, 
+		Ying Shen, Hongyu Li, and Jianwei Lu</font></span><p class="text">
+		<span lang="en-us"><font face="Calibri" size="4" color="#0000FF">School 
+		of Software Engineering, Tongji University, Shanghai, China</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;3D Palmprint Identification Using 
+Block-wise Features and Collaborative Representation&quot;, accepted by IEEE </span>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">Transactions on 
+Pattern Analysis and Machine Intelligence.</span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">During the past 
+decade, great efforts have been devoted in exploiting the palmprint as a 
+biometric identifier. However, most of the previous works have focused on 2D 
+palmprints. Only quite recently, 3D palmprints have begun to draw attention of 
+researchers. Compared with its 2D counterpart, 3D palmprint has several unique 
+merits, including the robustness to illumination variations, the insensitivity 
+to palm contamination, and a better anti-forgery capability. However, most of 
+the existing 3D palmprint matching methods are designed for one-to-one 
+verification and they are not quite efficient to cope with the one-to-many 
+identification case. In this paper, we aim to fill this gap by proposing a novel 
+efficient 3D palmprint identification scheme. We propose to use a collaborative 
+representation (CR) based framework with l1-norm or l2-norm regularizations for 
+3D palmprint identification. The effects of different regularization terms have 
+been thoroughly evaluated in experiments. To use the CR-based classification 
+framework, one key issue is how to extract feature vectors from raw range 
+images. To this end, we propose a block-wise feature extraction scheme. We at 
+first divide a 3D palmprint ROI (region of interest) into uniform blocks and 
+extract a histogram of surface types from each block; histograms from all blocks 
+are then concatenated to form a feature vector. Such feature vectors are highly 
+discriminative and are robust to mere misalignment between samples. Extensive 
+experiments conducted on the PolyU benchmark dataset demonstrate that the 
+proposed CR-based framework with an l2-norm regularization term can achieve much 
+better recognition accuracy than the other state-of-the-art methods. More 
+importantly, its computational complexity is extremely low, making it quite 
+suitable for the large-scale identification application. </font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">CR_L2 based 3D 
+palmprint classification method can be downloaded here,
+<a href="https://pan.baidu.com/s/1THC8Hybl1utWcLhTP-3V9w?pwd=rhxm">CR_L2.rar</a>.</font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">CR_L1_Homotopy 
+based 3D palmprint classification method can be downloaded here,
+<a href="https://pan.baidu.com/s/1r5mtnchoBGaV2pQBvG4egA?pwd=qr4s">CR_L1_Homotopy.rar</a>.</font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">CR_L1_DALM based 
+3D palmprint classification method can be downloaded here,
+<a href="https://pan.baidu.com/s/1bbAjtuThG9KKr9gm17Ovrw?pwd=afs3">CR_L1_DALM.rar</a>.</font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">HK PolyU 3D 
+palmprint dataset can be downloaded locally
+<a href="http://pan.baidu.com/s/1nvHNsZB">here</a>. 
+Note that the original PolyU 3D palmprint database contains both 2D and 3D 
+versions. We only used the 3D ones.</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">In experiments, 
+we used the <a href="http://www.comp.polyu.edu.hk/~biometrics/">PolyU 3D 
+palmprint database</a>. This database contains 8000 samples collected from 400 
+different palms, belonging to 200 volunteers. Among the volunteers, 136 were 
+male and the other 64 were female. 20 samples from each of these palms were 
+collected in two separated sessions, where 10 samples were captured in each 
+session, respectively. The average time interval between the two sessions was 
+one month.<br>
+In the following experiments, we took samples collected at the first session as 
+the gallery set and samples collected at the second session as the probe set. 
+Under such an experimental setting, it is easy to know that for the gallery set, 
+there are 400 classes and for each class there are 10 samples. We use the 
+recognition rate as the performance measure. In addition, the running speed of 
+each competing method will also be evaluated. Experiments were performed on a 
+standard HP Z620 workstation with a 3.2GHZ Intel Xeon E5-1650 CPU and an 8G RAM. 
+The software platform was Matlab R2013b.<br>
+In our proposed CR-based 3D palmprint identification framework, the 
+regularization term could be the <i>l</i><sub>1</sub>-norm sparsity term or the
+<i>l</i><sub>2</sub>-norm term. If the <i>l</i><sub>2</sub>-norm term is used, 
+we refer this method as CR_L2. If the <i>l</i><sub>1</sub>-norm sparsity term is 
+used, we tried different methods to solve the <i>l</i><sub>1</sub>-minimization 
+problem, including Homotopy, FISTA, l1_ls, SpaRSA, DALM. And accordingly, we 
+refer these methods as CR_L1_Homotopy, CR_L1_FISTA, CR_L1_l1_ls, CR_L1_SpaRSA, 
+and CR_L1_DALM, respectively. In order to demonstrate the superiority of the 
+proposed CR-based 3D palmprint identification scheme, the proposed method will 
+be evaluated and compared with the other state-of-the-art methods in this field. 
+They include the MCI (mean curvature image)-based method [1], the GCI (Gaussian 
+curvature image)-based method [1], the ST (surface types)-based method [1], and 
+local correlation (LC)-based method [2]. Given a test sample, the time cost for 
+one identification operation includes the time consumed by the feature 
+extraction and the time consumed by matching the test feature with the gallery 
+feature set. The results are summarized in the following Table.</font></span></p>
+<div align="center">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: -49.85pt" id="table5" width="692" height="336">
+		<tr style="height: 31.75pt">
+			<td style="width: 183px; height: 31.75pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri"><b>
+			<span style="font-size: 13pt; line-height: 94%; color: black">&nbsp;</span></b></font></td>
+			<td style="width: 149px; height: 31.75pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			recognition<span lang="en-us"> </span>rate</span></font></td>
+			<td style="width: 324px; height: 31.75pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">time 
+			cost for<span lang="en-us"> </span>1 identification (ms)</span></font></td>
+		</tr>
+		<tr style="height: 11.8pt">
+			<td style="width: 183px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" style="line-height: 94%" align="center">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>1</sub>_Homotopy</span></font></td>
+			<td style="width: 149px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9925</span></font></td>
+			<td style="width: 324px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">321.70</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 25px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>1</sub>_FISTA</span></font></td>
+			<td style="width: 149px; height: 25px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9942</span></font></td>
+			<td style="width: 324px; height: 25px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			10905.26</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>1</sub>_<i>l</i><sub>1</sub>_<i>ls</i></span></font></td>
+			<td style="width: 149px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9935</span></font></td>
+			<td style="width: 324px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			14054.62</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>1</sub>_SpaRSA</span></font></td>
+			<td style="width: 149px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9882</span></font></td>
+			<td style="width: 324px; height: 28px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			2131.42</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>1</sub>_DALM</span></font></td>
+			<td style="width: 149px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9948</span></font></td>
+			<td style="width: 324px; height: 26px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">547.03</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">MCI [<span lang="en-us">1</span>]</span></font></td>
+			<td style="width: 149px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9188</span></font></td>
+			<td style="width: 324px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			9403.33</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">GCI [<span lang="en-us">1</span>]</span></font></td>
+			<td style="width: 149px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9187</span></font></td>
+			<td style="width: 324px; height: 29px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			9403.30</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 32px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">ST [<span lang="en-us">1</span>]</span></font></td>
+			<td style="width: 149px; height: 32px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9878</span></font></td>
+			<td style="width: 324px; height: 32px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			63275.86</span></font></td>
+		</tr>
+		<tr style="height: 12.55pt">
+			<td style="width: 183px; height: 30px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%">LC [2]</span></font></td>
+			<td style="width: 149px; height: 30px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9173</span></font></td>
+			<td style="width: 324px; height: 30px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri">
+			<span style="font-size: 13pt; line-height: 94%; color: black">
+			70992.13</span></font></td>
+		</tr>
+		<tr style="height: 13.25pt">
+			<td style="width: 183px; height: 30px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri"><b>
+			<span style="font-size: 13pt; line-height: 94%">CR_L<sub>2</sub></span></b></font></td>
+			<td style="width: 149px; height: 30px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri"><b>
+			<span style="font-size: 13pt; line-height: 94%; color: black">0.9915</span></b></font></td>
+			<td style="width: 324px; height: 30px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormal" align="center" style="text-align: center; line-height: 94%">
+			<font face="Calibri"><b>
+			<span style="font-size: 13pt; line-height: 94%; color: black">22.78</span></b></font></td>
+		</tr>
+	</table>
+</div>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Calibri">[1] </font></span>
+<font face="Calibri"><span style="font-size: 12pt; color: black" dir="LTR">D. 
+Zhang, G. Lu, W. Li, L. Zhang, and N. Luo, “Palmprint recognition using 3-D 
+information,“ <i>IEEE Trans. Systems, Man and Cybernetics, Part C</i>, vol. 39, 
+no. 5, pp. 505–519, Sep. 2009.</span></font></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">[2] </font></span>
+<font face="Calibri"><span style="font-size: 12pt; color: black" dir="LTR">D. 
+Zhang, V. Kanhangad, N. Luo, and A. Kumar, “Robust palmprint verification using 
+2D and 3D features,” <i>Pattern Recognition</i>, vol. 43, no. 1, pp. 358-368, 
+Jan. 2010.</span></font></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: Jun. 
+28, 2014</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Jul</span>.<span lang="en-us"> 
+07,
+</span>201<span lang="en-us">5</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>
