@@ -1,0 +1,434 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>LCKSVD_LHST for 3D ear identification</title>
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b><font face="Calibri" size="5" color="#0000FF">3D 
+		Ear Identification Using Block-wise Statistics based Features and LC-KSVD</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang, 
+		Lida Li, Hongyu Li, and Meng Yang</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;<a href="Files/3D%20Ear%20Identification%20Using%20Block-wise%20Statistics%20based%20Features%20and%20LC-KSVD.pdf">3D ear identification using block-wise 
+statistics based features and LC-KSVD</a>&quot;, IEEE Trans. Multimedia</span><span style="font-family: Calibri; font-size: 13pt" lang="en-us"> 
+18&nbsp; (8) 1531-1541, 2016.</span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Biometrics 
+authentication has been corroborated to be an effective method for automatically 
+recognizing a person's identity with high confidence. In this field, the use of 
+3D ear shape as a biometric trait is a recent trend. As a biometric identifier, 
+ear has several special inherent merits. However, though a great deal of efforts 
+have been devoted, there is still a large room for improvement for developing a 
+highly effective and efficient 3D ear identification approach. In this paper, we 
+attempt to fill this gap to some extent by proposing a novel 3D ear 
+classification scheme, making use of the label consistent K-SVD (LC-KSVD) 
+framework. As an effective supervised dictionary learning algorithm, LC-KSVD 
+learns a single compact discriminative dictionary for sparse coding and a 
+multi-class linear classifier simultaneously. To use the LC-KSVD framework, one 
+key issue is how to extract feature vectors from 3D ear scans. To this end, we 
+propose a block-wise statistics based feature extraction scheme. Specifically, 
+we divide a 3D ear ROI into uniform blocks and extract a histogram of surface 
+types from each block; histograms from all blocks are then concatenated to form 
+the desired feature vector. Feature vectors extracted in this way are highly 
+discriminative and are robust to mere misalignment between samples. Experimental 
+results demonstrate that the proposed approach can achieve much better 
+recognition accuracy than the other state-of-the-art methods. More importantly, 
+its computational complexity is extremely low at the classification stage, 
+making it quite suitable for the large-scale identification applications. </font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<font face="Calibri" style="font-size: 13pt">The source code can be 
+downloaded here: 
+<a href="https://pan.baidu.com/s/1V7K9iZS8vjm7pS0wc8xqSA?pwd=77n2"><span lang="en-us">LCKSVD_LHST</span>.<span lang="en-us">zip</span></a> 
+(Extract code: 77n2).</font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">In experiments, 
+we used the UND Collection J2 dataset. This dataset contains 2346 3D side face 
+scans captured from 415 different persons, making it the largest 3D ear scan 
+dataset so far. Those range images were collected using a Minolta Vivid 910 
+range scanner in high resolution mode. There are variations in pose between them 
+and some images are occluded with hair or ear rings. </font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+To evaluate the performance of our method, however, we cannot simply conduct 
+experiments on the whole dataset since some classes in UND-J2 have only 2 
+samples. As pointed out in [1], classification schemes based on sparse coding 
+need sufficient samples for each class in the gallery. Consequently, we 
+virtually created four subsets from UND-J2 for experiments. Specifically, we 
+required that each class should have more than 6, 8, 10, and 12 samples, 
+respectively. For subset1, we randomly selected from each class 6 samples to 
+form the gallery set and the rest samples were used to form the test set. For 
+subset2, we randomly selected from each class 8 samples to form the gallery set 
+and the rest samples were used to form the test set. For subset3 and subset4, 
+similar strategies were used to generate the gallery and test sets. To make it 
+clear, major information about the four subsets used for evaluation is 
+summarized in Table I.</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">We use the 
+recognition rate as the performance measure. In addition, the running speed of 
+each competing method was also evaluated. Experiments were performed on a 
+standard HP Z620 workstation with a 3.2GHZ Intel Xeon E5-1650 CPU and an 8G RAM. 
+The software platform was Matlab R2013b.</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">TABLE I<br>
+SUBSETS USED IN OUR EXPERIMENT</font></span></p>
+<table class="MsoNormalTable" style="width: 74%" id="table4" border="0" cellpadding="0">
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center; layout-grid-mode: char" align="center">
+		<span lang="en-us"><font size="3"><span style="font-family: Calibri">
+		subset index</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">no. of classes</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" valign="top">
+		<span lang="en-us"><font face="Calibri" size="3">gallery size</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" valign="top">
+		<span lang="en-us"><font face="Calibri" size="3">probe size</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" valign="top">
+		<span lang="en-us"><font face="Calibri" size="3">total samples</font></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">1</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<p align="center"><font face="Calibri" size="3">127</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">762</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">715</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">1477</font></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">2</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<p align="center"><font face="Calibri" size="3">85</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">680</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">461</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">1141</font></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">3</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<p align="center"><font face="Calibri" size="3">62</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">620</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">291</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">911</font></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">4</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<p align="center"><font face="Calibri" size="3">39</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">468</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">168</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">636</font></td>
+	</tr>
+</table>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">Recognition 
+rates and time costs are listed in the following two tables.</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">TABLE II<br>
+RECOGNITION RATES BY USING DIFFERENT IDENTIFICATION METHODS (%)</font></span></p>
+<table class="MsoNormalTable" style="width: 74%" id="table5" border="0" cellpadding="0">
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center; layout-grid-mode: char" align="center">　</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 1</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 2</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 3</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 4</font></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">ICP</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">83.22</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">90.02</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">94.09</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">95.83</font></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">Zhang et al. [2]</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">83.78</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">90.67</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">94.50</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">96.43</font></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">SRC_LHST</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">92.17</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">94.36</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">96.56</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">98.81</font></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><b><font face="Calibri" size="3">LCKSVD_LHST</font></b></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">92.86</font></b></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">95.88</font></b></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">98.63</font></b></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">100</font></b></span></td>
+	</tr>
+</table>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">TABLE III<br>
+TIME COST FOR ONE IDENTIFICATION OPERATION (SECONDS)</font></span></p>
+<table class="MsoNormalTable" style="width: 74%" id="table6" border="0" cellpadding="0">
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center; layout-grid-mode: char" align="center">　</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" style="text-align: center" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 1</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 2</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 3</font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center">
+		<span lang="en-us"><font face="Calibri" size="3">subset 4</font></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">ICP</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			5.356</span><span lang="EN-US" style="mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman; font-family: Symbol">*</span><span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; color: black; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">10</span><span style="mso-bidi-font-family:&quot;Times New Roman&quot;"><sup><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:宋体;mso-hansi-font-family:&quot;Times New Roman&quot;;font-size:
+8pt;color:black;position:relative;top:-.45em;mso-text-raise:30%;mso-fareast-language:
+ZH-CN">5</span></sup><span style="mso-spacerun: yes; font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN" lang="EN-US">&nbsp;</span></span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<div style="mso-char-wrap:1;mso-kinsoku-overflow:1">
+				<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+				3.763</span><span lang="en-us"><font size="3"><span style="font-family: Symbol">*</span></font></span><span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; color: black; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">10</span><span style="mso-bidi-font-family:&quot;Times New Roman&quot;"><sup><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:宋体;mso-hansi-font-family:&quot;Times New Roman&quot;;font-size:
+8pt;color:black;position:relative;top:-.45em;mso-text-raise:30%;mso-fareast-language:
+ZH-CN">5</span></sup><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:宋体;mso-hansi-font-family:&quot;Times New Roman&quot;;font-size:
+12pt;mso-fareast-language:ZH-CN"><span style="mso-spacerun:yes">&nbsp;</span> </span>
+				</span></div>
+		</div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<div style="mso-char-wrap:1;mso-kinsoku-overflow:1">
+				<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+				1.876</span><span lang="EN-US" style="mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman; font-family: Symbol">*</span><span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; color: black; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">10</span><sup><span style="mso-bidi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:宋体;mso-hansi-font-family:&quot;Times New Roman&quot;;font-size:
+8pt;color:black;position:relative;top:-.45em;mso-text-raise:30%;mso-fareast-language:
+ZH-CN">5</span></span></sup></div>
+		</div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<div style="mso-char-wrap:1;mso-kinsoku-overflow:1">
+				<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+				1.287</span><span lang="en-us"><font size="3"><span style="font-family: Symbol">*</span></font></span><span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; color: black; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">10</span><sup><span style="mso-bidi-font-family:&quot;Times New Roman&quot;"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-fareast-font-family:宋体;mso-hansi-font-family:&quot;Times New Roman&quot;;font-size:
+8pt;color:black;position:relative;top:-.45em;mso-text-raise:30%;mso-fareast-language:
+ZH-CN">5</span></span></sup></div>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">Zhang et al. [2]</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			2.425</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			2.424</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			2.423</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			2.420</span></div>
+		</td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><font face="Calibri" size="3">SRC_LHST</font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			0.074</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			0.070</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			0.066</span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			0.056</span></div>
+		</td>
+	</tr>
+	<tr>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><b><font face="Calibri" size="3">LCKSVD_LHST</font></b></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" valign="top" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			<b>0.058</b> </span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			<b>0.034</b></span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			<b>0.033</b> </span></div>
+		</td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center"><p:colorscheme
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"/>
+
+		<div v:shape="_x0000_s1026" class="O">
+			<span lang="EN-US" style="font-family: Times New Roman; mso-ascii-font-family: Times New Roman; mso-fareast-font-family: 宋体; mso-hansi-font-family: Times New Roman; font-size: 12pt; mso-fareast-language: ZH-CN; mso-bidi-font-family: Times New Roman">
+			<b>0.018</b> </span></div>
+		</td>
+	</tr>
+</table>
+<p>　</p>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Calibri">[1] J. Wright et al., &quot;Robust 
+face recognition via sparse representation,&quot; <i>IEEE Trans. Pattern Anal. Mach. 
+Intell.</i>, 
+vol. 31, no. 2, pp. 210-227, 2009.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">[2] L. Zhang et al., 
+&quot;3D ear identification based on sparse representation,&quot; <i>PLoS ONE</i>, vol. 9, 
+no. 4, pp. e95506.1-9, 2014.</font></span></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: Oct. 
+03, 2014</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Jul</span>.<span lang="en-us"> 
+16,
+</span>201<span lang="en-us">6</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>
