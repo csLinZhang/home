@@ -1,0 +1,413 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Binary Gabor Pattern: An Efficient and Robust Descriptor for Texture Classification</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="5" color="#0000FF">Binary Gabor 
+		Pattern: An Efficient and Robust Descriptor for Texture Classification</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">
+		Lin Zhang<font color="#0000FF">, Zhiqiang 
+		Zhou, and Hongyu 
+		Li</font></font></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">School of Software 
+		Engineering, Tongji University, Shanghai</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Abstract</font></b></span></p>
+<p>
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">In this 
+paper, we present a simple yet efficient and effective multi-resolution approach 
+to gray-scale and rotation invariant texture classification. Given a texture 
+image, we at first convolve it with J Gabor filters sharing the same parameters 
+except the parameter of orientation. Then by binarizing the obtained responses, 
+we can get J bits at each location. Then, each location can be assigned a unique 
+integer, namely “rotation invariant binary Gabor pattern (BGPri)”, formed from J 
+bits associated with it using some rule. The classification is based on the 
+image’s histogram of its BGPris at multiple scales. Using BGPri, there is no 
+need for a pre-training step to learn a texton dictionary, as required in 
+methods based on clustering such as MR8. Extensive experiments conducted on the 
+CUReT database demonstrate the overall superiority of <i>BGP<sub>ri</sub></i> 
+over the other state-of-the-art texture representation methods evaluated.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Source Code</font></b></span></p>
+<p>
+<font face="Times New Roman" style="font-size: 13pt">The source code can be 
+downloaded here: <a href="BGP.m">BGP.m</a>. </font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Algorithm</font></b></span></p>
+<p><font face="Times New Roman"><span lang="EN-US" style="font-size: 13pt">In 
+this paper, we propose a novel training-free rotation invariant texture 
+representation scheme. Here training-free means that in our method there is no 
+need for a pre-training step to learn a texton dictionary as MR8 does. Our idea 
+is inspired by the success of LBP, such a simple yet powerful texture 
+descriptor. From the definition of LBP it can be known that LBP for a central 
+pixel is totally decided by the signs of differences between it and its 
+neighboring pixels. But, each sign used in LBP is binarized from the difference 
+of two single pixels so it may be sensitive to noise. To improve it, we can use 
+difference between regions to replace difference between two single pixels, 
+which will be more robust intuitively. Gabor filter is an ideal tool to this 
+end, which can calculate the difference between regions covered by its support. 
+In our method, the dictionary is a set of pre-defined rotation invariant binary 
+patterns called as &#8220;rotation invariant binary Gabor patterns (<i>BGP<sub>ri</sub></i>s)&#8221;. 
+The occurrence histogram of <i>BGP<sub>ri</sub></i>s can be formed to a given 
+image. Then, the classification is based on the matching results between the 
+sample histogram and the model histograms. The following figure shows the 
+flowchart of our algorithm.</span></font></p>
+<p>
+<img border="0" src="BGP.ht1.jpg"></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Evaluation 
+Results</font></b></span></p>
+<p style="text-align: justify; text-justify: inter-ideograph; font-size: 13pt; font-family: Times New Roman; margin-top: 0; margin-bottom: 0; line-height:150%">
+<span lang="EN-US">We conducted experiments on a modified CUReT database. It contains 61 textures and each texture has 92 images 
+obtained under different viewpoints and illumination directions. The proposed <i>
+BGP<sub>ri</sub></i> was compared with the other five state-of-the-art rotation 
+invariant texture representation methods, LBP [1], MR8 [2], Joint [3], BIF [4] 
+and M-LBP [5]. </span><span lang="EN-US" style="font-size: 13pt">
+<font face="Times New Roman">In order to get statistically 
+significant classification results, <i>N</i> training images were randomly 
+chosen from each class while the remaining 92 &#8211; <i>N </i>&nbsp;images per class were 
+used as the test set. The partition was repeated 1000 times independently. The 
+average accuracy along with one standard deviation for each method is reported 
+in Table 1. </font></span><font face="Times New Roman" style="font-size: 13pt">
+<span lang="EN-US">In addition to the classification accuracy, we also care 
+about the feature size and the classification speed of each method. At the 
+classification stage, the histogram of the test image will be built at first and 
+then it will be matched to all the models generated from the training samples. 
+In Table 2, we list the feature size (number of histogram bins), the time cost 
+for one test histogram construction and the time cost for one matching at the 
+classification stage by each method. All the algorithms were implemented with Matlab 2010b except that a C++ implemented kd-tree (encapsulated in a MEX 
+function) was used in MR8 and Joint to accelerate the labeling process. 
+Experiments were performed on a Dell Inspiron 530s PC with Intel 6550 processor 
+and 2GB RAM.</span></font></p>
+<p class="MsoNormal" style="layout-grid-mode: char" align="center">
+<font face="Georgia"><b><span style="font-size: 12pt; font-style: normal">Table 
+1.</span></b><span style="font-size: 12pt; font-style: normal"> Classification 
+results (%)</span></font></p>
+<div align="center">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" id="table11" width="510">
+		<tr>
+			<td style="width: 85px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<i><span lang="EN-US" style="font-size: 11pt">&nbsp;</span></i></td>
+			<td style="width: 90px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<i><span lang="EN-US" style="font-size: 11pt">N</span></i><span lang="EN-US" style="font-size: 11pt"> 
+			= 46</span></td>
+			<td style="width: 87px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<i><span lang="EN-US" style="font-size: 11pt">N</span></i><span lang="EN-US" style="font-size: 11pt"> 
+			= 23</span></td>
+			<td style="width: 91px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<i><span lang="EN-US" style="font-size: 11pt">N</span></i><span lang="EN-US" style="font-size: 11pt"> 
+			= 12</span></td>
+			<td style="width: 97px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<i><span lang="EN-US" style="font-size: 11pt">N</span></i><span lang="EN-US" style="font-size: 11pt"> 
+			= 6</span></td>
+		</tr>
+		<tr>
+			<td style="width:85px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">LBP [1]</span></td>
+			<td style="width:90px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">95.74</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">0.84</span></td>
+			<td style="width:87px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">91.95</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">1.43</span></td>
+			<td style="width:91px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">86.45</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">2.23</span></td>
+			<td style="width:97px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">78.06</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">3.31</span></td>
+		</tr>
+		<tr>
+			<td style="width:85px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">MR8 [2]</span></td>
+			<td style="width:90px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">97.79<b>±</b>0.68</span></td>
+			<td style="width:87px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">95.03<b>±</b>1.28</span></td>
+			<td style="width:91px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">90.48<b>±</b>1.99</span></td>
+			<td style="width:97px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">82.90<b>±</b>3.45</span></td>
+		</tr>
+		<tr>
+			<td style="width:85px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">Joint [3]</span></td>
+			<td style="width:90px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">97.66<b>±</b>0.68</span></td>
+			<td style="width:87px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">94.58<b>±</b>1.34</span></td>
+			<td style="width:91px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">89.40<b>±</b>2.39</span></td>
+			<td style="width:97px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<span lang="EN-US" style="font-size: 11pt">81.06<b>±</b>3.74</span></td>
+		</tr>
+		<tr>
+			<td style="width:85px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">BIF [4]</span></td>
+			<td style="width:90px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">97.38<b>±</b>0.68</span></td>
+			<td style="width:87px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">94.95<b>±</b>0.99</span></td>
+			<td style="width:91px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">90.67<b>±</b>2.09</span></td>
+			<td style="width:97px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<a name="OLE_LINK2"><span lang="EN-US" style="font-size: 11pt">83.52<b>±</b>3.55</span></a></td>
+		</tr>
+		<tr>
+			<td style="width:85px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">M-LBP [5]</span></td>
+			<td style="width:90px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">98.12</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">0.53</span></td>
+			<td style="width:87px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">95.80</span><b><span lang="EN-US" style="font-size: 11pt">±</span></b><span lang="EN-US" style="font-size: 11pt">1.17</span></td>
+			<td style="width:91px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">91.27<b>±</b>2.46</span></td>
+			<td style="width:97px;padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 11pt">83.32<b>±</b>3.94</span></td>
+		</tr>
+		<tr>
+			<td style="border-left:medium none; border-right:medium none; border-top:medium none; width:85px;border-bottom:1.5pt solid black;
+  padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><i><span lang="EN-US" style="font-size: 11pt">BGP<sub>ri</sub></span></i></b></td>
+			<td style="border-left:medium none; border-right:medium none; border-top:medium none; width:90px;border-bottom:1.5pt solid black;
+  padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 11pt">98.70±0.46</span></b></td>
+			<td style="border-left:medium none; border-right:medium none; border-top:medium none; width:87px;border-bottom:1.5pt solid black;
+  padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 11pt">96.80±1.00</span></b></td>
+			<td style="border-left:medium none; border-right:medium none; border-top:medium none; width:91px;border-bottom:1.5pt solid black;
+  padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 11pt">93.09±2.03</span></b></td>
+			<td style="border-left:medium none; border-right:medium none; border-top:medium none; width:97px;border-bottom:1.5pt solid black;
+  padding-left:3.5pt; padding-right:3.5pt; padding-top:0cm; padding-bottom:0cm" align="left">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 11pt">86.52±3.43</span></b></td>
+		</tr>
+	</table>
+</div>
+<P align="center"><font face="Georgia"><b><span style="font-size: 12pt; font-style: normal">Table 
+2.</span></b><span style="font-size: 12pt; font-style: normal"> Feature size and 
+time cost (msec)</span></font></P>
+<div align="center">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" id="table10" width="564">
+		<tr>
+			<td width="59" style="width: 35.45pt; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">&nbsp;</span></td>
+			<td style="width: 75px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">Feature size</span></td>
+			<td style="width: 188px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">Time cost for one 
+			histogram construction </span></td>
+			<td style="width: 194px; border-left: medium none; border-right: medium none; border-top: 1.5pt solid black; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">Time cost for one 
+			matching</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">LBP</span></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">54</span></td>
+			<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">87</span></td>
+			<td style="width: 194px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">0.022</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">MR8</span></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">2440</span></td>
+			<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">4960</span></td>
+			<td style="width: 194px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">0.089</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">Joint</span></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">2440</span></td>
+			<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">13173</span></td>
+			<td style="width: 194px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">0.089</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">BIF</span></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">1296</span></td>
+			<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">157</span></td>
+			<td style="width: 194px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">0.056</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">M-LBP</span></td>
+			<td style="width: 75px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">540</span></td>
+			<td style="width: 188px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">221</span></td>
+			<td style="width: 194px; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="EN-US" style="font-size: 12pt">0.035</span></td>
+		</tr>
+		<tr>
+			<td width="59" style="width:35.45pt;border:none;border-bottom:solid black 1.5pt;
+  padding:0cm 3.5pt 0cm 3.5pt">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><i><span lang="EN-US" style="font-size: 12pt">BGP<sub>ri</sub></span></i></b></td>
+			<td style="width: 75px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 12pt">216</span></b></td>
+			<td style="width: 188px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 12pt">136</span></b></td>
+			<td style="width: 194px; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+			<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+			<b><span lang="EN-US" style="font-size: 12pt">0.027</span></b></td>
+		</tr>
+	</table>
+</div>
+<p align="justify" style="layout-grid-mode: char; line-height:150%; margin-bottom:0">
+<font face="Times New Roman" style="font-size: 13pt">
+<span lang="EN-US">Based on Table 1 and Table 2, we can have the following 
+findings. First of all, <i>BGP<sub>ri</sub> </i>can achieve higher 
+classification accuracy than all the other methods evaluated, especially in the 
+case of less training samples. Secondly, the proposed <i>BGP<sub>ri</sub> </i>
+scheme requires a moderate feature size, a little bigger than LBP but much 
+smaller than MR8, Joint, BIF, and M-LBP. The numbers of histogram bins for MR8, 
+Joint, BIF, and M-LBP are 2400, 2400, 1296, and 540, while <i>BGP<sub>ri</sub>
+</i>only needs 216 bins. Although the feature size of <i>BGP<sub>ri</sub> </i>is 
+a little bigger than LBP, considering the significant gain in the classification 
+accuracy, it is deserved. Thirdly, these six schemes have quite different 
+classification speeds. LBP runs fastest while <i>BGP<sub>ri</sub> </i>ranks the 
+second. Especially, <i>BGP<sub>ri</sub> </i>works much faster than the two 
+clustering based methods, MR8 and Joint. <i>BGP<sub>ri</sub> </i>is nearly 40 
+times faster than MR8 and 100 times faster than Joint. In MR8 and Joint, to 
+build the histogram of the test image, every pixel on the test image needs to be 
+labeled to one item in the texton dictionary, which is quite time consuming. 
+Such a process is not required in LBP, M-LBP, BIF, and <i>BGP<sub>ri</sub></i>. 
+Besides, an extra training period is needed in MR8 and Joint to build the texton 
+dictionary, which is also not required in LBP, M-LBP, GIF, and <i>BGP<sub>ri</sub></i>.</span></font></p>
+<hr>
+<p><font face="Times New Roman" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<P style="text-align: justify; margin-bottom:0; margin-top:0">
+<font size="3" face="Times New Roman">[1] T. Ojala, M. Pietik&auml;inen, and T. M&auml;enp&auml;&auml;, &#8220;Multiresolution 
+gray-scale and rotation invariant texture classification with local binary 
+patterns,&#8221; IEEE Trans. PAMI, vol. 24, pp. 971-987, 2002.</font></P>
+<P style="text-align: justify; margin-bottom:0; margin-top:0">
+<font size="3" face="Times New Roman">[2] M. Varma and A. Zisserman, &#8220;A statistical approach to texture 
+classification from single images,&#8221; Int. J. Comput. Vis., vol. 62, pp. 61-81, 
+2005.<br>
+[3] M. Varma and A. Zisserman, &#8220;A statistical approach to material 
+classification using image patch exemplars,&#8221; IEEE Trans. PAMI, vol. 31, pp. 
+2032-2047, 2009.</font></P>
+<P style="text-align: justify; margin-bottom:0; margin-top:0">
+<font size="3" face="Times New Roman">[4] M. Crosier and L.D. Griffin, &#8220;Using basic image features for 
+texture classification,&#8221; Int. J. Comput. Vis., vol. 88, pp. 447-460, 2010.</font></P>
+<P style="text-align: justify; margin-bottom:0; margin-top:0">
+<font size="3" face="Times New Roman">[5] L. Zhang, L. Zhang, Z. Guo, and D. Zhang, &#8220;Monogenic-LBP: a 
+new approach for rotation invariant texture classification,&#8221; ICIP&#8217;10, pp. 
+2677-2680, 2010.</font></P>
+
+<hr>
+<p align="justify"><font face="Times New Roman"><span lang="en-us">Created on: 
+Nov. 
+29, 2012</span></font></p>
+<p align="justify"><font face="Times New Roman">Last update: Nov.<span lang="en-us"> 
+29,
+</span>201<span lang="en-us">2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>

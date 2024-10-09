@@ -1,0 +1,101 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>SSGD</title>
+<style>
+<!--
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+.fontstyle0
+{
+	font-family:NimbusRomNo9L-Regu;
+	font-size:10pt;
+	font-style:normal;
+	font-weight:normal;
+	color:rgb(0,0,0);
+}
+.fontstyle2
+{
+	font-family:NimbusRomNo9L-ReguItal;
+	font-size:10pt;
+	font-style:italic;
+	font-weight:normal;
+	color:rgb(0,0,0);
+}
+-->
+</style>
+</head>
+
+<body>
+
+<TABLE width="1217" height="35" class="MsoNormalTable" id="table3" border="0" 
+cellpadding="0">
+  <TBODY>
+  <TR>
+    <TD align="left" valign="top" style="padding: 0.75pt; width: 1211px; height: 31px;">
+      <P class="text" align="center"><b><font size="5" color="#0000FF">SSGD: 
+		SUPERPIXELS USING THE SHORTEST GRADIENT DISTANCE</font></b><br>
+		<font size="5">Ning Zhang and Lin Zhang*<br>
+		School of Software Engineering, Tongji University, Shanghai, China</font></TD></TR></TBODY></TABLE>
+<HR>
+
+<P><SPAN lang="en-us"><B><FONT face="Calibri" 
+size="5">Introduction</FONT></B></SPAN></P>
+<P><font face="Calibri" size="4">As a pre-processing step for many problems in 
+the field of computer vision, superpixel algorithms aim to over-segment the 
+image by grouping homogenous pixels. In this paper, we propose a novel 
+superpixel segmentation algorithm, namely Superpixel using the Shortest Gradient 
+Distance (SSGD for short) in a k-means clustering framework. Starting from 
+initializing the superpixel seeds, a bilateral filter is applied to the 
+texture-rich regions centered at each initial seed. Then, a new distance 
+function taking the shortest gradient distance into account is computed to 
+enforce adherence to boundaries. Unlike using the simple Euclidean distance, the 
+proposed combined distance function increases the accuracy of associating a 
+pixel to a cluster. The experimental results demonstrate that our algorithm 
+outperforms the state-of-the-art methods.</font></P>
+<P>　</P>
+<p><img border="0" src="SSGD%20S1.jpg"></p>
+<p><font face="Calibri" size="4">Image reconstruction with 300 superpixels using 
+mean color of clusters. (a) original image, (b) SLIC[1], (c) SCALP[2], (d) SSGD 
+without bilateral filtering operation, (e) SSGD. </font></p>
+<HR>
+
+<p><b><font face="Calibri" size="5">Source Code</font></b></p>
+<p><a href="https://github.com/noahzn/SSGD">https://github.com/noahzn/SSGD</a></p>
+<HR>
+
+<p><b><font face="Calibri" size="5">Experiment Results</font></b></p>
+<p><font face="Calibri" size="4">We compare SSGD with several state-of-the-art 
+methods, including SLIC [1], SCALP [2], TP [3], NC [4], on BSDS500 [5].</font></p>
+<p><font face="Calibri" size="4">We use three standard metrics to evaluate the 
+performance of different algorithms, which are Boundary Recall (BR), Corrected 
+Undersegmentation Error (CUE) and Achievable Segmentation Accuracy (ASA). For BR 
+and ASA the higher the better, while for CUE the lower the better.</font></p>
+<p><img border="0" src="SSGD%20S2.jpg"></p>
+<HR>
+
+<p><font size="5" face="Calibri"><b>Reference&nbsp;</b></font></p>
+<p><font face="Calibri" size="4">[1] R. Achanta, A. Shaji, K. Smith, et al., 
+“Slic superpixels compared to state-of-the-art superpixel methods,” IEEE Trans. 
+PAMI, vol. 34, no. 11, pp. 2274–82, 2012.</font></p>
+<p><font face="Calibri" size="4">[2] R. Giraud, V. Ta, and N. Papadakis, “Scalp: 
+Superpixels with contour adherence using linear path,” in ICPR, 2016.</font></p>
+<p><font face="Calibri" size="4">[3] A. Levinshtein, A. Stere, K. N. Kutulakos, 
+et al., “Turbopixels: Fast superpixels using geometric flows,” IEEE Trans. PAMI, 
+vol. 31, no. 12, pp. 2290–7, 2009.</font></p>
+<p><font face="Calibri" size="4">[4] J. Shi and J. Malik, “Normalized cuts and 
+image segmentation,” IEEE Trans. PAMI, vol. 22, no. 8, pp. 888–905, 2000.</font></p>
+<p><font face="Calibri" size="4">[5] P. Arbelaez, M. Maire, C. Fowlkes C, et 
+al., “Contour detection and hierarchical image segmentation,” IEEE Trans. PAMI, 
+vol. 33, no. 5, pp. 898–916, 2011. </font>
+<br style="font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">
+　</p>
+<p>　</p>
+
+</body>
+
+</html>
