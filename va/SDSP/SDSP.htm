@@ -1,0 +1,352 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>SDSP: A Novel Saliency Detection Method by Combining Simple Priors</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">SDSP: A Novel 
+		Saliency Detection Method by Combining Simple Priors</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang<font color="#0000FF">, Zhongyi Gu, and 
+		Hongyu 
+		Li</font></font></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">School of Software 
+		Engineering, Tongji University, Shanghai</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;<a href="../../ICIP2013/SDSP.pdf">SDSP: A Novel Saliency Detection Method 
+by Combining Simple Priors</a>&quot;, <i>in </i>Proc. ICIP,<i> 2013</i>. </span></p>
+<p align="justify">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Salient regions 
+detection from images is an important and fundamental research problem in 
+neuroscience and psychology and it serves as an indispensible step for numerous 
+machine vision tasks. In this paper, we propose a novel conceptually simple 
+salient region detection method, namely SDSP, by combining three simple priors. 
+At first, the behavior that the human visual system detects salient objects in a 
+visual scene can be well modeled by band-pass filtering. Secondly, people are 
+more likely to pay their attention on the center of an image. Thirdly, warm 
+colors are more attractive to people than cold colors are. Extensive experiments 
+conducted on the benchmark dataset indicate that SDSP could outperform the other 
+state-of-the-art algorithms by yielding higher saliency prediction accuracy. 
+Moreover, SDSP has a quite low computational complexity, rendering it an 
+outstanding candidate for time critical applications. The following figure shows 
+the flowchart for SDSP computation for a given image.</font></span></p>
+<img border="0" src="scheme.jpg" width="445" height="561"><p align="justify">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Illustration for 
+the computation process of SDSP.</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<font face="Calibri" style="font-size: 13pt">The source code can be 
+downloaded here: <a href="Files/SDSP.m">SDSP.m</a>.</font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Sample Results</font></b></span></p>
+<p>
+<font face="Calibri">
+<img border="0" src="Files/samples.jpg" width="537" height="932"></font></p>
+<p>
+<font face="Calibri" style="font-size: 13pt">Saliency detection results 
+obtained by using our proposed algorithm SDSP are shown in the above figure. 
+Left column shows original images while the right column shows their 
+corresponding saliency maps.</font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">We 
+exhaustively compared our approach SDSP to eight state-of-the-art other saliency 
+detection methods on a publicly available dataset [1] comprising 1000 images 
+with binary ground truth. The methods used for comparison included AIM [2], CA 
+[3], FT [1], GB [4], IS [5], IT [6], MSSS [7], and SR [8].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-style: italic">
+Experiment 1.</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">We 
+evaluated the performance of a saliency detection algorithm in the context of 
+salient object segmentation. For a given saliency map with values in the range 
+[0, 255], the simplest way to get a binary segmentation of the salient object is 
+to threshold the saliency map at a threshold <i>T<sub>f</sub></i>∈[0, 255]. When
+<i>T<sub>f</sub></i> varies from 0 to 255, different precision-recall pairs are 
+obtained, and a precision-recall curve can be drawn. The average 
+precision-recall curve is generated by averaging the results from all the 1000 
+test images. The resulting curves are shown in the following figure.</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<font face="Calibri">
+<img border="0" src="Files/PR.png" width="660" height="459"></font></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-style: italic">
+Experiment 2.</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">In this 
+experiment, we used an image dependent adaptive threshold to segment objects in 
+the image. Specifically, such an adaptive threshold <i>T<sub>a</sub></i> is 
+determined as twice the mean saliency of the image. Using the adaptive 
+threshold, we could obtain binarized maps of salient objects extracted by each 
+of the saliency detection algorithm. Then, for each algorithm, for each image, 
+we can compute the <i>F</i>-measure, which is defined as</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 12.0pt; font-family: Calibri"><i>F = </i>(1+</span><i><span lang="EL" style="font-size: 12.0pt; font-family: Calibri">β</span></i><sup><span style="font-size: 12.0pt; font-family: Calibri">2</span></sup><span lang="en-us"><font face="Calibri" style="font-size: 13pt">)*<i>Precision</i>*<i>Recall</i> 
+/ (</font></span><i><span lang="EL" style="font-size: 12.0pt; font-family: Calibri">β</span></i><sup><span style="font-size: 12.0pt; font-family: Calibri">2</span></sup><span lang="en-us"><font face="Calibri" style="font-size: 13pt">*<i>Precision</i> 
++ <i>Recall</i>)</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<font face="Calibri"><span lang="EN-US" style="font-size: 13pt">we set
+</span><i><span lang="EL" style="font-size: 13pt">β</span></i><sup><span lang="EN-US" style="font-size: 13pt">2
+</span></sup><span lang="EN-US" style="font-size: 13pt">= 0.3 in our 
+experiments. <i>F</i>-measure can reflect the overall prediction accuracy of an 
+algorithm. Averaged <i>F</i>-measure over 1000 images achieved by each saliency 
+detection algorithm is listed in the following table.</span></font></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 34%" id="table6">
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Method</span></font></span></td>
+		<td style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<b><font face="Calibri" size="3"><i>F</i>-Measure</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">AIM</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.4317</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CA</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.5528</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">FT</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6700</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><b><font size="3" face="Calibri">GB</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6186</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">IS</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.5020</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">IT</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.4959</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">MSSS</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.7417</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SR</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.4568</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<b><font size="3" face="Calibri">SDSP</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<b><font size="3" face="Calibri">0.7758</font></b></td>
+	</tr>
+</table>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-style: italic">
+Experiment 3.</font></span></p>
+<p class="MsoBodyTextIndent3" style="text-indent:0cm">
+<font face="Calibri" style="font-size: 13pt"><span lang="EN-US">In 
+addition to the saliency prediction accuracy, the computational costs of various 
+methods were also evaluated. Experiments were performed on a standard HP Z620 
+workstation with a 3.2GHZ Intel Xeon E5-1650 CPU and an 8G RAM. The software 
+platform was Matlab R2012a. The time cost consumed by each evaluated saliency 
+detection method for processing one 400×300 color image is listed in the 
+following table.</span></font></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 34%" id="table7">
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Method</span></font></span></td>
+		<td style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<b><font face="Calibri" size="3">Time cost (seconds)</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">AIM</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3" face="Calibri"><b>5.118</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CA</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3" face="Calibri"><b>33.662</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">FT</span></font></span></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3" face="Calibri"><b>0.045</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="center"><b><font size="3" face="Calibri">GB</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3" face="Calibri"><b>0.464</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">IS</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3" face="Calibri"><b>0.022</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">IT</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.134</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">MSSS</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.784</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SR</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.013</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 186px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<b><font size="3" face="Calibri">SDSP</font></b></td>
+		<td valign="top" style="width: 251px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<b><font size="3" face="Calibri">0.039</font></b></td>
+	</tr>
+</table>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify" style="margin-top: 0; margin-bottom: 0"><span lang="EN-US">
+<font face="Calibri">[1]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp; </span></span>
+<font face="Calibri">
+<span lang="EN-US" style="letter-spacing: .25pt">R. Achanta, S. Hemami, F. 
+Estrada, and S. Susstrunk, “Frequency-tuned salient region detection,” <i>
+CVPR’09</i>, pp. 1597-1604, 2009.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[2]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span><font face="Calibri">N. Bruce and J. Tsotsos, “Saliency based on information maximization,”<i> 
+Adv. Neural Info</i></font></span><font face="Calibri"><i><span lang="EN-US">rmation Process. Syst.</span></i><span lang="EN-US">, 
+vol. 18, pp. 155-162, 2006.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[3]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span><font face="Calibri">S. Goferman, L. Zelnik-Manor, and A. Tal, “Context-aware saliency 
+detection,” </font> </span><font face="Calibri"><i><span lang="EN-US" style="letter-spacing: .25pt">CVPR’10</span></i><span lang="EN-US" style="letter-spacing: .25pt">, 
+pp. 2376-2383, 2010.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[4]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span><font face="Calibri">J. Harel, C. Koch, and P. Perona, “Graph-based visual saliency,” <i>Adv. 
+Neural Info</i></font></span><font face="Calibri"><i><span lang="EN-US">rmation Process. Syst.</span></i><span lang="EN-US">, 
+vol. 19, pp. 545-552, 2007.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[5]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span></span><font face="Calibri"><span lang="EN-US" style="letter-spacing: .25pt">X. Hou and L. 
+Zhang, “Saliency detection: a spectral residual approach,” </span><i>
+<span lang="EN-US" style="letter-spacing: .25pt">CVPR’07</span></i><span lang="EN-US" style="letter-spacing: .25pt">, 
+pp. 1-8, 2007.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[6]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span></span><font face="Calibri"><span lang="EN-US" style="letter-spacing: .25pt">L. Itti, C. Koch, 
+and E. Niebur, “A model of saliency-based visual attention for rapid scene 
+analysis,” <i>IEEE Trans. </i></span><i>
+<span lang="EN-US" style="letter-spacing: .25pt">PAMI</span></i><span lang="EN-US" style="letter-spacing: .25pt">, 
+vol. 20, pp. 1254-1259, 1998.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[7]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span></span><font face="Calibri"><span lang="EN-US" style="letter-spacing: .25pt">R. Achanta and S. 
+Susstrunk, “Saliency detection using maximum symmetric surround,” <i>ICIP’10</i>, 
+pp. 2653-2656, 2010.</span></font></p>
+<p class="References" style="text-indent: -15.0pt; margin-left: 15.6pt; margin-top: 0; margin-bottom: 0">
+<span lang="EN-US"><font face="Calibri">[8]</font><span style="font-style:normal; font-variant:normal; font-weight:normal; font-size:7.0pt; font-family:Calibri">&nbsp;&nbsp;
+</span></span><font face="Calibri"><span lang="EN-US" style="letter-spacing: .25pt">X. Hou, J. Harel, 
+and C. Koch, “Image signature: highlighting sparse salient regions,” <i>IEEE 
+Trans. PAMI</i>, vol. 34, pp. 194-201, 2012.</span></font></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: 
+Jan. 
+02, 2013</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">May</span>.<span lang="en-us"> 05,
+</span>201<span lang="en-us">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>
