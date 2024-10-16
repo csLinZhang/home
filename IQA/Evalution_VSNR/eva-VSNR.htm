@@ -1,0 +1,364 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Evaluation of Visual Signal-to-Noise Ratio (VSNR)</title>
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">Evaluation of 
+		VSNR</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang, School of Software Engineering, Tongji University</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">VSNR</span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+(Visual Singal-to-Noise Ratio) index is pres</span><span style="font-size: 13pt; font-family: Calibri; color: black">ented by 
+Chandler and Hemami on 200<span lang="en-us">7 </span>[1]. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Calibri; color: black">
+The authors of VSNR have provided their implementation at
+<a href="http://foulard.ece.cornell.edu/dmc27/vsnr/vsnr.html">
+http://foulard.ece.cornell.edu/dmc27/vsnr/vsnr.html</a>. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Usage Notes</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Calibri; color: black">
+1. VSNR can only deal with gray-scale images and the luminance range is [0, 
+255]. So, for color images, before calling VSNR, you need to convert it to [0, 
+255] gray-scale version. Usually, this can be accomplished by the Matlab routine 
+rgb2gray. Then, further convert the images to double(). </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">The results (in Matlab .mat format) are provided here. Each result file contains a <i>n</i> by 
+2 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+VSNR values, and the second column is the mos/dmos values provided by the database. 
+For example, you can use the following matlab code to calculate the SROCC and 
+KROCC values for VSNR
+values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">matData 
+= load('VSNROnTID.mat');<br>
+VSNROnTID= matData.VSNROnTID;<br>
+VSNR_TID_SROCC = corr(VSNROnTID(:,1), VSNROnTID(:,2), 'type', 'spearman');<br>
+VSNR_TID_KROCC = corr(VSNROnTID(:,1), VSNROnTID(:,2), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+%%%%%%%%%%%%%%%</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> and <i>RMSE</i> are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[2].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+Evaluation results of VSNR 
+on seven databases are given below. Besides, for each evaluation metric, we 
+present its weighted-average value over all the testing datasets; and the weight 
+for each database is set as the number of distorted images in that dataset. </font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Note: On 
+TID2013, for some images, their VSNR score is INF. In this case, SROCC and KROCC 
+can be computed and the result is identical to the ones reported on
+<a href="http://www.ponomarenko.info/tid2013.htm">
+http://www.ponomarenko.info/tid2013.htm</a>. However, with these &quot;INFs&quot;, PLCC 
+and RMSE cannot be defined. Thus, we remove the INFs when computing PLCC and 
+RMSE and the results are reported as follows. In &quot;VSNROnTID2013.mat&quot;, the INFs 
+have been removed. With such a&nbsp; &quot;VSNROnTID2013.mat&quot;, the computed SROCC and 
+KROCC will be different from the ones reported here.</font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 68%" id="table4">
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Database</span></font></span></td>
+		<td style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Results</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">Nonlinear fitting code</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">KROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">PLCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">RMSE</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2013</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/VSNROnTID2013.mat">VSNROnTID2013</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID2013.rar">NonlinearFittingTID<span lang="en-us">2013</span></a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font face="Calibri" size="3"><b>0.6812</b></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font face="Calibri" size="3"><b>0.5084</b></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font face="Calibri" size="3"><b>0.7402</b></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font face="Calibri" size="3"><b>0.8392</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2008</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/VSNROnTID.mat">VSNROnTID</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID.rar">NonlinearFittingTID</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7046</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5340</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6820</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9815</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CSIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/VSNROnCSIQ.mat">VSNROnCSIQ</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingCSIQ.rar">NonlinearFittingCSIQ</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.8106</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.6247</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.8002</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.1575</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">LIVE</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/VSNROnLIVE.mat">VSNROnLIVE</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingLIVE.rar">NonlinearFittingLIVE</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9274</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7616</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9231</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">10.5059</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IVC</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/VSNROnIVC.mat"><b>
+		<font face="Calibri" size="3">VSNROnIVC</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingIVC.rar">NonlinearFittingIVC</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7983</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.6036</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.8032</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7258</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span style="font-family: Calibri; font-weight: 700">
+		<font size="3">Toyama-MICT</font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/VSNROnMICT.mat"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">VSNROnMICT</span></font></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingMICT.rar"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">NonlinearFittingMICT</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.8614</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.6762</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.8710</span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.6147</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">A57</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/VSNROnA57.mat"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">VSNROnA57</span></font></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingA57.rar"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">NonlinearFittingA57</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.9355</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.8031</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.9<span lang="en-us">502</span></span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.0<span lang="en-us">766</span></span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">WIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/VSNROnWIQ.mat">VSNROn<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/NonlinearFittingWIQ.rar">NonlinearFitting<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.6558</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.4873</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.7<span lang="en-us">736</span></span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">14.<span lang="en-us">5153</span></span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">　</td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Calibri">[1] D.M. 
+Chandler and S.S. Hemami, &quot;VSNR: A wavelet-based visual 
+signal-to-noise-ratio for natural images&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 16, pp.2284-2298, 2007.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">[2] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: May. 08, 2011</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Dec. 02, 2013</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></p>
+
+</body>
+
+</html>

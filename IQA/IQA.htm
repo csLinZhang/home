@@ -1,0 +1,556 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>IQA Research Webpage</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+<base target="_blank">
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" color="#0000FF" size="5">Research on Image Quality Assessment</font></b></span><p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" color="#0000FF" size="3">Lin Zhang, School 
+		of Software Engineering, Tongji University</font></b></span><p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="3" color="#0000FF">Lei Zhang, Dept. 
+		Computing, The Hong Kong Polytechnic University</font></b></span><p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="3" color="#0000FF">Key words: image 
+		quality assessment, IQA, FSIM, FSIM<sub>C</sub>, SSIM, VIF, MS-SSIM, 
+		IW-SSIM, IFC, PSNR, NQM, VSNR, SR_SIM, MAD, GSM, RFSIM </font></b></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">Image 
+quality assessment (IQA) aims to use computational models to measure the image 
+quality consistently with subjective evaluations. With the rapid proliferation 
+of digital imaging and communication technologies, image quality assessment (IQA) 
+has been becoming an important issue in numerous applications such as image 
+acquisition, transmission, compression, restoration and enhancement, etc. Since 
+the subjective IQA methods cannot be readily and routinely used for many 
+scenarios, e.g. real-time and automated systems, it is necessary to develop 
+objective IQA metrics to automatically and robustly measure the image quality. 
+Meanwhile, it is anticipated that the evaluation results should be statistically 
+consistent with those of the human observers. To this end, the scientific 
+community has developed various IQA methods in the past decades. This website 
+aims to provide enough basic knowledge of IQA to the beginners in this 
+direction.</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">What are 
+different categories of IQA problems?</font></b></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">According to 
+the availability of a reference image, objective IQA metrics can be classified 
+as full reference (FR), no-reference (NR) and reduced-reference (RR) methods.</font></span></p>
+<p><span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-style: italic">Full 
+Reference (FR) IQA&nbsp; </font>
+<font face="Calibri" style="font-size: 13pt">In FR IQA problem, the 
+distortion free image is given. Such an image usually is considered to have a 
+&quot;perfect&quot; quality and is called &quot;reference image&quot; in IQA terminologies. Then, a 
+set of its distorted versions are also provided. Your task is to present a 
+computerized algorithm to evaluate the perceptual quality of each distorted 
+image.</font></span></p>
+<p><span style="font-style: italic" lang="en-us">
+<font face="Calibri" style="font-size: 13pt">Reduced</font></span><span lang="en-us"><font face="Calibri" style="font-size: 13pt; font-style: italic"> 
+Reference (RR) IQA&nbsp; </font>
+<font face="Calibri" style="font-size: 13pt">In RR IQA problem, the 
+distorted image is of course given. The reference image is not available; 
+however, partial information of the reference image is known. What kind of 
+information is known of the reference image depends on your algorithm's scheme. 
+Such RR algorithms can be useful in applications such as real-time visual 
+information communications over wired or wireless networks, where they can be 
+adopted to monitor image quality degradations or control the network streaming 
+resources. The general framework explaining how an RR IQA metric works can be 
+illustrated by the following figure, which is extracted from the paper &quot;Q. Li, 
+Z. Wang, Reduced-reference image quality assessment using divisive 
+normalization-based image representation, IEEE Trans. Image Processing, vol. 3, 
+no. 2, pp. 202-211, 2009&quot;.</font></span></p>
+<p><font face="Calibri"><img border="0" src="Files/RR-Framework.png" width="764" height="340"></font></p>
+<p><span style="font-style: italic" lang="en-us">
+<font face="Calibri" style="font-size: 13pt">No</font></span><span lang="en-us"><font face="Calibri" style="font-size: 13pt; font-style: italic"> 
+Reference (NR) IQA&nbsp; </font>
+<font face="Calibri" style="font-size: 13pt">In NR IQA problem, only the 
+distorted image is given. Or more accurately in such a case, we cannot call it 
+as &quot;distorted&quot; image since we do not know the corresponding distortion-free 
+reference image. You need to design an algorithm to evaluate the quality of the 
+given image. NR is the most difficult IQA problems. To the best of my knowledge, 
+there is no successful universal NR IQA algorithms currently. Most of the 
+existing NR IQA metrics assume that the distortion affecting the image is known 
+beforehand. For example, there exist NR IQA metrics to evaluate the quality of 
+JPEG, JPEG2000, or blurred images. </font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">How to evaluate 
+IQA metrics?</font></b></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">If 
+you want to evaluate the performance of existing IQA metrics or to compare your 
+proposed IQA metric with the existed ones, you need to conduct experiments on 
+the public available image databases established for the purpose of evaluating 
+IQA metrics. Normally, in such a database, there are a dozen of reference 
+images; for each image, there are several distorted versions corresponding to 
+several kinds of different distortion types. For each distorted image, there are 
+several subjective evaluations by human beings. And a final subjective score is 
+assigned to each distorted image according to some rules. In order to evaluate 
+an IQA metric, you need to compute objective scores for all the distorted images 
+in the database using the selected IQA metric. Then, you can evaluate kinds of 
+correlations (and RMSE) between the obtained objective scores and the subjective 
+scores provided by the database. By such a process, the performance of IQA 
+metrics can be compared.</font></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+Currently, to the best of my knowledge, there are seven publicly available image 
+databases in the IQA community, </font></span>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+including
+<a href="http://www.ponomarenko.info/tid2013.htm">TID2013 database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www.ponomarenko.info/tid2008.htm">
+TID2008 database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://vision.eng.shizuoka.ac.jp/mod/page/view.php?id=23">CSIQ database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://live.ece.utexas.edu/research/Quality/subjective.htm">LIVE database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www2.irccyn.ec-nantes.fr/ivcdb/">
+IVC database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://mict.eng.u-toyama.ac.jp/mictdb.html">Toyama-MICT database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://foulard.ece.cornell.edu/dmc27/vsnr/vsnr.html">
+Cornell A57 database</a><span style="color: #000000">, and
+<a href="http://www.bth.se/tek/rcg.nsf/pages/wiq-db">Wireless Imaging Quality 
+database (WIQ)</a>.</span> However, these seven databases are quite different in 
+terms of the number of reference images, the number of distorted images, the 
+number of quality distortion types, the number of human observers, and the 
+format of 
+images (grayscale or colorful). In my opinion, TID2008, CSIQ, and LIVE are the most comprehensive ones. </span>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The 
+characteristics of these seven databases are summarized in the following table.</font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 62%" id="table4">
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Database</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Source 
+		Images</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Distorted 
+		Images</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Distortion 
+		Types</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Image Type</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Observers</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID20<span lang="en-us">13</span></span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">25</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">3000</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">24</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">971</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2008</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">25</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">1700</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">17</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">838</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CSIQ</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">30</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">866</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">6</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">35</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">LIVE</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">29</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">779</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">5</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">161</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IVC</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">10</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">185</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">4</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">15</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span style="font-family: Calibri; font-weight: 700">
+		<font size="3">Toyama-MICT</font></span></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">14</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">168</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">2</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">color</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">16</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">A57</span></font></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">3</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">54</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">6</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">gray</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">7</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 147px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">WIQ</span></font></span></td>
+		<td style="width: 121px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">7</span></font></span></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" width="161">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">80</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">5</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">gray</span></font></td>
+		<td style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">6</span></font></span><font size="3"><span style="font-family: Calibri; font-weight: 700">0</span></font></td>
+	</tr>
+</table>
+<p style="margin-bottom: 0"><span lang="en-us">
+<font face="Calibri" style="font-size: 13pt">Suppose that you have 
+already calculated objective scores for all the distorted images in a database 
+with a selected IQA metric, now you can analyze its performance. In the IQA 
+community, there are four widely used metrics to evaluate the performance of IQA 
+metrics. In the following, <i>n</i> denotes the number of distorted images in 
+the database.</font></span></p>
+<p style="margin-bottom: 0"><span lang="en-us">
+<font face="Calibri" style="font-size: 13pt">The first two ones are the 
+Spearman rank order correlation coefficient (SROCC) and the Kendall rank order 
+correlation coefficient. These two can measure the prediction monotonicity of an 
+IQA metric since they operate only on the rank of the data points and ignore the 
+relative distance between data points. SROCC is defined as:</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0"><span lang="en-us">
+<font face="Calibri" style="font-size: 13pt">&nbsp;<img border="0" src="IQA.ht2.gif"></font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt"><span lang="en-us">where <i>
+d<sub>i </sub></i>is the difference between </span>the<span lang="en-us"> <i>i</i><sup>th</sup> 
+image's ranks in the subjective and objective evaluations. KROCC is defined as:
+</span></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt">
+<img border="0" src="IQA.ht4.gif"></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt"><span lang="en-us">where<i> 
+n<sub>c</sub></i><sub> </sub>is the number of concordant pairs in the data set 
+and <i>n<sub>d</sub> </i>is the number of discordant pairs in the data set. </span>
+Let (<i>x</i><sub>1</sub>,&nbsp;<i>y</i><sub>1</sub>), (<i>x</i><sub>2</sub>,&nbsp;<i>y</i><sub>2</sub>), 
+…, (<i>x</i><sub><i>n</i></sub>,&nbsp;<i>y</i><sub><i>n</i></sub>) be a set of joint 
+observations from two random variables <i>X</i> and <i>Y</i> respectively, such 
+that all the values of (<i>x</i><sub><i>i</i></sub>) and (<i>y</i><sub><i>i</i></sub>) 
+are unique. Any pair of observations (<i>x</i><sub><i>i</i></sub>,&nbsp;<i>y</i><sub><i>i</i></sub>) 
+and (<i>x</i><sub><i>j</i></sub>,&nbsp;<i>y</i><sub><i>j</i></sub>) are said to be <i>
+concordant</i> if the ranks for both elements agree: that is, if both <i>x</i><sub><i>i</i></sub>&nbsp;&gt;&nbsp;<i>x</i><sub><i>j</i></sub> 
+and <i>y</i><sub><i>i</i></sub>&nbsp;&gt;&nbsp;<i>y</i><sub><i>j</i></sub> or if both <i>x</i><sub><i>i</i></sub>&nbsp;&lt;&nbsp;<i>x</i><sub><i>j</i></sub> 
+and <i>y</i><sub><i>i</i></sub>&nbsp;&lt;&nbsp;<i>y</i><sub><i>j</i></sub><span lang="en-us">.</span>
+<span lang="en-us">T</span>hey are said to be <i>discordant</i>, if <i>x</i><sub><i>i</i></sub>&nbsp;&gt;&nbsp;<i>x</i><sub><i>j</i></sub> 
+and <i>y</i><sub><i>i</i></sub>&nbsp;&lt;&nbsp;<i>y</i><sub><i>j</i></sub> or if <i>x</i><sub><i>i</i></sub>&nbsp;&lt;&nbsp;<i>x</i><sub><i>j</i></sub> 
+and <i>y</i><sub><i>i</i></sub>&nbsp;&gt;&nbsp;<i>y</i><sub><i>j</i></sub>. If <i>x</i><sub><i>i</i></sub>&nbsp;=&nbsp;<i>x</i><sub><i>j</i></sub> 
+or <i>y</i><sub><i>i</i></sub>&nbsp;=&nbsp;<i>y</i><sub><i>j</i></sub>, the pair is 
+neither concordant, nor discordant.<span lang="en-us"> With the help of Matlab, 
+it is easy to compute the Spearman or Kendall rank order correlations for two 
+vectors (one vector holds the subjective scores, and the other contains the 
+corresponding objective scores) by the following Matlab script:</span></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+SROCC_Corr_Coef = corr(subjetiveScores, objectiveScores, 'type', 'spearman');</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+KROCC_Corr_Coef = corr(subjetiveScores, objectiveScores, 'type', 'kendall');</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt"><span lang="en-us">In the 
+following, we suppose that <i>s<sub>i</sub></i><sub> </sub>is the subjective 
+score of the <i>i</i>-th image and <i>x</i></span><i><sub>i </sub></i>
+<span lang="en-us">is the objective score of the <i>i</i>-th image. To compute 
+the other two evaluation</span> metrics we need to apply a regression analysis, 
+to provide a nonlinear mapping between <span lang="en-us">predicted </span>objective scores and the subjective mean 
+opinion scores (MOS). </font><span style="font-size: 13pt">
+<font face="Calibri">The third metric is the Pearson linear correlation 
+coefficient (PLCC) between MOS and the objective scores after nonlinear 
+regression. The fourth metric is the root mean squared error (RMSE) between MOS 
+and the objective scores after nonlinear regression. For the nonlinear 
+regression, the following mapping function <span lang="en-us">is widely used, 
+which is proposed in &quot;H.R. Sheikh et al., A statistical evaluation of recent 
+full reference image quality assessment algorithms, IEEE Trans. Image 
+Processing, vol. 15, no. 11, pp. 3440-3451, 2006&quot;. We first map </span></font>
+</span><font face="Calibri" style="font-size: 13pt"><span lang="en-us">
+<i>x</i></span><i><sub>i </sub></i><span lang="en-us">to <i>q</i></span><i><sub>i
+</sub></i></font><span style="font-size: 13pt"><font face="Calibri">
+<span lang="en-us">by the following function: </span></font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt">
+<img border="0" src="IQA.ht1.gif"></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri" style="font-size: 13pt"><span lang="en-us">where
+</span></font><i>
+<span lang="EL" style="font-size: 13pt; font-family: Calibri">β</span><sub><span style="font-size: 13pt; font-family: Calibri" lang="en-us">i
+</span></sub></i><span style="font-size: 13pt"><font face="Calibri">
+<span lang="en-us">are parameters to be fitted. Then, the PLCC can be computed 
+as</span></font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span style="font-size: 13pt"><font face="Calibri"><span lang="en-us">&nbsp;<img border="0" src="IQA.ht3.gif">
+</span></font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Of 
+course, such a Pearson linear correlation coefficient can be conveniently 
+computed by using the following Matlab script:</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">PLCC = 
+corr(subjectiveScores, nonLinearMappedObjectiveScores, 'type', 'Pearson');</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The 
+fourth metric RMSE can be simply defined as</font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri">
+<img border="0" src="IQA.ht5.gif"></font></p>
+<p style="margin-top: 0; margin-bottom: 0">
+　</p>
+<p style="margin-top: 0; margin-bottom: 0">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">In 
+addition to the four evaluation metrics defined above, usually researchers plot 
+the distributions of subjective scores and objective scores on a 2-D graph and also 
+plot the fitted curve on the same figure. The following figure is such an 
+example, which shows the scatter distributions of subjective MOS versus the 
+predicted scores obtained by the FSIM IQA metric and the VIF IQA metric on 
+TID2008 database. </font></span></p>
+<p style="margin-top: 0; margin-bottom: 0">
+<font face="Calibri">
+<img border="0" src="Files/scatter.png" width="985" height="342"></font></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">What are the 
+performances of modern FR IQA metrics? </font></b></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">In 
+the past decade, a dozen of FR IQA metrics have been proposed; however, there 
+is few papers giving a systematic evaluation of all the popular IQA metrics on 
+all the available datasets. There is because new IQA metrics and new testing 
+datasets are continuously emerging. Sometimes, different researchers reported 
+different evaluation results even for the same IQA metric on the same dataset; 
+because they used different or even wrong implementations. Another fact is that 
+in order to compute PLCC and RMSE, researchers need to perform a non-linear 
+fitting to the result; however, people sometimes use different fitting 
+functions. And even with the same fitting function, the fitting results can also 
+be different because of the different parameter initialization. Considering 
+these situations, here we want to 
+give a thoroughly evaluation of all the popular IQA metrics known by us on all 
+the available datasets. All the experimental settings, including the source code 
+used, the fitting function used, the parameter initialization for the fitting 
+function, and way to generate the scatter plot, will be described in detail. We will keep updating materials provided here.</font></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">1.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="VSI/VSI.htm">Evaluation of VSI</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">2.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="FSIM/FSIM.htm">Evaluation of FSIM/FSIM</a></span></font><span lang="EN-US" style="FONT-SIZE: 13pt; COLOR: black; FONT-FAMILY: Calibri"><sub><i><a href="FSIM/FSIM.htm">C</a></i></sub></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us">.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">3</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us">. 
+<a target="_blank" href="Evalution_SSIM/eva-SSIM.htm">Evaluation of SSIM</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">4.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_MS_SSIM/eva-MS-SSIM.htm">Evaluation of Multiscale-SSIM</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">5.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_VIF/eva-VIF.htm">Evaluation of VIF</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">6.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_VSNR/eva-VSNR.htm">Evaluation of VSNR</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">7.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_PSNR/eva-PSNR.htm">Evaluation of PSNR</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">8.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_NQM/eva-NQM.htm">Evaluation of NQM</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">9.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_IFC/eva-IFC.htm">Evaluation of IFC</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">10.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_IW_SSIM/eva-IW-SSIM.htm">Evaluation of IW-SSIM</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">11.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_UQI/eva-UQI.htm">Evaluation of UQI</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">12.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_GSM/eva-GSM.htm">Evaluation of GSM</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">13.</font></span><font face="Calibri" style="font-size: 13pt"><span lang="en-us"> 
+<a href="Evalution_MAD/eva-MAD.htm">Evaluation of MAD</a>.</span></font></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">14.
+<a href="SR-SIM/SR-SIM.htm">Evaluation of SR-SIM</a>.</font></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">15.
+<a href="Evalution_RFSIM/eva-RFSIM.htm">Evaluation of RFSIM</a>.</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Our related works</font></b></span></p>
+<ol>
+	<li>
+	<p style="margin-top: 0; margin-bottom: 0"><font face="Calibri">Lin Zhang,
+	<span lang="en-us">Ying Shen</span>,<span lang="en-us"> and Hongyu Li</span>,<span lang="en-us"> 
+	&quot;<a href="http://sse.tongji.edu.cn/linzhang/files/VSI.pdf">VSI: A visual 
+	saliency induced index for perceptual image quality assessment</a>&quot;</span>,
+	<span lang="en-us">IEEE Trans. Image Processing, vol. 23, no. 10, pp. 
+	4270-4281, 2014</span>.<span lang="en-us"> (<i><b><font color="#FF0000"><a target="_blank" href="http://sse.tongji.edu.cn/linzhang/IQA/VSI/VSI.htm">website 
+	and source code</a></font></b></i>)</span></font></p></li>
+	<li>
+	<p style="margin-top: 0; margin-bottom: 0">
+	<span style="font-family: Calibri; font-size: 12pt" lang="en-us">Lin Zhang and Hongyu Li, &quot;<a href="../ICIP12/ICIP-SR-SIM.pdf">SR-SIM: A 
+fast and high performance IQA index based on spectral residual</a>&quot;, 
+in Proc. ICIP, pp. 1473-1476, 2012.</span><font face="Calibri"><span lang="en-us"> (<i><b><font color="#ff0000"><a target="_blank" href="SR-SIM/SR-SIM.htm">website 
+and source code</a></font></b></i>)</span></font></p></li>
+	<li>
+	<p style="margin-top: 0; margin-bottom: 0">
+	<span style="font-family: Calibri; font-size: 12pt" lang="en-us">Lin Zhang, Lei Zhang, Xuanqin Mou, and David Zhang, &quot;<a href="../ICIP12/ICIP12-IQA%20Evaluation.pdf">A 
+comprehensive evaluation of full reference image quality assessment algorithms</a>&quot;, 
+in Proc. ICIP, pp. 1477-1480, 2012.</span></p></li>
+	<li>
+	<p style="margin-top: 0; margin-bottom: 0"><font face="Calibri">Lin 
+Zhang, Lei Zhang, <span lang="en-us">Xuanqin Mou, and </span>David Zhang,<span lang="en-us"> 
+&quot;<a href="FSIM/Files/Fsim%20a%20feature%20similarity%20index%20for%20image%20quality%20assessment.pdf">FSIM: 
+	A feature similarity index 
+for image quality assessment</a>&quot;</span>, <span lang="en-us">IEEE Trans. 
+Image Processing</span>, <span lang="en-us">vol. 20, no. 8, pp. 2378-2386, 
+2011</span>.<span lang="en-us"> (<i><b><font color="#ff0000"><a target="_blank" href="FSIM/FSIM.htm">website 
+and source code</a></font></b></i>)</span></font></p></li>
+	<li>
+	<p style="margin-top: 0; margin-bottom: 0"><span lang="en-us">
+	<font face="Calibri">Lin Zhang, 
+Lei Zhang, and Xuanqin Mou, &quot;<a href="RFSIM/RFSIM_files/RFSIM%20A%20FEATURE%20BASED%20IMAGE%20QUALITY%20ASSESSMENT%20METRIC%20USING%20Riesz%20transforms.pdf">RFSIM: 
+	A feature based image quality assessment metric using Riesz transforms</a>&quot;,
+</font></span><font face="Calibri">i<span lang="en-us">n: </span>Proc<span lang="en-us">. 
+ICIP, pp. 321-324,&nbsp; 2010. (<i><b><font color="#ff0000"><a target="_blank" href="RFSIM/RFSIM.htm">website 
+and source code</a></font></b></i>)</span></font></p></li>
+</ol>
+<p align="justify" style="margin-top: 0; margin-bottom: 0">　</p>
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created</span> <span lang="en-us">on</span>: <span lang="en-us">Jan</span>.<span lang="en-us">18,
+</span>201<span lang="en-us">1</span>
+</font>
+</p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Aug</span>.<span lang="en-us"> 
+30,
+</span>201<span lang="en-us">4</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+<div align="center"><font face="Calibri"><br></font></div>
+<div align="center"><font face="Calibri"><a href="http://www.amazingcounters.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3013238&c=9040027" alt="home page stats"></a></font></div>
+</body>
+
+</html>

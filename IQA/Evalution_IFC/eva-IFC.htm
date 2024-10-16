@@ -1,0 +1,362 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Evaluation of Information Fidelity Criterion (IFC)</title>
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">Evaluation of 
+		IFC</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang, School of Software Engineering, Tongji University</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">IFC</span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+(Information Fidelity Criterion) index is presented by Sheikh and Bovik on 2005 [1]. 
+It is an earlier version of VIF.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">The 
+authors of IFC provide the implementation, </span>
+<span lang="en-us" style="font-size: 13pt; font-family: Calibri; color: black">which 
+can be downloaded from here
+<a href="http://live.ece.utexas.edu/research/quality/ifcvec_release.zip">
+http://live.ece.utexas.edu/research/quality/ifcvec_release.zip</a>. Please note 
+that in our previous works, we used the IFC implementation provided in the 
+<a href="http://foulard.ece.cornell.edu/gaubatz/metrix_mux/">MetriX MuX</a> package, which will generate slightly different results from the ones 
+reported here. This is because in MetriX MuX uses a different &quot;color to 
+grayscale&quot; conversion strategy.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Usage Notes</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Calibri; color: black">
+1. Do not change the default parameter settings. </span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Calibri; color: black">
+2. IFC can only deal with gray-scale images and the 
+luminance range is [0, 255]. So, for color images, before calling IFC, you need 
+to convert it to [0, 255] gray-scale version. Usually, this can be 
+accomplished by the Matlab routine rgb2gray. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">The results (in Matlab .mat format) are provided here. Each result file contains a <i>n</i> by 
+2 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+IFC values, and the second column is the mos/dmos values provided by the database. 
+For example, you can use the following matlab code to calculate the SROCC and 
+KROCC values for IFC
+values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">matData 
+= load('IFCOnTID.mat');<br>
+IFCOnTID= matData.IFCOnTID;<br>
+IFC_TID_SROCC = corr(IFCOnTID(:,1), IFCOnTID(:,2), 'type', 'spearman');<br>
+IFC_TID_KROCC = corr(IFCOnTID(:,1), IFCOnTID(:,2), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+%%%%%%%%%%%%%%%</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> and <i>RMSE</i> are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[2].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+Evaluation results of IFC on seven databases are given below. Besides, for each evaluation metric, we 
+present its weighted-average value over all the testing datasets; and the weight 
+for each database is set as the number of distorted images in that dataset. </font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 68%" id="table4">
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Database</span></font></span></td>
+		<td style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Results</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">Nonlinear fitting code</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">KROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">PLCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">RMSE</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2013</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/IFCOnTID2013.mat">IFCOnTID2013</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID2013.rar">NonlinearFittingTID<span lang="en-us">2013</span></a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5389</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.3939</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5538</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">1.0322</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2008</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/IFCOnTID.mat">IFCOnTID</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID.rar">NonlinearFittingTID</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5675</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.4236</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7340</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9113</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CSIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/IFCOnCSIQ.mat">IFCOnCSIQ</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingCSIQ.rar">NonlinearFittingCSIQ</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7671</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.5897</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.8384</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.1431</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">LIVE</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Calibri"><b>
+		<a href="Files/IFCOnLIVE.mat">IFCOnLIVE</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingLIVE.rar">NonlinearFittingLIVE</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9259</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7579</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9268</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">10.2643</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IVC</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/IFCOnIVC.mat"><b>
+		<font face="Calibri" size="3">IFCOnIVC</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingIVC.rar">NonlinearFittingIVC</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.8993</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.7202</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9093</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.5069</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span style="font-family: Calibri; font-weight: 700">
+		<font size="3">Toyama-MICT</font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/IFCOnMICT.mat"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IFCOnMICT</span></font></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingMICT.rar"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">NonlinearFittingMICT</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.8354</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.6370</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.8403</span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.6784</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">A57</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/IFCOnA57.mat"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IFCOnA57</span></font></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingA57.rar"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">NonlinearFittingA57</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.3185</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.2378</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.5772</span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.2007</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">WIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/IFCOnWIQ.mat">IFCOn<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/NonlinearFittingWIQ.rar">NonlinearFitting<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.7159</span></font></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.5290</span></font></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">0.7678</span></font></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="21">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">14.6748</span></font></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">　</td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Calibri">[1] H.R. 
+Sheikh, A.C. Bovik, and G. de Veciana, &quot;An information fidelity criterion 
+for image quality assessment using natural scene statistics&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 14, no. 12,&nbsp; pp. 2117-2128, 2005.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">[2] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: May. 08, 2011</span></font></p>
+<p align="justify"><font face="Calibri">Last update:<span lang="en-us"> Dec. 02, 2013</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></p>
+
+</body>
+
+</html>

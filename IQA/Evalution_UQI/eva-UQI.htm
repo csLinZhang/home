@@ -1,0 +1,310 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Evaluation of Visual Signal-to-Noise Ratio (VSNR)</title>
+<!--mstheme--><link rel="stylesheet" href="natu1011-106.css">
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="5" color="#0000FF">Evaluation of 
+		UQI</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">
+		Lin Zhang, Dept. Computing, The Hong Kong Polytechnic University</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Introduction</font></b></span></p>
+<p>
+<span lang="EN-US" style="font-size: 13pt; font-family: Times New Roman; color: black">
+UQI
+(Universal Quality Index) is proposed</span><span style="font-size: 13pt; font-family: Times New Roman; color: black"> by 
+<span lang="en-us">Wang</span> and <span lang="en-us">Bovik</span>
+<span lang="en-us">in</span> 200<span lang="en-us">2 </span>[1]. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Source Code</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Times New Roman; color: black">
+We use Dr. Zhou Wang's original implementation which can be downloaded here
+<a href="https://ece.uwaterloo.ca/~z70wang/research/quality_index/img_qi.m">
+https://ece.uwaterloo.ca/~z70wang/research/quality_index/img_qi.m</a>. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Usage Notes</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Times New Roman; color: black">
+UQI can only deal with gray-scale images and the luminance range is [0, 255]. 
+So, for color images, before calling UQI, you need to convert it to [0, 255] 
+gray-scale version. Usually, this can be accomplished by the Matlab routine 
+rgb2gray.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Times New Roman; color: windowtext" lang="EN-US">The results (in Matlab .mat format) are provided here. Each result file contains a <i>n</i> by 
+2 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+UQI values, and the second column is the mos/dmos values provided by the database. 
+For example, you can use the following matlab code to calculate the SROCC and 
+KROCC values for UQI
+values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">matData 
+= load('UQIOnTID.mat');<br>
+UQIOnTID= matData.UQIOnTID;<br>
+UQI_TID_SROCC = corr(UQIOnTID(:,1), UQIOnTID(:,2), 'type', 'spearman');<br>
+UQI_TID_KROCC = corr(UQIOnTID(:,1), UQIOnTID(:,2), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">
+%%%%%%%%%%%%%%%</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> and <i>RMSE</i> are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[2].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">
+Evaluation results of UQI 
+on seven databases are given below. Besides, for each evaluation metric, we 
+present its weighted-average value over all the testing datasets; and the weight 
+for each database is set as the number of distorted images in that dataset. </font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 68%" id="table4">
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">Database</span></font></span></td>
+		<td style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">Results</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">Nonlinear fitting code</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">SROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">KROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">PLCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">RMSE</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">TID2008</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/UQIOnTID.mat"><b>
+		<font face="Times New Roman" size="3">UQI</font></b><b><font size="3" face="Times New Roman">OnTID</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingTID.rar">NonlinearFittingTID</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">0.5851</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.4255</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6643</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">1.0031</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">CSIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<a href="Files/UQIOnCSIQ.mat"><span lang="en-us"><b>
+		<font face="Times New Roman" size="3">UQI</font></b></span></a><span lang="en-us"><font size="3" face="Times New Roman"><b><a href="Files/UQIOnCSIQ.mat">OnCSIQ</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingCSIQ.rar">NonlinearFittingCSIQ</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.8098</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6188</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.8312</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.1460</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">LIVE</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3" face="Times New Roman"><b>
+		<a href="Files/UQIOnLIVE.mat">UQIOnLIVE</a></b></font></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingLIVE.rar">NonlinearFittingLIVE</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">0.8941</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7100</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8987</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">11.9823</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">IVC</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="3"><a href="Files/UQIOnIVC.mat">UQIOnIVC</a></font></b></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingIVC.rar">NonlinearFittingIVC</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8244</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6252</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8302</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6792</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<font size="3">Toyama-MICT</font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/UQIOnMICT.mat"><span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">UQI</span></font></span><span style="font-family: Times New Roman; font-weight: 700"><font size="3">OnMICT</font></span></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingMICT.rar"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">NonlinearFittingMICT</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7028</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.5227</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7164</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8731</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">A57</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/UQIOnA57.mat"><span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">UQI</span></font></span><span style="font-family: Times New Roman; font-weight: 700"><font size="3">OnA57</font></span></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingA57.rar"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">NonlinearFittingA57</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.4260</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.3330</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6356</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.1897</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">WIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/UQIOnWIQ.mat"><span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">UQI</span></font></span><span style="font-family: Times New Roman; font-weight: 700"><font size="3">On<span lang="en-us">WIQ</span></font></span></a></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<a href="Files/NonlinearFittingWIQ.rar">NonlinearFitting<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6084</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.4360</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6974</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="19">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">16.4163</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">　</td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7137</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.5398</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7602</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<hr>
+<p><font face="Times New Roman" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Times New Roman">[1] Z. Wang 
+and A.C. Bovik, “A universal image quality index,” <i>IEEE Signal Process. Lett.</i>, 
+vol. 9, no. 3, pp. 81-84, 2002.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Times New Roman">[2] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+
+<hr>
+<p align="justify"><span lang="en-us">Created on: May 08, 2011</span></p>
+<p align="justify">Last update: <span lang="en-us">Aug.03, 2011</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+</body>
+
+</html>

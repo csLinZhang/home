@@ -1,0 +1,350 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Evaluation of Noise Quality Measure (NQM)</title>
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="5" color="#0000FF">Evaluation of 
+		NQM</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Times New Roman" size="4" color="#0000FF">
+		Lin Zhang, Dept. Computing, The Hong Kong Polytechnic University</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">NQM</span><span lang="EN-US" style="font-size: 13pt; font-family: Times New Roman; color: black">
+(Noise Quality Measure) index is presented&nbsp; [1]. </span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Source Code</font></b></span></p>
+<p>
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">The 
+original implementation provided by the authors can be found at
+<a href="http://users.ece.utexas.edu/~bevans/papers/2000/imageQuality/index.html">
+http://users.ece.utexas.edu/~bevans/papers/2000/imageQuality/index.html</a>. 
+However, we find that it can only deal with squared images (that means the 
+number of rows and the number of columns of the image is the same)</span><span lang="en-us" style="font-size: 13pt; font-family: Times New Roman; color: black">. 
+Thus, we used the NQM implementation provided in the 
+MetriX MuX package, which is available at .<a href="http://foulard.ece.cornell.edu/gaubatz/metrix_mux/">http://foulard.ece.cornell.edu/gaubatz/metrix_mux/</a>. 
+MetriX MuX's NQM implementation is the same as the original NQM implementation, 
+only having some modifications to make it accept non-squared images.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Usage Notes</font></b></span></p>
+<p>
+<span lang="en-us" style="font-size: 13pt; font-family: Times New Roman; color: black">
+1. Using MetriX MuX package, you do not need to convert the RGB image to the 
+grayscale version; such a step is embedded in Metrix MuX.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Times New Roman" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Times New Roman; color: windowtext" lang="EN-US">The results (in Matlab .mat format) are provided here. Each result file contains a <i>n</i> by 
+2 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+NQM values, and the second column is the mos/dmos values provided by the database. 
+For example, you can use the following matlab code to calculate the SROCC and 
+KROCC values for NQM
+values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Times New Roman; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">matData 
+= load('NQMOnTID.mat');<br>
+NQMOnTID= matData.NQMOnTID;<br>
+NQM_TID_SROCC = corr(NQMOnTID(:,1), NQMOnTID(:,2), 'type', 'spearman');<br>
+NQM_TID_KROCC = corr(NQMOnTID(:,1), NQMOnTID(:,2), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">
+%%%%%%%%%%%%%%%</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> and <i>RMSE</i> are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[2].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Times New Roman" style="font-size: 13pt">
+Evaluation results of NQM on seven databases are given below. Besides, for each evaluation metric, we 
+present its weighted-average value over all the testing datasets; and the weight 
+for each database is set as the number of distorted images in that dataset. </font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 68%" id="table4">
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">Database</span></font></span></td>
+		<td style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">Results</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">Nonlinear fitting code</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">SROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">KROCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">PLCC</font></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">RMSE</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">TID2013</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="3"><a href="Files/NQMOnTID2013.mat">NQMOnTID2013</a></font></b></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingTID2013.rar">NonlinearFittingTID<span lang="en-us">2013</span></a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6432</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.4740</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6904</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.8969</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">TID2008</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/NQMOnTID.mat"><b>
+		<font face="Times New Roman" size="3">NQM</font></b><b><font size="3" face="Times New Roman">OnTID</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingTID.rar">NonlinearFittingTID</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6243</font></b></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.4608</font></b></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">0.6142</font></b></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Times New Roman" size="3">1.0590</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">CSIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/NQMOnCSIQ.mat"><b>
+		<font face="Times New Roman" size="3">NQM</font></b><b><font size="3" face="Times New Roman">OnCSIQ</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingCSIQ.rar">NonlinearFittingCSIQ</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7402</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.5638</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7433</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.1756</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">LIVE</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><a href="Files/NQMOnLIVE.mat"><b>
+		<font face="Times New Roman" size="3">NQM</font></b><b><font size="3" face="Times New Roman">OnLIVE</font></b></a></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingLIVE.rar">NonlinearFittingLIVE</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9086</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.7413</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.9122</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">11.1926</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">IVC</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><b>
+		<font face="Times New Roman" size="3"><a href="Files/NQMOnIVC.mat">NQMOnIVC</a></font></b></span></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Times New Roman">
+		<a href="Files/NonlinearFittingIVC.rar">NonlinearFittingIVC</a></font></b></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8347</font></b></span></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6342</font></b></span></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.8498</font></b></span></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Times New Roman" size="3">0.6421</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<font size="3">Toyama-MICT</font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<a href="Files/NQMOnMICT.mat">NQMOnMICT</a></span></font></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingMICT.rar"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">NonlinearFittingMICT</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">0.8911</span></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">0.7129</span></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">0.8955</span></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">0.5569</span></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">A57</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<a href="Files/NQMOnA57.mat">NQMOnA57</a></span></font></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingA57.rar"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">NonlinearFittingA57</span></font></a></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.7981</b></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.5932</b></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.82<span lang="en-us">71</span></b></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.1<span lang="en-us">3</span>8<span lang="en-us">1</span></b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">WIQ</span></font></span></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<a href="Files/NQMOnWIQ.mat">NQMOn<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		<a href="Files/NonlinearFittingWIQ.rar">NonlinearFitting<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.7644</b></font></td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.5803</b></font></td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>0.8<span lang="en-us">17</span>0</b></font></td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="22">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Times New Roman"><b>13.<span lang="en-us">20</span>8<span lang="en-us">9</span></b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Times New Roman; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td valign="top" style="width: 153px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">　</td>
+		<td style="width: 151px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 98px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 114px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 97px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 112px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<hr>
+<p><font face="Times New Roman" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Times New Roman">[1] N. 
+Damera-Venkata, T.D. Kite, W.S. Geisler, B.L. Evans, and A.C. Bovik, &quot;Image 
+quality assessment based on degradation model&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 9, no. 4, pp.636-650, 2000.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Times New Roman">[2] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+
+<hr>
+<p align="justify"><span lang="en-us">Created on: May. 09, 2011</span></p>
+<p align="justify">Last update: <span lang="en-us">Dec. 02, 2013</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+</body>
+
+</html>

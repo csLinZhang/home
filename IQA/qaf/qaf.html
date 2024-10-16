@@ -1,0 +1,518 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Learning Quality-Aware Filters for No-Reference Image Quality Assessment</title>
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">Learning Quality-Aware Filters for No-Reference Image Quality Assessment</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		Lin Zhang, 
+		Zhongyi Gu, Xiaoxu Liu, Hongyu Li, and Jianwei Lu</font></span><p class="text">
+		<span lang="en-us"><font face="Calibri" size="4" color="#0000FF">School 
+		of Software Engineering, Tongji University, Shanghai, China</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;Learning Quality-Aware Filters for 
+No-Reference Image Quality Assessment&quot;, submitted to IEEE Multimedia 
+Magazine</span><span style="font-family: Calibri; font-size: 13pt" lang="en-us">.</span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">With the rapid 
+development of the usage of digital imaging and communication technologies, 
+there appears to be a great demand for fast and practical image quality 
+assessment (IQA) algorithms that can predict an image’s quality consistently 
+with human perceptions. This paper addresses the problem of general-purpose 
+no-reference image quality assessment (NR-IQA) with the goal of developing a 
+model without any prior knowledge about non-distorted reference images and types 
+of distortions. The key of our approach is to obtain effective image 
+representations by means of learning quality-aware filters (QAF). Additionally, 
+the random forest, instead of other regression models, is used to learn the 
+mapping from the feature space to human subjective scores. Extensive experiments 
+conducted on LIVE and CSIQ databases demonstrate that the proposed NR-IQA metric 
+QAF can achieve better prediction performance than all the other 
+state-of-the-art approaches in terms of both the prediction accuracy and the 
+generalization capability. </font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Source code for 
+QAF will be available when the manuscript is accepted.</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The performance 
+of QAF is validated in terms of its ability to predict the perceptual quality of 
+a given image. Two widely-used IQA datasets are employed,
+<a href="http://live.ece.utexas.edu/research/Quality/">LIVE</a> and
+<a href="http://vision.okstate.edu/?loc=csiq">CSIQ</a>. Five opinion-aware 
+approaches, namely BIQI, BRISQUE, BLIINDS-II, DIIVINE, CORNIA and two 
+opinion-unaware approaches, namely NIQE and QAC, were used for comparison.
+</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-style: italic; font-weight: 700">
+Performances on single database</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">For 
+training-based methods, we present their results under three partition settings: 
+distorted images associated to 80%, 50% and 10% of the reference images are used 
+for training and the remainders are used for testing. The partition was randomly 
+conducted 1000 times and we report the median result. The performance of QAF and 
+other NR-IQA methods is presented in Table 1 and Table 2.</font></span></p>
+<p class="ListParagraph" align="center" style="text-align: center; layout-grid-mode: char">
+<span style="font-size: 12pt; font-family: Calibri">Table <span lang="en-us">1</span>. 
+Performance Evaluation on LIVE.</span></p>
+<div align="center">
+	<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: medium none" id="table6">
+		<tr>
+			<td width="114" rowspan="2" style="width: 68.35pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">Method</span></td>
+			<td width="228" colspan="2" style="width: 1.9in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">80%</span></td>
+			<td width="228" colspan="2" style="width: 136.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">50%</span></td>
+			<td width="228" colspan="2" style="width: 136.9pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">10%</span></td>
+		</tr>
+		<tr>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+		</tr>
+		<tr style="height: 76.15pt">
+			<td width="114" style="width: 68.35pt; height: 76.15pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">BIQI</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">BRISUQE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">BLIIDNS-II</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">DIIVINE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">CORNIA</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">NIQE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">QAC</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">QAF</span></b></td>
+			<td width="114" style="width: .95in; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.825</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.933</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.924</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.884</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.940</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.908</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.874</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.948</span></b></td>
+			<td width="114" style="width: .95in; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.840</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.931</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.927</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.893</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.944</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.908</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.868</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.953</span></b></td>
+			<td width="114" style="width: .95in; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.739</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.917</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.901</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.858</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.933</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.905</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.869</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.949</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.764</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.919</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.901</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.866</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.934</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.904</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.864</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.949</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.547</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.806</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.836</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.695</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.893</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.905</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.866</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.942</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 76.15pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.623</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.816</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.834</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.701</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.894</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.903</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.860</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.945</span></b></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+　</p>
+<p class="ListParagraph" align="center" style="text-align: center; layout-grid-mode: char">
+<span style="font-size: 12pt; font-family: Calibri">Table <span lang="en-us">2</span>. 
+Performance Evaluation on CSIQ.</span></p>
+<div align="center">
+	<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: medium none" id="table7">
+		<tr>
+			<td width="114" rowspan="2" style="width: 68.35pt; border: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">Method</span></td>
+			<td width="228" colspan="2" style="width: 1.9in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">80%</span></td>
+			<td width="228" colspan="2" style="width: 136.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">50%</span></td>
+			<td width="228" colspan="2" style="width: 136.9pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">10%</span></td>
+		</tr>
+		<tr>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+			<td width="114" style="width: .95in; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+			<td width="114" style="width: 68.45pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+		</tr>
+		<tr style="height: 88.3pt">
+			<td width="114" style="width: 68.35pt; height: 88.3pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span lang="FR" style="font-size: 12pt; font-family: Calibri">BIQI</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span lang="FR" style="font-size: 12pt; font-family: Calibri">
+			BRISQUE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span lang="FR" style="font-size: 12pt; font-family: Calibri">
+			BLIIDNS-II</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span lang="FR" style="font-size: 12pt; font-family: Calibri">
+			DIIVINE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span lang="FR" style="font-size: 12pt; font-family: Calibri">CORNIA</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">NIQE</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">QAC</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">QAF</span></b></td>
+			<td width="114" style="width: .95in; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.092</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.775</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.780</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.757</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.714</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.627</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.486</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.786</span></b></td>
+			<td width="114" style="width: .95in; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.237</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.817</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.832</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.795</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.781</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.725</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.654</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.847</span></b></td>
+			<td width="114" style="width: .95in; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.092</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.736</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.749</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.652</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.678</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.626</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.494</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.771</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.396</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.781</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.806</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.716</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.754</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.716</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.706</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.815</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.020</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.545</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.628</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.441</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.638</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.624</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.490</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.742</span></b></td>
+			<td width="114" style="width: 68.45pt; height: 88.3pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.311</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.596</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.688</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.492</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.732</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.714</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<span style="font-size: 12pt; font-family: Calibri">0.707</span></p>
+			<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+			<b><span style="font-size: 12pt; font-family: Calibri">0.755</span></b></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us">
+<font face="Calibri" style="font-size: 13pt; font-weight: 700; font-style: italic">
+Performances on cross-databases</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">We performed a 
+more comprehensive performance evaluation by training on LIVE dataset and 
+testing on CSIQ datasets. For the five opinion-aware NR-IQA methods, their 
+quality prediction models trained on the entire LIVE dataset are provided by the 
+original authors. Thus, we directly use them for testing on CSIQ. The 
+experimental results are presented in Table 3. We can see that QAF performs 
+significantly better than all the other state-of-the-art NR-IQA algorithms in 
+this case, indicating that QAF has a better generalization capability than the 
+other competitors.</font></span></p>
+<p class="MsoNormal" style="text-align:center;">
+<span style="font-size: 12pt; font-family: Calibri">Table <span lang="en-us">3</span>. 
+Evaluation results when trained on LIVE and tested on CSIQ</span></p>
+<div align="center">
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: medium none" id="table8">
+	<tr>
+		<td width="266" valign="top" style="width: 159.6pt; border: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">Method</span></td>
+		<td width="266" valign="top" style="width: 159.65pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">SROCC</span></td>
+		<td width="266" valign="top" style="width: 159.65pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">PLCC</span></td>
+	</tr>
+	<tr style="height: 92.05pt">
+		<td width="266" valign="top" style="width: 159.6pt; height: 92.05pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span lang="FR" style="font-size: 12pt; font-family: Calibri">BIQI</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span lang="FR" style="font-size: 12pt; font-family: Calibri">BRISQUE</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span lang="FR" style="font-size: 12pt; font-family: Calibri">BLIIDNS-II</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span lang="FR" style="font-size: 12pt; font-family: Calibri">DIIVINE</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span lang="FR" style="font-size: 12pt; font-family: Calibri">CORNIA</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">NIQE</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">QAC</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<b><span style="font-size: 12pt; font-family: Calibri">QAF</span></b></td>
+		<td width="266" valign="top" style="width: 159.65pt; height: 92.05pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.619</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.557</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.577</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.596</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.663</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.627</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.490</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<b><span style="font-size: 12pt; font-family: Calibri">0.710</span></b></td>
+		<td width="266" valign="top" style="width: 159.65pt; height: 92.05pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.695</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.742</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.724</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.697</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.764</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.716</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<span style="font-size: 12pt; font-family: Calibri">0.708</span></p>
+		<p class="ListParagraph" align="center" style="text-align: center; text-indent: 0in; layout-grid-mode: char">
+		<b><span style="font-size: 12pt; font-family: Calibri">0.720</span></b></td>
+	</tr>
+</table>
+</div>
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: Jun. 
+29, 2014</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Jun</span>.<span lang="en-us"> 
+29,
+</span>201<span lang="en-us">4</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>

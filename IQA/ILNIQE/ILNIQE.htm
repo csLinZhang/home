@@ -1,0 +1,1353 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>A Feature-Enriched Completely Blind Image Quality Evaluator</title>
+<meta name="Microsoft Theme" content="nature 1011">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" size="5" color="#0000FF">A Feature-Enriched 
+		Completely Blind Image Quality Evaluator</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		<a href="http://sse.tongji.edu.cn/linzhang/">Lin Zhang</a>,
+		<a href="http://www4.comp.polyu.edu.hk/~cslzhang/">Lei Zhang</a>, and
+		<a href="http://live.ece.utexas.edu/people/bovik/">Alan C. Bovik</a></font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+This is the website for our paper &quot;A Feature-Enriched Completely Blind Image 
+Quality Evaluator&quot;, submitted</span><span style="font-family: Calibri; font-size: 13pt" lang="en-us">.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p>
+<font face="Calibri" style="font-size: 13pt">The source code<span lang="en-us"> 
+for the proposed blind NR-IQA metric IL-NIQE </span>can be 
+downloaded here: <span lang="en-us"><a href="Files/ILNIQE.zip">ILNIQE.zip</a></span>. </font></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">In order to 
+facilitate the other researchers, the prediction scores obtained by IL-NIQE along 
+with MOS (or DMOS) on different datasets are provided here. </font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+<a href="Files/ILNIQEOnTID2013.mat">ILNIQEOnTID2013.mat</a></font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+<a href="Files/ILNIQEOnCSIQ.mat">ILNIQEOnCSIQ.mat</a></font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+<a href="Files/ILNIQEOnLIVE.mat">ILNIQEOnLIVE.mat</a></font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+<a href="Files/ILNIQEOnMD1.mat">ILNIQEOnMD1.mat</a></font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+<a href="Files/ILNIQEOnMD2.mat">ILNIQEOnMD2.mat</a></font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">With the above 
+mat file, the performance metrics could be easily computed. For example, with the 
+following codes, the IL-NIQE's SROCC on TID2013 can be obtained :</font></span></p>
+<p>
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">matData 
+= load('ILNIQEOnTID2013.mat');<br>
+ILNIQEOnTID2013= matData.ILNIQEOnTID2013;<br>
+SROCC = corr(ILNIQEOnTID2013(:,1), 
+ILNIQEOnTID2013(:,2), 'type', 
+'spearman');</font></span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt; font-style: italic" lang="en-us">
+A. Databases</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Four benchmark 
+large-scale IQA datasets are used to evaluate the proposed IL-NIQE index, 
+including TID2013, CSIQ, LIVE, and LIVE Multiply Distortion. The LIVE Multiply 
+Distortion (MD) dataset was constructed by two sections and we regard them as 
+two separate datasets, denoted by LIVE MD1 and LIVE MD2. </font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-style: italic; font-size: 13pt" lang="en-us">
+B</span><span style="font-family: Calibri; font-size: 13pt; font-style: italic" lang="en-us">. 
+Performance on Each Individual Dataset</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Since 
+opinion-aware methods need to use the distorted images in the dataset to learn 
+the model, we partition the dataset into a training subset and a testing subset. 
+We report results under three partition settings: distorted images associated to 
+80%, 50%, and 10% of the reference images are used for training and the 
+remaining for testing. The partition was randomly conducted 1,000 times and the 
+median results are reported in the Table 1. For IL-NIQE, NIQE and QAC, 
+though they do not need training on the dataset, we report their results on the 
+partitioned test subset to make the comparison consistent.</font></span></p>
+<p class="TableTitle"><font face="Calibri"><span lang="en-us">Table 1 </span>Results of Performance Evaluation on Each Individual 
+Dataset</font></p>
+<div align="left">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" id="table5" width="558">
+		<tr style="height: 7.95pt">
+			<td width="65" rowspan="2" style="width: 38.7pt; height: 7.95pt; border-left: medium none; border-right: 1.0pt solid black; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpFirst" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">Datasets</span></font></td>
+			<td width="83" rowspan="2" style="width: 49.5pt; height: 7.95pt; border-left: medium none; border-right: 1.0pt solid black; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">Methods</span></font></td>
+			<td style="width: 106px; height: 7.95pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">80%</span></font></td>
+			<td style="width: 113px; height: 7.95pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">50%</span></font></td>
+			<td style="width: 120px; height: 7.95pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">10%</span></font></td>
+		</tr>
+		<tr style="height: 11.4pt">
+			<td style="width: 106px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 113px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 120px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="65" rowspan="8" style="width: 38.7pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">TID2013</span></font></td>
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BIQI</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.349&nbsp; 0.366</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.332&nbsp; 0.332</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.199&nbsp; 0.250</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BRISQUE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.573&nbsp; 0.651</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.563&nbsp; 0.645</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.513&nbsp; 0.587</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BLIINDS2</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.536&nbsp; 0.628</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.458&nbsp; 0.480</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.402&nbsp; 0.447</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">DIIVINE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.549&nbsp; 0.654</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.503&nbsp; 0.602</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.330&nbsp; 0.391</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CORNIA</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.549&nbsp; 0.613</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.573&nbsp; 0.652</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.508&nbsp; 0.603</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">NIQE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.317&nbsp; 0.426</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.317&nbsp; 0.420</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.313&nbsp; 0.398</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">QAC</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.390&nbsp; 0.495</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.390&nbsp; 0.489</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.372&nbsp; 0.435</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">IL<span lang="en-us">-NIQE</span></span></font></td>
+			<td style="width: 106px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.521&nbsp; 0.648</span></font></td>
+			<td style="width: 113px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.513&nbsp; 0.641</span></font></td>
+			<td style="width: 120px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.494&nbsp; 0.590</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="65" rowspan="8" style="width: 38.7pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CSIQ</span></font></td>
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BIQI</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.092&nbsp; 0.237</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.092&nbsp; 0.396</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.020&nbsp; 0.311</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BRISQUE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.775&nbsp; 0.817</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.736&nbsp; 0.781</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.545&nbsp; 0.596</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BLIINDS2</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.780&nbsp; 0.832</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.749&nbsp; 0.806</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.628&nbsp; 0.688</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">DIIVINE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.757&nbsp; 0.795</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.652&nbsp; 0.716</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.441&nbsp; 0.492</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CORNIA</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.714&nbsp; 0.781</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.678&nbsp; 0.754</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.638&nbsp; 0.732</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">NIQE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.627&nbsp; 0.725</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.626&nbsp; 0.716</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.624&nbsp; 0.714</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">QAC</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.486&nbsp; 0.654</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.494&nbsp; 0.706</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.490&nbsp;&nbsp; 0.707</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">IL<span lang="en-us">-NIQE</span></span></font></td>
+			<td style="width: 106px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.822&nbsp; 0.865</span></font></td>
+			<td style="width: 113px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.814&nbsp; 0.854</span></font></td>
+			<td style="width: 120px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.813&nbsp; 0.852</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="65" rowspan="8" style="width: 38.7pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">LIVE</span></font></td>
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BIQI</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.825&nbsp; 0.840</span></font></td>
+			<td style="width: 113px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.739&nbsp; 0.764</span></font></td>
+			<td style="width: 120px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.547&nbsp; 0.623</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BRISQUE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.933&nbsp; 0.931</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.917&nbsp; 0.919</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.806&nbsp; 0.816</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BLIINDS2</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.924&nbsp; 0.927</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.901&nbsp; 0.901</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.836&nbsp; 0.834</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">DIIVINE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.884&nbsp; 0.893</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.858&nbsp; 0.866</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.695&nbsp; 0.701</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CORNIA</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.940&nbsp; 0.944</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.933&nbsp; 0.934</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.893&nbsp; 0.894</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">NIQE</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.908&nbsp; 0.908</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.905&nbsp; 0.904</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.905&nbsp; 0.903</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">QAC</span></font></td>
+			<td style="width: 106px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.874&nbsp; 0.868</span></font></td>
+			<td style="width: 113px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.869&nbsp; 0.864</span></font></td>
+			<td style="width: 120px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.866&nbsp; 0.860</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="83" style="width: 49.5pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">IL<span lang="en-us">-NIQE</span></span></font></td>
+			<td style="width: 106px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.902&nbsp; 0.906</span></font></td>
+			<td style="width: 113px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.899&nbsp; 0.903</span></font></td>
+			<td style="width: 120px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.899&nbsp; 0.903</span></font></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt; font-style: italic" lang="en-us">
+C. 
+Cross-datasets Performance Evaluation</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<font face="Calibri" style="font-size: 13pt">
+<span lang="en-us">For the five 
+opinion-aware BIQA methods, their quality prediction models trained on the 
+entire LIVE dataset are provided by the original authors. Thus, we directly use 
+them for testing on the other datasets. The results are shown in Table 2. For 
+each performance measure, the two best results are highlighted in bold. In Table 
+3 we present the weighted-average SRCC and PLCC indices of all methods over the 
+four datasets, and the weight assigned to e</span></font><font style="font-size: 13pt" face="Calibri">ach dataset linearly 
+depends on the number of distorted images contained in that dataset. 
+Furthermore, we train the opinion-aware methods on the entire TID2013 dataset 
+and then perform testing on the rest datasets. The results are shown in Table 4 
+and Table 5.</font></p>
+<p class="TableTitle"><font face="Calibri"><span lang="en-us">Table 2 </span>Evaluation Results 
+<span lang="en-us">w</span>hen Trained on LIVE</font></p>
+<div align="left">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: -2.75pt" id="table6" width="591">
+		<tr style="height: 11.4pt">
+			<td width="70" rowspan="2" style="width: 41.85pt; height: 11.4pt; border-left: medium none; border-right: 1.0pt solid black; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpFirst" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">&nbsp;</span></font></td>
+			<td style="width: 122px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">TID2013</span></font></td>
+			<td style="width: 112px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CSIQ</span></font></td>
+			<td style="width: 100px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">MD1</span></font></p>
+			</td>
+			<td style="width: 122px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">MD2</span></font></td>
+		</tr>
+		<tr style="height: 11.4pt">
+			<td style="width: 122px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 112px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 100px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 122px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BIQI</span></font></td>
+			<td style="width: 122px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.394&nbsp; 0.468</span></font></td>
+			<td style="width: 112px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.619&nbsp; 0.695</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.654&nbsp; 0.774</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.490&nbsp; <span lang="en-us">&nbsp;</span>0.766</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BRISQUE</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.367&nbsp; 0.475</span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.557&nbsp; 0.742</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.791&nbsp; 0.866</span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.299&nbsp;<span lang="en-us"> </span>
+			0.459</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BLIINDS2</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.393&nbsp; 0.470</span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.577&nbsp; 0.724</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.665&nbsp; 0.710</span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.015<span lang="en-us"> </span>&nbsp;0.302</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">DIIVINE</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.355&nbsp; 0.545</span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.596&nbsp; 0.697</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.708&nbsp; 0.767</span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.602&nbsp;<span lang="en-us"> </span>&nbsp;0.702</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CORNIA</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.429</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.575</b></span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.663</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.764</b></span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.839&nbsp; 0.871</span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.841</span></b><span style="font-size: 12pt">&nbsp;<span lang="en-us">
+			</span>&nbsp;<b>0.864</b></span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">NIQE</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.311&nbsp; 0.398</span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.627&nbsp; 0.716</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.871</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.909</b></span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.795&nbsp;<span lang="en-us"> </span>&nbsp;0.848</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">QAC</span></font></td>
+			<td style="width: 122px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.372&nbsp; 0.437</span></font></td>
+			<td style="width: 112px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.490&nbsp; 0.708</span></font></td>
+			<td style="width: 100px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.396&nbsp; 0.538</span></font></td>
+			<td style="height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.471&nbsp;<span lang="en-us"> </span>&nbsp;0.672</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="70" style="width: 41.85pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="en-us"><font face="Calibri" size="3">IL-NIQE</font></span></td>
+			<td style="width: 122px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.494</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.589</b></span></font></td>
+			<td style="width: 112px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.815</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.854</b></span></font></td>
+			<td style="width: 100px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.891</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.905</b></span></font></td>
+			<td style="width: 122px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in" align="left">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.882</span></b><span style="font-size: 12pt">&nbsp;
+			<b><span lang="en-us">&nbsp;</span>0.897</b></span></font></td>
+		</tr>
+	</table>
+</div>
+<p class="Text"><font face="Calibri">
+<span style="font-size: 12pt; line-height: 105%">&nbsp;</span>Table 
+<span lang="en-us">3 </span>Weighted-average Performance Evaluation Based on Table 
+<span lang="en-us">2</span></font></p>
+<div align="left">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" id="table7" width="645">
+		<tr>
+			<td width="51" style="width: 30.85pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpFirst" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size:12pt;color:black">&nbsp;</span></font></td>
+			<td width="44" style="width: 26.1pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BIQI</span></font></td>
+			<td width="44" style="width: 26.1pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BRISQUE</span></font></td>
+			<td width="47" style="width: 27.9pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BLIINDS2</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">DIIVINE</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">CORNIA</span></font></td>
+			<td width="42" style="width: .35in; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">NIQE</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">QAC</span></font></td>
+			<td style="width: 80px; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt; color: black">IL<span lang="en-us">-NIQE</span></span></b></font></td>
+		</tr>
+		<tr style="height: 3.95pt">
+			<td width="51" style="width:30.85pt;padding:0in 3.5pt 0in 3.5pt;height:3.95pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC</span></font></td>
+			<td width="44" style="width: 26.1pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.458</span></font></td>
+			<td width="44" style="width: 26.1pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.424</span></font></td>
+			<td width="47" style="width: 27.9pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.424</span></font></td>
+			<td width="43" style="width: 25.65pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.435</span></font></td>
+			<td width="43" style="width: 25.65pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.519</span></font></td>
+			<td width="42" valign="top" style="width:.35in;padding:0in 3.5pt 0in 3.5pt;
+  height:3.95pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.429</span></font></td>
+			<td width="43" valign="top" style="width:25.65pt;padding:0in 3.5pt 0in 3.5pt;
+  height:3.95pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.402</span></font></td>
+			<td valign="top" style="width:80px;height:3.95pt; padding-left:3.5pt; padding-right:3.5pt; padding-top:0in; padding-bottom:0in">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri"><b>
+			<span style="font-size: 12pt">0.599</span></b></font></td>
+		</tr>
+		<tr style="height: 6.9pt">
+			<td width="51" style="width:30.85pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">PLCC</span></font></td>
+			<td width="44" style="width:26.1pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.545</span></font></td>
+			<td width="44" style="width:26.1pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.548</span></font></td>
+			<td width="47" style="width:27.9pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.525</span></font></td>
+			<td width="43" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.595</span></font></td>
+			<td width="43" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.643</span></font></td>
+			<td width="42" valign="top" style="width:.35in;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.512</span></font></td>
+			<td width="43" valign="top" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.509</span></font></td>
+			<td valign="top" style="border-left:medium none; border-right:medium none; border-top:medium none; width:80px;border-bottom:1.5pt double windowtext;
+  height:6.9pt; padding-left:3.5pt; padding-right:3.5pt; padding-top:0in; padding-bottom:0in">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri"><b>
+			<span style="font-size: 12pt">0.675</span></b></font></td>
+		</tr>
+	</table>
+</div>
+<p class="Text"><font face="Calibri">
+<span style="font-size: 12pt; line-height: 105%">&nbsp;</span>Table 
+<span lang="en-us">4 </span>Evaluation Results <span lang="en-us">w</span>hen Trained on TID2013</font></p>
+<div align="left">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: .2pt" id="table8" width="603">
+		<tr style="height: 11.4pt">
+			<td width="73" rowspan="2" style="width: 43.65pt; height: 11.4pt; border-left: medium none; border-right: 1.0pt solid black; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpFirst" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">&nbsp;</span></font></td>
+			<td style="width: 115px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">LIVE</span></font></td>
+			<td style="width: 117px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CSIQ</span></font></td>
+			<td style="width: 129px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">MD1</span></font></p>
+			</td>
+			<td style="width: 107px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">MD2</span></font></td>
+		</tr>
+		<tr style="height: 11.4pt">
+			<td style="width: 115px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 117px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 129px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+			<td style="width: 107px; height: 11.4pt; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC PLCC</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BIQI</span></font></td>
+			<td style="width: 115px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.047&nbsp; 0.311</span></font></td>
+			<td style="width: 117px; height: .15in; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.010&nbsp; 0.181</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.156&nbsp; 0.175</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.332&nbsp; 0.380</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BRISQUE</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.088&nbsp; 0.108</span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.639&nbsp; 0.728</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.625&nbsp; 0.807</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.184&nbsp; 0.591</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">BLIINDS2</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.076&nbsp; 0.089</span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.456&nbsp; 0.527</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.507&nbsp; 0.690</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.032&nbsp; 0.222</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">DIIVINE</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.042&nbsp; 0.093</span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.146&nbsp; 0.255</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.639&nbsp; 0.669</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.252&nbsp; 0.367</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">CORNIA</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.097&nbsp; 0.132</span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.656</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.750</b></span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.772&nbsp; 0.847</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.655&nbsp; 0.719</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">NIQE</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.906</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.904</b></span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.627&nbsp; 0.716</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.871</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.909</b></span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.795</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.848</b></span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">QAC</span></font></td>
+			<td style="width: 115px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.868&nbsp; 0.863</span></font></td>
+			<td style="width: 117px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.490&nbsp; 0.708</span></font></td>
+			<td style="width: 129px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.396&nbsp; 0.538</span></font></td>
+			<td style="width: 107px; height: .15in; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.471&nbsp; 0.672</span></font></td>
+		</tr>
+		<tr style="height: .15in">
+			<td width="73" style="width: 43.65pt; height: .15in; border-left: medium none; border-right: 1.0pt solid black; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<span lang="en-us"><font face="Calibri" size="3">IL-NIQE</font></span></td>
+			<td style="width: 115px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.898</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.903</b></span></font></td>
+			<td style="width: 117px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.815</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.854</b></span></font></td>
+			<td style="width: 129px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.891</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.905</b></span></font></td>
+			<td style="width: 107px; height: .15in; border-left: medium none; border-right: medium none; border-top: medium none; border-bottom: 1.5pt double windowtext; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt">0.882</span></b><span style="font-size: 12pt">&nbsp;
+			<b>0.897</b></span></font></td>
+		</tr>
+	</table>
+</div>
+<p class="Text"><font face="Calibri">
+<span style="font-size: 12pt; line-height: 105%">&nbsp;</span>Table 
+<span lang="en-us">5 </span>Weighted-average Performance Evaluation Based on Table 
+<span lang="en-us">4</span></font></p>
+<div align="left">
+	<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" id="table9" width="644">
+		<tr>
+			<td width="50" style="width: 30.15pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpFirst" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size:12pt;color:black">&nbsp;</span></font></td>
+			<td width="44" style="width: 26.1pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BIQI</span></font></td>
+			<td width="44" style="width: 26.1pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BRISQUE</span></font></td>
+			<td width="47" style="width: 27.9pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">BLIINDS2</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">DIIVINE</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">CORNIA</span></font></td>
+			<td width="42" style="width: .35in; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">NIQE</span></font></td>
+			<td width="43" style="width: 25.65pt; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">QAC</span></font></td>
+			<td style="width: 80px; border-left: medium none; border-right: medium none; border-top: 1.5pt double windowtext; border-bottom: 1.0pt solid black; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<b><span style="font-size: 12pt; color: black">IL<span lang="en-us">-NIQE</span></span></b></font></td>
+		</tr>
+		<tr style="height: 3.95pt">
+			<td width="50" style="width:30.15pt;padding:0in 3.5pt 0in 3.5pt;height:3.95pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">SRCC</span></font></td>
+			<td width="44" style="width: 26.1pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.074</span></font></td>
+			<td width="44" style="width: 26.1pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.384</span></font></td>
+			<td width="47" style="width: 27.9pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.275</span></font></td>
+			<td width="43" style="width: 25.65pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.172</span></font></td>
+			<td width="43" style="width: 25.65pt; height: 3.95pt; border: medium none; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0in; padding-bottom: 0in">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.461</span></font></td>
+			<td width="42" valign="top" style="width:.35in;padding:0in 3.5pt 0in 3.5pt;
+  height:3.95pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.775</span></font></td>
+			<td width="43" valign="top" style="width:25.65pt;padding:0in 3.5pt 0in 3.5pt;
+  height:3.95pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.618</span></font></td>
+			<td valign="top" style="width:80px;height:3.95pt; padding-left:3.5pt; padding-right:3.5pt; padding-top:0in; padding-bottom:0in">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri"><b>
+			<span style="font-size: 12pt">0.861</span></b></font></td>
+		</tr>
+		<tr style="height: 6.9pt">
+			<td width="50" style="width:30.15pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt; color: black">PLCC</span></font></td>
+			<td width="44" style="width:26.1pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.250</span></font></td>
+			<td width="44" style="width:26.1pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.491</span></font></td>
+			<td width="47" style="width:27.9pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.349</span></font></td>
+			<td width="43" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.251</span></font></td>
+			<td width="43" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormalCxSpMiddle" align="center" style="text-align: center; layout-grid-mode: char">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.527</span></font></td>
+			<td width="42" valign="top" style="width:.35in;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.821</span></font></td>
+			<td width="43" valign="top" style="width:25.65pt;border:none;border-bottom:double windowtext 1.5pt;
+  padding:0in 3.5pt 0in 3.5pt;height:6.9pt">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri">
+			<span style="font-size: 12pt">0.744</span></font></td>
+			<td valign="top" style="border-left:medium none; border-right:medium none; border-top:medium none; width:80px;border-bottom:1.5pt double windowtext;
+  height:6.9pt; padding-left:3.5pt; padding-right:3.5pt; padding-top:0in; padding-bottom:0in">
+			<p class="MsoNormal" align="center" style="text-align:center">
+			<font face="Calibri"><b>
+			<span style="font-size: 12pt">0.882</span></b></font></td>
+		</tr>
+	</table>
+</div>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: Nov. 
+06, 2014</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Nov</span>.<span lang="en-us"> 
+06,
+</span>201<span lang="en-us">4</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+
+</body>
+
+</html>

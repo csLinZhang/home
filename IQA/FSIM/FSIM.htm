@@ -1,0 +1,680 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>Feature SIMilarity Index for IQA</title>
+<meta name="Microsoft Theme" content="nature 1011">
+<link rel="File-List" href="FSIM.files/filelist.xml">
+
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif"}
+table.TableGrid
+	{border:1.0pt solid black;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+-->
+</style>
+<!--[if !mso]>
+<style>
+v\:*         { behavior: url(#default#VML) }
+o\:*         { behavior: url(#default#VML) }
+.shape       { behavior: url(#default#VML) }
+</style>
+<![endif]--><!--[if gte mso 9]>
+<xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]-->
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="0" cellpadding="0" width="1217" id="table3" height="35">
+	<tr>
+		<td valign="top" style="width: 1211px; height: 31px; padding: .75pt" align="left">
+		<p class="text">
+		<span lang="en-us"><b>
+		<font face="Calibri" color="#0000FF" size="5">FSIM: A Feature 
+		SIMilarity Index for Image Quality Assessment</font></b></span><p class="text">
+		<span lang="en-us">
+		<font face="Calibri" size="4" color="#0000FF">
+		<a href="../../index.htm">Lin Zhang</a>, 
+		<a href="http://www4.comp.polyu.edu.hk/~cslzhang">Lei 
+		Zhang</a>, Xuanqin Mou and David Zhang</font></span></td>
+	</tr>
+	</table>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Introduction</font></b></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">Image 
+quality assessment (IQA) aims to use computational models to measure the image 
+quality consistently with subjective evaluations. The well-known 
+structural-similarity (SSIM) index brings IQA from pixel based stage to 
+structure based stage. In this work, a novel feature-similarity (FSIM) index for 
+full reference IQA is proposed based on the fact that human visual system (HVS) 
+understands an image mainly according to its low-level features. Specifically, 
+the phase congruency (PC), which is a dimensionless measure of the significance 
+of a local structure, is used as the primary feature in FSIM. Considering that 
+PC is contrast invariant while the contrast information does affect HVS’ 
+perception of image quality, the image gradient magnitude (GM) is employed as 
+the secondary feature in FSIM. PC and GM play complementary roles in 
+characterizing the image local quality. After obtaining the local similarity 
+map, we use PC again as a weighting function to derive a single quality score. 
+Extensive experiments performed on six benchmark IQA databases demonstrate that 
+FSIM can achieve much higher consistency with the subjective evaluations than 
+all the state-of-the-art IQA metrics used in comparison. </font></span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+Although FSIM is designed for grayscale images (or the luminance components of 
+color images), the chrominance information can be easily incorporated by means 
+of a simple extension of FSIM, and we call this extension FSIM<i><sub>C</sub></i>.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Algorithm</font></b></span></p>
+<p><font style="font-size: 13pt" face="Calibri">The visual information in an image is often 
+very redundant, while the HVS understands an image mainly based on its low-level 
+features. In other words, the salient low-level features convey crucial 
+information for the HVS to interpret the scene. Accordingly, perceptible image 
+degradations will lead to perceptible changes in image low-level features, and 
+hence a good IQA metric could be devised by comparing the low-level feature sets 
+between the reference image and the distorted image. </font></p>
+<p><font face="Calibri" style="font-size: 13pt">Based on the 
+physiological and psychophysical evidence, it is found that visually discernable 
+features coincide with those points where the Fourier waves at different 
+frequencies have congruent phases. That is, at points of high phase congruency 
+(PC) we can extract highly informative features. Therefore, PC is used as the 
+primary feature in computing FSIM. Meanwhile, considering that PC is contrast 
+invariant but image local contrast does affect HVS’ perception on the image 
+quality, the image gradient magnitude (GM) is computed as the secondary feature 
+to encode contrast information. PC and GM are complementary and they reflect 
+different aspects of the HVS in assessing the local quality of the input image. 
+After computing the local similarity map, PC is utilized again as a weighting 
+function to derive a single similarity score. Although FSIM is designed for 
+grayscale images (or the luminance components of color images), the chrominance 
+information can be easily incorporated by means of a simple extension of FSIM, 
+and we call this extension FSIM<i><sub>C</sub></i>. </font></p>
+<p><font style="font-size: 13pt" face="Calibri">For the computation of 
+phase congruency, readers can refer to the salient work by 
+<a target="_blank" href="http://www.csse.uwa.edu.au/~pk/">Dr. Peter Kovesi</a>. 
+<span lang="en-us">For gradient magnitude, w</span>e 
+use the Scharr operator<span lang="en-us">.</span>
+<span style="font-size: 13pt">Suppose that we are going to calculate the 
+similarity between images <i>f</i><sub>1</sub> and <i>f</i><sub>2</sub>. Denote by <i>PC</i><sub>1</sub> and <i>
+PC</i><sub>2</sub> the PC maps extracted from <i>f</i><sub>1</sub> and<i> f</i><sub>2</sub>, and <i>G</i><sub>1</sub> and <i>
+G</i><sub>2</sub> the GM maps extracted from them. It should be noted that for color 
+images, PC and GM features are extracted from their luminance channels. FSIM 
+will be defined and computed based on <i>PC</i><sub>1</sub>, <i>PC</i><sub>2</sub>, <i>G</i><sub>1</sub> and <i>G</i><sub>2</sub>. 
+Furthermore, by incorporating the image chrominance information into FSIM, an 
+IQA index for color images, denoted by FSIM<i><sub>C</sub></i>, will be obtained.</span></font></p>
+<p><font face="Calibri" style="font-size: 13pt">The computation of FSIM 
+index consists of two stages. In the first stage, the local similarity map is 
+computed, and then in the second stage, we pool the similarity map into a single 
+similarity score. <br>
+We separate the feature similarity measurement between <i>f</i><sub>1</sub>(<b>x</b>) and <i>f</i><sub>2</sub>(<b>x</b>) 
+into two components, each for PC or GM. First, the similarity measure for <i>PC</i><sub>1</sub>(<b>x</b>) 
+and <i>PC</i><sub>2</sub>(<b>x</b>) is defined as</font><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"><span style="position: relative; top: 14.0pt"><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+ coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+ filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_s1028" type="#_x0000_t75" style='width:160.8pt;
+ height:36.6pt'>
+ <v:imagedata src="FSIM.files/image001.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=268 height=61
+src="FSIM.files/image002.gif" v:shapes="_x0000_s1028"><![endif]></span><!--[if gte mso 9]><![endif]--></span></p>
+<p><font face="Calibri" style="font-size: 13pt">where <i>T</i><sub>1</sub> is a positive 
+constant to increase the stability of <i>S<sub>PC</sub></i></font><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">. 
+Similarly, the GM values <i>G</i><sub>1</sub>(<b>x</b>) and <i>G</i><sub>2</sub>(<b>x</b>) 
+are compared and the similarity measure is defined as</span></p>
+<span lang="EN-US" style="font-size: 11.0pt; font-family: Calibri; color: black">
+<span style="position: relative; top: 14.0pt"><!--[if gte vml 1]><v:shape
+ id="_x0000_s1027" type="#_x0000_t75" style='width:148.8pt;height:37.2pt'>
+ <v:imagedata src="FSIM.files/image003.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=248 height=62
+src="FSIM.files/image004.gif" v:shapes="_x0000_s1027"><![endif]></span><!--[if gte mso 9]><![endif]--></span><p>
+<span style="font-size: 13pt"><font face="Calibri">where <i>T</i><sub>2</sub> 
+is a positive constant depending on the dynamic range of GM values. In our 
+experiments, both </font></span><font face="Calibri" style="font-size: 13pt">
+<i>T</i><sub>1<span lang="en-us"> </span></sub></font>
+<span style="font-size: 13pt"><font face="Calibri">and <i>T</i><sub>2</sub> 
+will be fixed to all databases so that the proposed FSIM can be conveniently 
+used. Then,<span lang="en-us"> </span></font></span>
+<font face="Calibri" style="font-size: 13pt">
+<i>S<sub>PC</sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+and </font></span><font face="Calibri" style="font-size: 13pt"><i>S<sub><span lang="en-us">G</span></sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+are combined to get the similarity </font></span>
+<font face="Calibri" style="font-size: 13pt">
+<i>S<sub><span lang="en-us">L</span></sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+of </font></span><font face="Calibri" style="font-size: 13pt"> <i>f</i><sub>1</sub></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+and </font></span><font face="Calibri" style="font-size: 13pt"> <i>f</i><sub><span lang="en-us">2</span></sub></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>). 
+We define </font></span><font face="Calibri" style="font-size: 13pt"><i>S<sub><span lang="en-us">L</span></sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+as </font></span><i>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+S<sub>L</sub></span></i><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">(<b>x</b>) 
+= S<i><sub>PC</sub></i>(<b>x</b>)&#903;S<i><sub>G</sub></i>(<b>x</b>).</span></p>
+<p>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+Having obtained the similarity </span>
+<font face="Calibri" style="font-size: 13pt">
+<i>S<sub><span lang="en-us">L</span></sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>)</font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+at each location <b>x</b>, the overall similarity between <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>1</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+and <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>2</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+can be calculated. However, different locations have different contributions to 
+HVS’ perception of the image. For example, edge locations convey more crucial 
+visual information than the locations within a smooth area. Since human visual 
+cortex is sensitive to phase congruent structures, the PC value at a location 
+can reflect how likely it is a perceptibly significant structure point. 
+Intuitively, for a given location x, if anyone of </span>
+<span style="font-size: 13pt"><font face="Calibri">&nbsp;</font></span><font face="Calibri" style="font-size: 13pt"><i>f</i><sub>1</sub></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>) 
+and </font></span><font face="Calibri" style="font-size: 13pt"> <i>f</i><sub><span lang="en-us">2</span></sub></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>)</font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+has a significant PC value, it implies that this position <b>x</b> will have a 
+high impact on HVS in evaluating the similarity between <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>1</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+and <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>2</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">. 
+Therefore, we use <i>PC<sub>m</sub></i>(<b>x</b>) = max(<i>PC</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>1</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">(</span><span style="font-size: 13pt; font-family: Calibri; color: black"><b>x</b></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">),
+<i>PC</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>2</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">(</span><span style="font-size: 13pt; font-family: Calibri; color: black"><b>x</b></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">)) 
+to weight the importance of </span><font face="Calibri" style="font-size: 13pt">
+<i>S<sub><span lang="en-us">L</span></sub></i></font><span style="font-size: 13pt"><font face="Calibri">(<b>x</b>)</font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+in the overall similarity between <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>1</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+and <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>2</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">, 
+and accordingly the FSIM index between <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>1</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+and <i>f</i></span><span style="font-size: 13pt"><font face="Calibri"><sub>2</sub></font></span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black"> 
+is defined as</span></p>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+<span style="position: relative; top: 15.0pt"><!--[if gte vml 1]><v:shape
+ id="_x0000_s1026" type="#_x0000_t75" style='width:153.6pt;height:40.8pt'>
+ <v:imagedata src="FSIM.files/image005.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=256 height=68
+src="FSIM.files/image006.gif" v:shapes="_x0000_s1026"><![endif]></span> </span><!--[if gte mso 9]>
+<![endif]-->
+<p>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+The FSIM index is designed for grayscale images or the luminance components of 
+color images. Since the chrominance information will also affect HVS in 
+understanding the images, better performance can be expected if the chrominance 
+information is incorporated in FSIM for color IQA. Such a goal can be achieved 
+by applying a straightforward extension to the FSIM framework. Please refer to 
+our paper for more details. The procedures to calculate the FSIM/FSIMC indices 
+are illustrated in the following figure. If the chromatic information is ignored 
+in the following figure, the </span>
+<font face="Calibri" style="font-size: 13pt">FSIM<i><sub>C<span lang="en-us">
+</span></sub></i> </font>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+index is reduced to the FSIM index.</span></p>
+<span lang="EN-US" style="font-size: 10.0pt; font-family: Calibri; color: black"><!--[if gte vml 1]><v:shape
+ id="_x0000_s1025" type="#_x0000_t75" style='width:605.4pt;height:380.4pt'>
+ <v:imagedata src="FSIM.files/image007.emz" o:title="structure"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=1009 height=634
+src="FSIM.files/image008.gif" v:shapes="_x0000_s1025"><![endif]></span><hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Source Code</font></b></span></p>
+<p><span style="font-family: Calibri; font-size: 13pt" lang="en-us">The 
+source code to compute the proposed FSIM/</span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">FSIM<sub><i>C</i></sub> 
+can be downloaded here: <b><a href="Files/FeatureSIM.m">FeatureSIM.m</a></b>.</span></p>
+<p><span style="font-family: Calibri; font-size: 13pt" lang="en-us">
+Usage:</span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+%Given 2 test images img1 and img2. For gray-scale images, their dynamic range 
+should be 0-255.<br>
+%For colorful images, the dynamic range of each color channel should be 0-255.<br>
+[FSIM, FSIMc] = FeatureSIM(img1, img2);</font></span></p>
+<p><span lang="en-us"><font face="Calibri" style="font-size: 13pt">Note: 
+FSIM compares two images based on their luminance components only; while </font>
+</span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+FSIM<sub><i>C</i></sub> also considers the chromatic information in addition to 
+the luminance.</span></p>
+<hr>
+<p><span lang="en-us"><b><font face="Calibri" size="5">Evaluation 
+Results</font></b></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+The </span>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">FSIM/</span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">FSIM<sub><i>C
+</i></sub></span>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+values are computed (using </span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+<b><a href="Files/FeatureSIM.m">FeatureSIM.m</a></b></span><span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">) 
+for 8 publicly available IQA databases, including
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www.ponomarenko.info/tid2013.htm">
+TID2013 database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www.ponomarenko.info/tid2008.htm">
+TID2008 database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://vision.okstate.edu/csiq">
+CSIQ database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://live.ece.utexas.edu/research/Quality/">
+LIVE database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://www2.irccyn.ec-nantes.fr/ivcdb/">
+IVC database</a>,
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://mict.eng.u-toyama.ac.jp/mictdb.html">Toyama-MICT database</a>, and
+<a style="color: blue; text-decoration: underline; text-underline: single" href="http://foulard.ece.cornell.edu/dmc27/vsnr/vsnr.html">
+Cornell A57 database</a> and
+<a href="http://www.bth.se/tek/rcg.nsf/pages/wiq-db">WIQ</a>. The results (in Matlab .mat format) are provided here, 
+together with performance evaluations based on Spearman rank order correlation 
+coefficient (SROCC) and Kendall rank order correlation coefficient (KROCC),&nbsp;for 
+future comparisons. Each result file contains a <i>n</i> by 3 matrix, where<i> n</i> 
+denotes the number of distorted images in the database. The first column is the 
+FSIM values, the second column is the </span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+FSIM<sub><i>C </i></sub></span>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+values, and the third column is the mos/dmos values provided by the database. 
+For example, you can use the following matlab code to calculate the SROCC and 
+KROCC values for FSIM and </span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+FSIM<sub><i>C </i></sub></span>
+<span style="font-size: 13pt; font-family: Calibri; color: windowtext" lang="EN-US">
+values obtained on the TID2008 database:</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">matData 
+= load('FSIMOnTID2008.mat');<br>
+FSIMOnTID2008 = matData.FSIMOnTID2008;<br>
+FSIM_TID_SROCC = corr(FSIMOnTID2008(:,1), FSIMOnTID2008(:,3), 'type', 
+'spearman');<br>
+FSIM_TID_KROCC = corr(FSIMOnTID2008(:,1), FSIMOnTID2008(:,3), 'type', 'kendall');<br>
+FSIMc_TID_SROCC = corr(FSIMOnTID2008(:,2), FSIMOnTID2008(:,3), 'type', 
+'spearman');<br>
+FSIMc_TID_KROCC = corr(FSIMOnTID2008(:,2), FSIMOnTID2008(:,3), 'type', 'kendall');</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">The 
+source codes to calculate the <i>PLCC</i> (Pearson Linear Correlation 
+Coefficient) and <i>RMSE</i> (Root Mean-Squared-Error) are also provided for 
+each database. This needs a nonlinear regression procedure which is dependant on 
+the initialization of the parameters. We try to adjust the parameters to get a 
+high <i>PLCC</i> value. For different databases, the parameter initialization 
+may be different. The nonlinear fitting function is of the form as described in 
+[2].</font></span></p>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">
+Evaluation results of </font></span>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">FSIM/</span><span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">FSIM<sub><i>C</i></sub></span><span lang="en-us"><font face="Calibri" style="font-size: 13pt"> 
+on six databases on given below. Besides, for each evaluation metric, we present 
+its weighted-average value over all the testing datasets; and the weight for 
+each database is set as the number of distorted images in that dataset. </font></span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" style="width: 78%" id="table4">
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" rowspan="2">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Database</span></font></span></td>
+		<td style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" rowspan="2" align="center">
+		<b><font size="3" face="Calibri">Nonlinear fitting code</font></b></td>
+		<td style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" rowspan="2">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">Results</span></font></span></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" colspan="4" align="center">
+		<b><span lang="en-us"><font size="3" face="Calibri">FSIM</font></span></b></td>
+		<td valign="top" style="border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" colspan="4">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="EN-US" style="font-size: 12pt; font-family: Calibri; color: black; font-weight: 700">FSIM<sub><i>C</i></sub></span></td>
+	</tr>
+	<tr>
+		<td valign="top" style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SROCC</font></b></td>
+		<td valign="top" style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p align="justify"><b><font size="3" face="Calibri">KROCC</font></b></td>
+		<td valign="top" style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">PLCC</font></b></td>
+		<td valign="top" style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">RMSE</font></b></td>
+		<td valign="top" style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">SROCC</font></b></td>
+		<td valign="top" style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">KROCC</font></b></td>
+		<td valign="top" style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">PLCC</font></b></span></td>
+		<td valign="top" style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">RMSE</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p align="center"><b><font face="Calibri" size="3">TID2013</font></b></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID2013.rar">NonlinearFittingTID<span lang="en-us">2013</span></a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/FSIMOnTID2013.mat">FSIMOnTID2013</a></span></font></span></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.8015</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6289</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.8589</font></b></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6349</font></b></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.8510</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.6665</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.8769</font></b></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">0.5959</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">TID2008</span></font></span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingTID.rar">NonlinearFittingTID</a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/FSIMOnTID2008.mat">FSIMOnTID2008</a></span></font></span></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8805</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.6946</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8738</font></b></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.6525</font></b></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8840</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.6991</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8762</font></b></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.6468</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">CSIQ</span></font></span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingCSIQ.rar">NonlinearFitting<span lang="en-us">CSIQ</span></a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center"><b>
+		<span lang="en-us"><font size="3" face="Calibri">
+		<a href="Files/FSIMOnCSIQ.mat">FSIMOnCSIQ</a></font></span></b></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9242</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7567</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9120</font></b></span></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.1077</font></b></span></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9310</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7690</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9192</font></b></span></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.1034</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">LIVE</span></font></span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingLIVE.rar">NonlinearFitting<span lang="en-us">LIVE</span></a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center"><b>
+		<span lang="en-us"><font size="3" face="Calibri">
+		<a href="Files/FSIMOnLIVE.mat">FSIMOnLIVE</a></font></span></b></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9634</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8337</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9597</font></b></span></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">7.6780</font></b></span></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9645</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.8363</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9613</font></b></span></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">7.5296</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">IVC</span></font></span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingIVC.rar">NonlinearFitting<span lang="en-us">IVC</span></a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center"><b>
+		<span lang="en-us"><font size="3" face="Calibri">
+		<a href="Files/FSIMOnIVC.mat">FSIMOnIVC</a></font></span></b></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9262</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7564</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9376</font></b></span></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.4236</font></b></span></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9293</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7636</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.9392</font></b></span></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<span lang="en-us"><b><font face="Calibri" size="3">0.4183</font></b></span></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<span lang="EN-US" style="font-size: 12.0pt; font-family: Calibri; font-weight: 700">Toyama-MICT</span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font size="3" face="Calibri">
+		<a href="Files/NonlinearFittingMICT.rar">NonlinearFitting<span lang="en-us">MICT</span></a></font></b></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center"><b>
+		<span lang="en-us"><font size="3" face="Calibri">
+		<a href="Files/FSIMOnMICT.mat">FSIMOnMICT</a></font></span></b></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9059</font></b></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7302</font></b></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9078</font></b></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5248</font></b></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9067</font></b></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.7303</font></b></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.9075</font></b></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<b><font face="Calibri" size="3">0.5257</font></b></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">A57</span></font></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<a href="Files/NonlinearFittingA57.rar"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">NonlinearFittingA57</span></font></a></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">
+		<a href="Files/FSIMOnA57.mat"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">FSIMOnA57</span></font></a></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.9181</b></font></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.7639</b></font></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.9393</b></font></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.0844</b></font></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.9181</b></font></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.7639</b></font></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.9393</b></font></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.0844</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<span lang="en-us"><font size="3">
+		<span style="font-family: Calibri; font-weight: 700">WIQ</span></font></span></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/NonlinearFittingWIQ.rar">NonlinearFitting<span lang="en-us">WIQ</span></a></span></font></td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		<a href="Files/FSIMOnWIQ.mat">FSIMOn<span lang="en-us">WIQ</span></a></span></font></td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.8006</b></font></td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.6215</b></font></td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.8546</b></font></td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>11.8949</b></font></td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.8006</b></font></td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.6215</b></font></td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>0.8546</b></font></td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center" height="20">
+		<p class="MsoNormal" align="center" style="layout-grid-mode: char">
+		<font size="3" face="Calibri">
+		<b>11.8949</b></font></td>
+	</tr>
+	<tr>
+		<td style="width: 141px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode: char">
+		<font size="3">
+		<span style="font-family: Calibri; font-weight: 700">
+		Weighted-Average</span></font></td>
+		<td valign="top" style="width: 170px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">　</td>
+		<td valign="top" style="width: 123px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm">
+		<p class="MsoNormal" align="center" style="text-align: center; layout-grid-mode:char">　</td>
+		<td style="width: 66px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 68px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 58px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 62px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 65px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 72px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 54px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+		<td style="width: 55px; border: 1.0pt inset; padding-left: 3.5pt; padding-right: 3.5pt; padding-top: 0cm; padding-bottom: 0cm" align="center">
+		　</td>
+	</tr>
+</table>
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph">
+<span lang="en-us"><font face="Calibri" style="font-size: 13pt">Note: 
+since images in A57 and WIQ are gray-scale, </font></span>
+<span lang="EN-US" style="font-size: 13pt; font-family: Calibri; color: black">
+FSIM<sub><i>C </i></sub></span>
+<span style="font-family: Calibri; font-size: 13pt" lang="en-us">will 
+produce exactly the same results with FSIM.</span></p>
+<hr>
+<p><font face="Calibri" size="5"><b><span lang="en-us">Reference</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></p>
+
+<p align="justify"><span lang="en-us"><font face="Calibri">[1] Lin Zhang, 
+Lei Zhang, Xuanqin Mou, and David Zhang, &quot;<a href="Files/Fsim%20a%20feature%20similarity%20index%20for%20image%20quality%20assessment.pdf">FSIM: 
+	a feature similarity index for image quality assessment</a>&quot;, <i>IEEE Transactions on Image Processing</i>, 
+vol. 20, no. 8, pp. 2378-2386, 2011.
+	</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">[2] H.R. 
+Sheikh, M.F. Sabir, and A.C. Bovik, &quot;A statistical evaluation of recent full 
+reference image quality assessment algorithms&quot;, <i>IEEE Trans. on Image Processing</i>, 
+vol. 15, no. 11, pp. 3440-3451, 2006.</font></span></p>
+<p align="justify"><span lang="en-us"><font face="Calibri">
+<a href="../IQA.htm">Our IQA Research Website</a>.</font></span></p>
+
+<hr>
+<p align="justify"><font face="Calibri"><span lang="en-us">Created on: Oct. 24, 2010</span></font></p>
+<p align="justify"><font face="Calibri">Last update: <span lang="en-us">Dec</span>.<span lang="en-us"> 
+10,
+</span>201<span lang="en-us">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>
+</p>
+<div align="center"><font face="Calibri"><a href="http://www.amazingcounter.com"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3013248&c=9040057" alt="Web Counter"></a></font></div>
+
+</body>
+
+</html>
