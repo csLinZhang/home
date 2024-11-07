@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>CV Project Multi-Source SLAM </title>
+</head>
+
+<body>
+
+<p><font size="5" face="Calibri"><b>LiDAR-Inertial-Camera Calibration and SLAM 
+(Tutor: Yunda SUN, wechat: syd17801034524)</b></font></p>
+<h2>
+<span style="font-family:&quot;Calibri&quot;">
+Introduction</span></h2>
+<h2>
+    <font size="3"><span style="font-family: Calibri; font-weight: 400">The tasks of this project are as follows:
+        <p>
+            <span style="font-family: Calibri">1&gt;Calibrate the extrinsic parameters of the LiDAR-Inertial-Camera sensor system.</span></p>
+        <p>
+            <span style="font-family: Calibri">2&gt;Based on the calibrated extrinsic parameters, achieve tightly coupled LiDAR-Inertial-Camera SLAM. </span></p>
+    </font>
+</h2>
+
+<h2>
+<span style="font-family: 'Calibri'">Requirements</span></h2>
+<h3>
+<span style="font-family: 'Calibri'">Basic Requirements:</span></h3>
+<p>
+<span style="font-family: Calibri">1&gt; The designed calibration module needs to support 
+    offline calibration without target.</span></p>
+<p>
+    <table><tr>
+        <td><figure>
+            <img src="uncalibrated.png" alt="uncalibrated image" width="600" height="350">
+            <figcaption>Uncalibrated</figcaption>
+        </td></figure>
+        
+        <td><figure>
+            <img src="calibrated.png" alt="calibrated image" width="600" height="350">
+            <figcaption>Calibrated</figcaption>
+        </td></figure>
+    </tr></table>
+
+<span style="font-family: Calibri">2&gt; The designed SLAM system should tightly couple point clouds
+    , motion information, and images for pose estimation.</span></p>
+<p>
+<span style="font-family: Calibri">3&gt; The localization and mapping results should be stable, with no significant drift.</span></p>
+<p>
+<table><tr>
+    <td><figure>
+        <img src="./slam_demo1.gif"  width="600" height="350">
+        
+    </td></figure>
+    
+    <td><figure>
+        <img src="./slam_demo2.gif"  width="600" height="350">
+        
+    </td></figure>
+</tr></table>
+<h3><span style="font-family: 'Calibri'">Advanced Requirements:</span></h3>
+
+<span style="font-family: Calibri">4&gt; Optimizing the calibration process to achieve automatic extrinsic calibration is encouraged.</span></p>
+<span style="font-family: Calibri">5&gt; Integrating the calibration module into the SLAM system to establish an automatic calibration-then-SLAM pipeline is encouraged.</span></p>
+<span style="font-family: Calibri">6&gt; Completing this project using self-collected data is encouraged.</span></p>
+
+<h2>
+    <span style="font-family: 'Calibri'">Reference</span></h2>
+<p>
+<span style="font-family: Calibri"> LiDAR-Camera calibration: <a href="https://arxiv.org/abs/2103.01627">
+    Pixel-level Extrinsic Self Calibration of High Resolution LiDAR and Camera in Targetless Environments</a>.</span></p>
+<p>
+<span style="font-family: Calibri"> LiDAR-Inertial-Camera SLAM: <a href="https://arxiv.org/abs/2109.07982">
+        A Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package</a>.</span></p>
+<p>
+<span style="font-family: Calibri">Created on: Nov. 06, 2024</span></p>
+
+</body>
+
+</html>
