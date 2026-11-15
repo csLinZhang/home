@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feed-Forward 3D Reconstruction of an Indoor Room</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; }
+    h1 { font-size: 1.5em; margin: 1em 0; }
+    figure { margin: 1em 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    .capture-rig { width: 124px; height: 300px; object-fit: cover; }
+    .reconstruction-views { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; }
+    .reconstruction-views img { width: 400px; }
+    figcaption { margin-top: 0.4em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Feed-Forward 3D Reconstruction (Tutor: Jinming Pan, Wechat: 19905103483)</h1>
+    <h2>Introduction</h2>
+    <p>The task of this project is to reconstruct an indoor room from a small set of images. You will capture the room from several positions with an Insta360 X5 and use a feed-forward method to produce a colored 3D point cloud.</p>
+
+    <h2>Requirements</h2>
+    <h3>Basic Requirements</h3>
+    <p>1&gt; Capture a set of images of one indoor room with the Insta360 X5. Choose viewpoints that cover the room and provide overlap between images.</p>
+    <figure>
+      <img class="capture-rig" src="feed-forward-3d-reconstruction-rig.png"
+           width="124" height="300" alt="Insta360 X5 mounted on a handheld capture rig">
+      <figcaption>Example capture rig with an Insta360 X5.</figcaption>
+    </figure>
+    <p>2&gt; Use a feed-forward reconstruction method of your choice to reconstruct the room and export a colored 3D point cloud. You may use the captured panoramas directly or extract perspective views from them.</p>
+    <figure>
+      <div class="reconstruction-views">
+        <img src="feed-forward-3d-reconstruction-room-1.png" width="1503" height="1213"
+             alt="Oblique view of a reconstructed room with a long table and chairs">
+        <img src="feed-forward-3d-reconstruction-room-2.png" width="1308" height="988"
+             alt="Another view of the reconstructed room showing the table and walls">
+      </div>
+      <figcaption>Two views of a reconstructed room.</figcaption>
+    </figure>
+    <p>3&gt; Show the input images and visualize the reconstructed point cloud from several viewpoints. Discuss which parts of the room were recovered and where the reconstruction is incomplete or inaccurate.</p>
+
+    <h3>Advanced Requirements</h3>
+    <p>4&gt; Capture point clouds of the same room with a Livox MID-360. Calibrate the camera and LiDAR relative to each other and visualize the projected LiDAR points on the captured images.</p>
+    <p>5&gt; Incorporate sparse LiDAR measurements into the feed-forward inference pipeline to recover the scale of the room in meters. Use the same input images to compare reconstructions with and without LiDAR, and explain how the measurements affect the result.</p>
+
+    <h2>References</h2>
+    <p>1&gt; Wang et al. <a href="https://arxiv.org/abs/2503.11651">VGGT: Visual Geometry Grounded Transformer</a>.</p>
+    <p>2&gt; Keetha et al. <a href="https://arxiv.org/abs/2509.13414">MapAnything: Universal Feed-Forward Metric 3D Reconstruction</a>.</p>
+    <p>3&gt; Bedkowski et al. <a href="https://isprs-archives.copernicus.org/articles/XLVIII-1-W4-2025/13/2025/">Method for Spherical Camera to 3D LiDAR Calibration and Synchronization with Example on Insta360 X4 and LiVOX MID 360</a>.</p>
+  </main>
+</body>
+</html>
